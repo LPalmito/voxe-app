@@ -8,12 +8,142 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="card-background-page">
 
-  <h3>Welcome to your first Ionic app!</h3>
 
-  <p>This starter project is our way of helping you get a functional app running in record time.</p>
-  <p>Follow along on the tutorial section of the Ionic docs!</p>
-  <p><button ion-button color="primary" menuToggle>Toggle Menu</button></p>
+<!-- Segment : Permet de passer de toutes les cartes aux cartes favorites -->
 
+<div padding>
+  <ion-segment [(ngModel)]="fiches">
+    <ion-segment-button value="all">
+      Toutes
+    </ion-segment-button>
+    <ion-segment-button value="favoris">
+      Favoris
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+<div [ngSwitch]="fiches">
+
+
+<!-- Toutes les fiches-->
+<ion-grid *ngSwitchCase="'all'">
+
+    <!-- Row et Col pour organiser les cards en tableau-->
+    <ion-row>
+      <ion-col width-50>
+        <ion-card (tap)="tapEvent($event)">
+
+        <!-- On truque du texte avec une classe "card-title" pour qu'il vienne se mettre par-dessus le background image -->
+          <div class="card-title">
+            Le revenu universel
+
+            <!-- Ici impossible de modifier la taille de l'icone : on la modifiera directement dans le fichier icone-emploi.png -->
+            <img src="../assets/img/icone-emploi.png" width="1px"/>
+          </div>
+
+          <img src="../assets/img/candidat-delli.jpg"/>
+
+
+          <!-- On ajoute un item en-dessous de la card pour placer les boutons-->
+          <ion-item>
+
+            <!-- Possibilité 1 : dépasse de la carte
+            <button ion-button clear icon-left small>
+              <ion-icon name="star"></ion-icon>
+              <div>Favoris</div>
+            </button>
+            <button ion-button clear icon-only small>
+              <ion-icon name="trash"></ion-icon>
+            </button>
+            -->
+
+            <button ion-button clear icon-left small>
+              <ion-icon name="star"></ion-icon>
+            </button>
+            <button ion-button clear icon-only small>
+              <ion-icon name="trash"></ion-icon>
+            </button>
+
+          </ion-item>
+
+        </ion-card>
+      </ion-col>
+
+      <ion-col width-50>
+        <ion-card>
+          <img src="../assets/img/candidat-duflot.jpg"/>
+
+          <div class="card-title">
+            Le centre Cigéo
+            <img src="../assets/img/icone-environnement.png" width="1px"/>
+          </div>
+
+          <ion-item>
+            <button ion-button clear icon-left small>
+              <ion-icon name="star"></ion-icon>
+            </button>
+            <button ion-button clear icon-only small>
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-item>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col width-50>
+        <ion-card>
+          <img src="../assets/img/candidat-rivasi.jpg"/>
+
+          <div class="card-title">
+            Les fiches S
+            <img src="../assets/img/icone-justice-securite.png" width="1px"/>
+          </div>
+
+          <ion-item>
+            <button ion-button clear icon-left small>
+              <ion-icon name="star"></ion-icon>
+            </button>
+            <button ion-button clear icon-only small>
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-item>
+
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+</ion-grid>
+
+<!-- Seulement les fiches favorites-->
+<ion-grid *ngSwitchCase="'favoris'">
+    <ion-row>
+      <ion-col width-50>
+        <ion-card>
+          <img src="../assets/img/candidat-rivasi.jpg"/>
+
+          <div class="card-title">
+            Les fiches S
+            <img src="../assets/img/icone-justice-securite.png" width="1px"/>
+          </div>
+
+          <ion-item>
+            <button ion-button clear icon-left small>
+              <ion-icon name="star"></ion-icon>
+            </button>
+            <button ion-button clear icon-only small>
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-item>
+
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+</ion-grid>
+
+</div>
 </ion-content>
