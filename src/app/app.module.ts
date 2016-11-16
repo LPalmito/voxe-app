@@ -1,26 +1,23 @@
 import {NgModule} from "@angular/core";
 import {IonicApp, IonicModule} from "ionic-angular";
-import {MyApp} from "./app.component";
-import {HelloIonicPage} from "../pages/hello-ionic/hello-ionic";
-import {ItemDetailsPage} from "../pages/item-details/item-details";
-import {ListPage} from "../pages/list/list";
+import {VoxeApp} from "./app.component";
+import {HomePage} from "../pages/home/home";
+import {SwipePage} from "../pages/swipe/swipe";
 
 @NgModule({
   declarations: [
-    MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage
+    VoxeApp,
+    HomePage,
+    SwipePage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(VoxeApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HelloIonicPage,
-    ItemDetailsPage,
-    ListPage
+    VoxeApp,
+    HomePage,
+    SwipePage
   ],
   providers: []
 })

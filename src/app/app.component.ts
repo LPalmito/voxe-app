@@ -1,18 +1,17 @@
 import {Component, ViewChild} from "@angular/core";
 import {Platform, MenuController, Nav} from "ionic-angular";
 import {StatusBar} from "ionic-native";
-import {HelloIonicPage} from "../pages/hello-ionic/hello-ionic";
-import {ListPage} from "../pages/list/list";
-
+import {HomePage} from "../pages/home/home";
+import {SwipePage} from "../pages/swipe/swipe";
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class VoxeApp {
   @ViewChild(Nav) nav: Nav;
 
-  // make HelloIonicPage the root (or first) page
-  rootPage: any = HelloIonicPage;
+  // make HomePage the root (or first) page
+  rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
@@ -23,8 +22,8 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage }
+      { title: 'Accueil', component: HomePage },
+      { title: 'Swipe', component: SwipePage }
     ];
   }
 
