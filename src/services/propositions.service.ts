@@ -14,13 +14,19 @@ export class CandidateService {
   constructor(private http: Http) {}
 
   getPropositionsFiltered(candidateIds: string[], tagIds: string[]): Observable<Array<Proposition>> {
-    // let url = this.server+'propositions/search?candidacyIds=';
-    // candidateIds.forEach(x => url+=x+',');
-    // url = url.substring(0, url.length - 1);
-    //
-    // let test = this.http.get(url)
-    //   .map(data => data.json());
-    // return test;
+    let url = this.server+'propositions/search';
+    // Add the candidateIds to the URL
+    url += '?candidacyIds=';
+    candidateIds.forEach(x => url+=x+',');
+    url = url.substring(0, url.length - 1);
+    // Add the tagIds to the URL
+    url += '?tagIds=';
+    tagIds.forEach(x => url+=x+',');
+    url = url.substring(0, url.length - 1);
+    // TODO: WIP here!
+    let test = this.http.get(url)
+      .map(data => data.json());
+    return test;
   }
 
 }
