@@ -3,12 +3,14 @@ import {IonicApp, IonicModule} from "ionic-angular";
 import {VoxeApp} from "./app.component";
 import {HomePage} from "../pages/home/home";
 import {SwipePage} from "../pages/swipe/swipe";
+import {StatsPage} from "../pages/stats/stats";
 
 @NgModule({
   declarations: [
     VoxeApp,
     HomePage,
-    SwipePage
+    SwipePage,
+    StatsPage
   ],
   imports: [
     IonicModule.forRoot(VoxeApp)
@@ -17,7 +19,8 @@ import {SwipePage} from "../pages/swipe/swipe";
   entryComponents: [
     VoxeApp,
     HomePage,
-    SwipePage
+    SwipePage,
+    StatsPage
   ],
   providers: []
 })

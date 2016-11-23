@@ -3,6 +3,7 @@ import {Platform, MenuController, Nav} from "ionic-angular";
 import {StatusBar} from "ionic-native";
 import {HomePage} from "../pages/home/home";
 import {SwipePage} from "../pages/swipe/swipe";
+import {StatsPage} from "../pages/stats/stats";
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +24,8 @@ export class VoxeApp {
     // set our app's pages
     this.pages = [
       { title: 'Accueil', component: HomePage },
-      { title: 'Swipe', component: SwipePage }
+      { title: 'Swipe', component: SwipePage },
+      { title: 'Stats', component: StatsPage },
     ];
   }
 
