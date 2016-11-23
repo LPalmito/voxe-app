@@ -25,7 +25,8 @@ export class SwipePage {
   @ViewChild('myswing1') swingStack: SwingStackComponent;
   @ViewChildren('mycards1') swingCards: QueryList<SwingCardComponent>;
 
-  cards: Array<any>;
+  // TODO: Create a 'Card' or 'Proposal' object?
+  cards: Array<string>;
   stackConfig: StackConfig;
   recentCard: string = '';
 
@@ -45,42 +46,46 @@ export class SwipePage {
 
   ngAfterViewInit() {
     // Either subscribe in controller or set in HTML
-    this.swingStack.throwin.subscribe((event: DragEvent) => {
-      event.target.style.background = '#ffffff';
-    });
+    // this.swingStack.throwin.subscribe((event: DragEvent) => {
+    //   event.target.style.background = '#ffffff';
+    // });
 
-    this.cards = [{email: ''}];
-    this.addNewCards(1);
+    // TODO: Move the requests properly to the services
+    this.http.get("http://compare.voxe.org/api/v1/propositions/search?limit=10")
+      .map(data => data.json().response.propositions)
+      .subscribe(data => {
+        this.cards = data.map(proposition => proposition.text);
+        console.log(this.cards);
+      });
+
+    // this.cards = [{email: ''}];
+    // this.addNewCards(1);
   }
 
-  // Called whenever we drag an element
+  // Change the color when dragging a card
   static onItemMove(element, x, y, r) {
     var color = '';
     var abs = Math.abs(x);
     let min = Math.floor(Math.min(16*16 - abs, 16*16));
     let hexCode = SwipePage.decimalToHex(min, 2);
 
-    if (x < 0) {
-      color = '#FF' + hexCode + hexCode;
-    } else {
-      color = '#' + hexCode + 'FF' + hexCode;
-    }
+    color = (x < 0)?
+      '#FF' + hexCode + hexCode:
+      '#' + hexCode + 'FF' + hexCode;
 
     element.style.background = color;
     element.style['transform'] = `translate3d(0, 0, 0) translate(${x}px, ${y}px) rotate(${r}deg)`;
   }
 
-  // Connected through HTML
-  voteUp(like: boolean) {
+  // Display the approved/unapproved state
+  voteUp(approved: boolean) {
     let removedCard = this.cards.pop();
-    this.addNewCards(1);
-    if (like) {
-      this.recentCard = 'You liked: ' + removedCard.email;
-    } else {
-      this.recentCard = 'You disliked: ' + removedCard.email;
-    }
+    // this.addNewCards(1);
+    this.recentCard = approved?
+      'Proposition approuvée':'Proposition désapprouvée';
   }
 
+  // TODO: Replace it with the real Voxe API
   // Add new cards to our array
   addNewCards(count: number) {
     this.http.get('https://randomuser.me/api/?results=' + count)
