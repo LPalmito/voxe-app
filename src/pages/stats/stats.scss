@@ -1,0 +1,67 @@
+.candidate-stats {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  overflow: hidden;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  width: 40%;
+  height: 40%;
+}
+
+#theme {
+  width: 10%;
+  height: 10%;
+  float: left;
+  margin-right: 3%;
+  margin-left: -3%;
+  margin-top: -2%;
+}
+
+.ImageCandidate {
+}
+
+.vote-yes {
+  //display: block;
+  //padding: 3px;
+  color: #2ec95c;
+  background-color: white;
+}
+
+.vote-no {
+  //display: block;
+  //padding: 3px;
+  color: #e13838;
+  background-color: white;
+}
+
+.badge-result {
+  background-color: white;
+}
+
+hr {
+  margin-top: -2%;
+}
+
+.NameCandidate {
+  text-align: center;
+  font-size: 2vmax;
+}
+
+
+.ResultsIcons {
+  text-align: center;
+}
+
+.AcceptedProposal {
+  background-color: #30d05f;
+}
+
+.title-theme {
+  font-size: 2.6vmax;
+}
+
+.IndependantCard {
+  float: left;
+}
