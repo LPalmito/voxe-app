@@ -3,18 +3,27 @@ import {AfterViewInit} from '@angular/component';
 import {Http} from '@angular/http';
 import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
-import {CandidateService} from "../../services/candidates.service";
+import {NavController} from "ionic-angular";
+import {StatsPage} from "../stats/stats";
+// import {PropositionService} from "../../services/propositions.service";
 
 //!\\
 // When launching "npm install angular2-swing@^0.7.1 --save"
 // npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
 // npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.0.15: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
 
+// TODO: Change the structure to accept the "ask" attribute
+export interface Answer {
+  candidateId: string,
+  proposition: string,
+  approved: boolean
+}
+
 // 'directives' does not exist in 'Component', use 'declarations' in 'NgModule' instead:
 // http://stackoverflow.com/questions/39886792/directive-does-not-exist-in-type-component
 @Component({
   templateUrl: 'swipe.html',
-  providers: [CandidateService]
+  // providers: [PropositionService]
 })
 
 export class SwipePage {
@@ -25,8 +34,9 @@ export class SwipePage {
   cards: Array<string> = [];
   stackConfig: StackConfig;
   recentCard: string = '';
+  answers: Answer[] = [];
 
-  constructor(private http: Http, private candidateService: CandidateService) {
+  constructor(private http: Http, public nav: NavController) {
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {
         return Math.min(Math.abs(offset) / (element.offsetWidth/2), 1);
@@ -38,12 +48,11 @@ export class SwipePage {
 
   ngAfterViewInit() {
     // TODO: Move the requests properly to the services
-    this.candidateService.getCandidateByNameSpace("marine-le-pen");
-    // this.http.get("http://compare.voxe.org/api/v1/propositions/search?limit=10")
-    //   .map(data => data.json().response.propositions)
-    //   .subscribe(data => {
-    //     this.cards = data.map(proposition => proposition.text);
-    //   });
+    this.http.get("http://compare.voxe.org/api/v1/propositions/search?limit=10")
+      .map(data => data.json().response.propositions)
+      .subscribe(data => {
+        this.cards = data.map(proposition => proposition.text);
+      });
   }
 
   // Change the color when dragging a card
@@ -59,11 +68,20 @@ export class SwipePage {
     element.style['transform'] = `translate3d(0, 0, 0) translate(${x}px, ${y}px) rotate(${r}deg)`;
   }
 
-  // Display the approved/unapproved state
+  // Save the answer of the user
   voteUp(approved: boolean) {
+    this.answers.push({
+      candidateId: "test",
+      proposition: this.cards[this.cards.length-1],
+      approved: approved
+    });
     this.cards.pop();
     this.recentCard = approved?
       'Proposition approuvée':'Proposition désapprouvée';
+    // Redirect to the StatsPage after the last card
+    if (this.cards.length == 0) {
+      this.nav.push(StatsPage, {answers: this.answers});
+    }
   }
 
   // http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript

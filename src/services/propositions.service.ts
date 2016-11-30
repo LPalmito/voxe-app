@@ -8,7 +8,7 @@ export interface Proposition {
 }
 
 @Injectable()
-export class CandidateService {
+export class PropositionService {
   server: string = "http://compare.voxe.org/api/v1/";
 
   constructor(private http: Http) {}
@@ -23,9 +23,9 @@ export class CandidateService {
     url += '?tagIds=';
     tagIds.forEach(x => url+=x+',');
     url = url.substring(0, url.length - 1);
-    // TODO: WIP here!
     let test = this.http.get(url)
       .map(data => data.json());
+    test.subscribe(x => console.log(x));
     return test;
   }
 
