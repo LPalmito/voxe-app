@@ -6,7 +6,8 @@ import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swi
 import {NavController} from "ionic-angular";
 import {StatsPage} from "../stats/stats";
 import { ToastController } from 'ionic-angular';
-// import {PropositionService} from "../../services/propositions.service";
+import {MainService} from "../../services/main.service";
+import {PropositionService} from "../../services/propositions.service";
 
 //!\\
 // When launching "npm install angular2-swing@^0.7.1 --save"
@@ -24,7 +25,7 @@ export interface Answer {
 // http://stackoverflow.com/questions/39886792/directive-does-not-exist-in-type-component
 @Component({
   templateUrl: 'swipe.html',
-  // providers: [PropositionService]
+  providers: [PropositionService, MainService]
 })
 
 export class SwipePage {
@@ -38,7 +39,8 @@ export class SwipePage {
   recentCard: string = '';
   answers: Answer[] = [];
 
-  constructor(private http: Http, public nav: NavController, public toastCtrl: ToastController) {
+  constructor(private http: Http, public nav: NavController, public toastCtrl: ToastController,
+              private main: MainService, private propositionService: PropositionService) {
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {
         return Math.min(Math.abs(offset) / (element.offsetWidth/2), 1);
@@ -55,6 +57,7 @@ export class SwipePage {
       .subscribe(data => {
         this.cards = data.map(proposition => proposition.text);
       });
+    this.main.getElection();
   }
 
   // TODO: Resolve the color bug when dragging but not coming back to white
