@@ -5,6 +5,7 @@ import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
 import {NavController} from "ionic-angular";
 import {StatsPage} from "../stats/stats";
+import { ToastController } from 'ionic-angular';
 // import {PropositionService} from "../../services/propositions.service";
 
 //!\\
@@ -32,11 +33,12 @@ export class SwipePage {
 
   // TODO: Create a 'Card' or 'Proposition' object?
   cards: Array<string> = [];
+  lastCards: Array<string> = [];
   stackConfig: StackConfig;
   recentCard: string = '';
   answers: Answer[] = [];
 
-  constructor(private http: Http, public nav: NavController) {
+  constructor(private http: Http, public nav: NavController, public toastCtrl: ToastController) {
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {
         return Math.min(Math.abs(offset) / (element.offsetWidth/2), 1);
@@ -55,6 +57,7 @@ export class SwipePage {
       });
   }
 
+  // TODO: Resolve the color bug when dragging but not coming back to white
   // Change the color when dragging a card
   static onItemMove(element, x, y, r) {
     var color = '';
@@ -75,13 +78,21 @@ export class SwipePage {
       proposition: this.cards[this.cards.length-1],
       approved: approved
     });
+    this.lastCards.push(this.cards[this.cards.length-1]);
     this.cards.pop();
-    this.recentCard = approved?
-      'Proposition approuvée':'Proposition désapprouvée';
+    this.infoToast(approved);
     // Redirect to the StatsPage after the last card
     if (this.cards.length == 0) {
       this.nav.push(StatsPage, {answers: this.answers});
     }
+  }
+
+  // Undo last action
+  undo() {
+    this.answers.pop();
+    this.cards.push(this.lastCards[this.lastCards.length-1]);
+    this.lastCards.pop();
+    this.cancelToast();
   }
 
   // http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
@@ -94,4 +105,21 @@ export class SwipePage {
     return hex;
   }
 
+  // Display a toast with the last swipe information
+  infoToast(approved) {
+    let toast = this.toastCtrl.create({
+      message: approved? 'Proposition approuvée':'Proposition désapprouvée',
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  // Display a toast with the cancel information on it
+  cancelToast() {
+    let toast = this.toastCtrl.create({
+      message: "Opération annulée",
+      duration: 2000,
+    });
+    toast.present();
+  }
 }
