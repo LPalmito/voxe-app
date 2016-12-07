@@ -7,7 +7,7 @@ import {MainService, Candidate} from "./main.service";
 @Injectable()
 export class CandidateService {
 
-  constructor(private http: Http, private main: MainService) {}
+  constructor(private main: MainService) {}
 
   getCandidates(): Observable<Array<Candidate>> {
     return this.main.getElection()

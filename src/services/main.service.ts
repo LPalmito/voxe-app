@@ -11,6 +11,11 @@ export interface DataElections {
   response: {elections: Election[]}
 }
 
+export interface DataPropositions {
+  meta: {code: number},
+  response: {proposition: Proposition[]}
+}
+
 export interface Election {
   id: string,
   name: string,
@@ -79,7 +84,18 @@ export interface Icon {
 }
 
 export interface Proposition {
-  // TODO
+  id: string,
+  text: string,
+  favorite_users_count: number,
+  against_users_count: number,
+  support_users_count: number,
+  tags: {id: number}[],
+  comments: {count: number},
+  favorite_users: {count: number, data: string[]},
+  against_users: {count: number, data: string[]},
+  support_users: {count: number, data: string[]},
+  candidacy: {id: string},
+  embeds: string[]
 }
 
 @Injectable()

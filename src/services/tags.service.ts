@@ -7,7 +7,7 @@ import {MainService, Tag} from "./main.service";
 @Injectable()
 export class TagService {
 
-  constructor(private http: Http, private main: MainService) {}
+  constructor(private main: MainService) {}
 
   getTags(): Observable<Array<Tag>> {
     return this.main.getElection()
