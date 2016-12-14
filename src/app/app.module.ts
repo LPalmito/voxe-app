@@ -4,6 +4,7 @@ import {VoxeApp} from "./app.component";
 import {HomePage} from "../pages/home/home";
 import {SwipePage} from "../pages/swipe/swipe";
 import {StatsPage} from "../pages/stats/stats";
+import {InfoPage} from "../pages/info/info";
 import {SwingStackComponent} from "angular2-swing";
 import {SwingCardComponent} from "angular2-swing";
 
@@ -13,6 +14,7 @@ import {SwingCardComponent} from "angular2-swing";
     HomePage,
     SwipePage,
     StatsPage,
+    InfoPage,
     SwingStackComponent,
     SwingCardComponent
   ],
@@ -23,6 +25,7 @@ import {SwingCardComponent} from "angular2-swing";
   entryComponents: [
     VoxeApp,
     HomePage,
+    InfoPage,
     SwipePage,
     StatsPage
   ],

@@ -4,6 +4,7 @@ import {StatusBar} from "ionic-native";
 import {HomePage} from "../pages/home/home";
 import {SwipePage} from "../pages/swipe/swipe";
 import {StatsPage} from "../pages/stats/stats";
+import {InfoPage} from "../pages/info/info";
 
 @Component({
   templateUrl: 'app.html'
@@ -26,6 +27,7 @@ export class VoxeApp {
       { title: 'Accueil', component: HomePage },
       { title: 'Swipe', component: SwipePage },
       { title: 'Stats', component: StatsPage },
+      { title: 'Info', component: InfoPage }
     ];
   }
 
