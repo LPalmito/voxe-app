@@ -3,25 +3,25 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Stats</ion-title>
+    <ion-title>Statistiques</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding class="IndependantCard">
+<ion-content padding class="independant-card">
+
+  <!--Head of stats page: theme-->
   <ion-card class="title-theme">
     <ion-card-header>
       <img id="theme" src="../assets/img/icone-environnement.png"/>
       Environnement et agriculture
     </ion-card-header>
-
     <hr>
-
+    <!--Pictures and names of candidates-->
     <ion-card-content>
       <ion-grid>
-
         <ion-row>
-          <ion-col width-50 class="ImageCandidate">
+          <ion-col width-50 class="image-candidate">
             <div>
               <img class="candidate-stats" src="../assets/img/candidat-jadot.jpg"/>
             </div>
@@ -32,52 +32,100 @@
             </div>
           </ion-col>
         </ion-row>
-
         <ion-row>
-          <ion-col width-50 class="NameCandidate">
+          <ion-col width-50 class="candidate-name">
             Yannick Jadot
           </ion-col>
-          <ion-col width-50 class="NameCandidate">
+          <ion-col width-50 class="candidate-name">
             Karima Delli
           </ion-col>
         </ion-row>
 
+        <!--Swipe results-->
         <ion-row>
-          <ion-col width-50 class="ResultsIcons">
-              <ion-icon *ngFor="let proposition of displayAnswers['test'].yes" name="checkmark" class="vote-yes"></ion-icon>
-              <ion-icon *ngFor="let proposition of displayAnswers['test'].no" name="close" class="vote-no"></ion-icon>
+          <ion-col width-50 class="results-icons">
+            <ion-icon *ngFor="let proposition of displayAnswers['test'].yes" name="checkmark" class="vote-yes"></ion-icon>
           </ion-col>
-          <ion-col width-50 class="ResultsIcons">
-            <ion-icon name="close" class="vote-no"></ion-icon>
-            <ion-icon name="close" class="vote-no"></ion-icon>
+          <ion-col width-50 class="results-icons">
+            <ion-icon *ngFor="let proposition of displayAnswers['test'].yes" name="checkmark" class="vote-yes"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col width-50 class="results-icons">
+            <ion-icon *ngFor="let proposition of displayAnswers['test'].no" name="close" class="vote-no"></ion-icon>
+          </ion-col>
+          <ion-col width-50 class="results-icons">
+            <ion-icon *ngFor="let proposition of displayAnswers['test'].no" name="close" class="vote-no"></ion-icon>
           </ion-col>
         </ion-row>
 
       </ion-grid>
     </ion-card-content>
   </ion-card>
-</ion-content>
 
-<!--<ion-content padding class="IndependantCard">-->
-  <!--<ion-card>-->
-    <!--<ion-card-content>-->
-      <!--<ion-grid>-->
-        <!--<ion-row>-->
-          <!--<ion-col width-20 class="ImageCandidate">-->
-            <!--<div>-->
-              <!--<img class="candidate-stats" src="../assets/img/candidat-jadot.jpg"/>-->
-            <!--</div>-->
-          <!--</ion-col>-->
-          <!--<ion-col width-80 class="AcceptedProposal">-->
-            <!--<div>-->
-              <!--Proposition 1-->
-            <!--</div>-->
-          <!--</ion-col>-->
-        <!--</ion-row>-->
-      <!--</ion-grid>-->
-    <!--</ion-card-content>-->
-  <!--</ion-card>-->
-<!--</ion-content>-->
+  <!--Propositions summary-->
+  <ion-card>
+    <ion-item *ngFor="let answer of answers" *ngIf="answer.candidateId == 'test'" >
+      <ion-avatar item-left>
+        <img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>
+      </ion-avatar>
+      <p *ngIf="answer.approved == true" width-80 class="proposition-yes">
+        {{answer.proposition}}
+      </p>
+      <p *ngIf="answer.approved == false" width-80 class="proposition-no">
+        {{answer.proposition}}
+      </p>
+    </ion-item>
+    <ion-item *ngFor="let answer of answers" *ngIf="answer.candidateId == 'test2'" >
+      <ion-avatar item-left>
+        <img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>
+      </ion-avatar>
+      <p *ngIf="answer.approved == true" width-80 class="proposition-yes">
+        {{answer.proposition}}
+      </p>
+      <p *ngIf="answer.approved == false" width-80 class="proposition-no">
+        {{answer.proposition}}
+      </p>
+    </ion-item>
+  </ion-card>
+
+  <button ion-button round class="again-button">Faire un autre test</button>
+
+</ion-content>
+<!--<ion-card *ngFor="let answer of answers">-->
+<!--<ion-grid>-->
+<!--<ion-card-content *ngIf="answer.candidateId == 'test'" class="propositions-cards">-->
+<!--<ion-row>-->
+<!--&lt;!&ndash;TODO use ion avatar&ndash;&gt;-->
+<!--&lt;!&ndash;TODO color on card and not text&ndash;&gt;-->
+<!--<ion-avatar item-left>-->
+<!--<img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>-->
+<!--</ion-avatar>-->
+<!--<p *ngIf="answer.approved == true" width-80 class="proposition-yes">-->
+<!--{{answer.proposition}}-->
+<!--</p>-->
+<!--<p *ngIf="answer.approved == false" width-80 class="proposition-no">-->
+<!--{{answer.proposition}}-->
+<!--</p>-->
+<!--</ion-row>-->
+<!--</ion-card-content>-->
+<!--<ion-card-content *ngIf="answer.candidateId == 'test2'" class="propositions-cards">-->
+<!--<ion-row>-->
+<!--<ion-avatar item-left="">-->
+<!--<img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>-->
+<!--</ion-avatar>-->
+<!--<p *ngIf="answer.approved == true" width-80 class="proposition-yes">-->
+<!--{{answer.proposition}}-->
+<!--</p>-->
+<!--<p *ngIf="answer.approved == false" width-80 class="proposition-no">-->
+<!--{{answer.proposition}}-->
+<!--</p>-->
+<!--</ion-row>-->
+<!--</ion-card-content>-->
+<!--</ion-grid>-->
+<!--</ion-card>-->
+
+
 
 
 

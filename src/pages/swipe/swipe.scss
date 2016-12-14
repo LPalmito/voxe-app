@@ -1,12 +1,27 @@
 .swipe {
 
+  background: #F5F5F5;
+
+  ion-card-header {
+    p {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+    h2 {
+      margin-top: 34px;
+    }
+    img {
+      margin-top: 12px;
+    }
+  }
+
   #card-stack {
     width: 90%;
-    height: 200px;
-    background: #F5F5F5;
-    //border: 10px solid #4cb338;
-    margin: 100px auto 0;
-    position: relative;
+    height: 430px;
+    position: fixed;
+    top: 0;
+    margin: 80px auto 0;
   }
 
   #card-stack ion-card {
@@ -15,6 +30,54 @@
     text-align: center;
     top: 3%;
     height: 90%;
+  }
+
+  ion-card {
+    img {
+      display: inline;
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  ion-card-content div {
+    margin: 0;
+    position: absolute;
+    top: 60%;
+    left: 20%;
+    transform: translate(-14%, -60%);
+  }
+
+  .buttons {
+    position: relative;
+    top: 440px;
+    .unapproved {
+      text-align: center;
+      text-transform: uppercase;
+      color: red;
+    }
+    .undo {
+      text-align: center;
+      text-transform: uppercase;
+      color: gray;
+    }
+    .approved {
+      text-align: center;
+      text-transform: uppercase;
+      color: green;
+    }
+    .width-36 {
+      -webkit-flex: 0 0 37%;
+      -ms-flex: 0 0 37%;
+      flex: 0 0 37%;
+      max-width: 37%;
+    }
+    .width-28 {
+      -webkit-flex: 0 0 29%;
+      -ms-flex: 0 0 29%;
+      flex: 0 0 29%;
+      max-width: 29%;
+    }
   }
 
 }

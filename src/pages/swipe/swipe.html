@@ -1,3 +1,4 @@
+<!--HEADER-->
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -8,25 +9,40 @@
 </ion-header>
 
 <ion-content class="swipe" padding>
-  <div swing-stack #myswing1 [stackConfig]="stackConfig" (throwoutleft)="voteUp(false)" (throwoutright)="voteUp(true)" id="card-stack">
-    <ion-card #mycards1 swing-card *ngFor="let c of cards">
-      <ion-card-content>{{c}}</ion-card-content>
 
-      <ion-row>
-        <ion-col>
-          <button primary clear small (click)="voteUp(true)">
-            <ion-icon name="thumbs-up"></ion-icon>
-            <div>Yes</div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <button primary clear small (click)="voteUp(false)">
-            <ion-icon name="thumbs-down"></ion-icon>
-            <div>No</div>
-          </button>
-        </ion-col>
-      </ion-row>
+<!--STACK OF CARDS-->
+  <div swing-stack #myswing1 id="card-stack"
+       [stackConfig]="stackConfig" (throwoutleft)="voteUp(false)" (throwoutright)="voteUp(true)">
+    <ion-card #mycards1 swing-card *ngFor="let c of cards">
+      <!--TITLE-->
+      <ion-card-header>
+        <p>{{10-cards.length+1}}/10</p>
+        <h2>Education et recherche</h2>
+        <img src="../../assets/img/icone-education-24.png">
+      </ion-card-header>
+      <!--CONTENT-->
+      <ion-card-content><div>{{c}}</div></ion-card-content>
     </ion-card>
   </div>
-  <p style="text-align: center; width: 100%;">{{ recentCard }}</p>
+
+<!--BUTTONS-->
+  <ion-row class="buttons">
+    <!--UNAPPROVED-->
+    <ion-col class="unapproved width-36" (click)="voteUp(false)">
+      <ion-icon name="close"></ion-icon>
+      <p>Désapprouver</p>
+    </ion-col>
+    <!--CANCEL-->
+    <ion-col class="undo width-28" (click)="undo()" *ngIf="lastCards.length > 0">
+      <ion-icon name="undo"></ion-icon>
+      <p>Annuler</p>
+    </ion-col>
+    <ion-col class="undo width-28" *ngIf="lastCards.length == 0"></ion-col>
+    <!--APPROVED-->
+    <ion-col class="approved width-36" (click)="voteUp(true)">
+      <ion-icon name="checkmark"></ion-icon>
+      <p>Approuver</p>
+    </ion-col>
+  </ion-row>
+
 </ion-content>

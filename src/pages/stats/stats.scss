@@ -19,7 +19,7 @@
   margin-top: -2%;
 }
 
-.ImageCandidate {
+.image-candidate {
 }
 
 .vote-yes {
@@ -44,24 +44,62 @@ hr {
   margin-top: -2%;
 }
 
-.NameCandidate {
+.candidate-name {
   text-align: center;
   font-size: 2vmax;
+  font-family: Montserrat;
 }
 
 
-.ResultsIcons {
+.results-icons {
   text-align: center;
 }
 
-.AcceptedProposal {
-  background-color: #30d05f;
-}
 
 .title-theme {
   font-size: 2.6vmax;
+  font-family: Montserrat;
 }
 
-.IndependantCard {
+.independant-card {
   float: left;
+}
+
+.proposition-yes {
+  font-size: 1.5vmax;
+  background-color: #30d05f;
+  font-family: Montserrat;
+}
+
+.proposition-no {
+  font-size: 1.5vmax;
+  background-color: #f53d3d;
+  font-family: Montserrat;
+}
+
+.candidate-proposition-picture {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  overflow: hidden;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+}
+
+.propositions-cards {
+  padding-top: 3px;
+  padding-right: 6px;
+  padding-bottom: 3px;
+  padding-left: 6px;
+}
+
+.again-button {
+  background-color: #f53d3d;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }

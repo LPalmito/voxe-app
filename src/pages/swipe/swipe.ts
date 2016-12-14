@@ -5,9 +5,11 @@ import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
 import {NavController} from "ionic-angular";
 import {StatsPage} from "../stats/stats";
-// import {PropositionService} from "../../services/propositions.service";
+import { ToastController } from 'ionic-angular';
+import {MainService} from "../../services/main.service";
+import {PropositionService} from "../../services/propositions.service";
 
-//!\\
+
 // When launching "npm install angular2-swing@^0.7.1 --save"
 // npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
 // npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.0.15: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
@@ -23,7 +25,7 @@ export interface Answer {
 // http://stackoverflow.com/questions/39886792/directive-does-not-exist-in-type-component
 @Component({
   templateUrl: 'swipe.html',
-  // providers: [PropositionService]
+  providers: [PropositionService]
 })
 
 export class SwipePage {
@@ -32,11 +34,13 @@ export class SwipePage {
 
   // TODO: Create a 'Card' or 'Proposition' object?
   cards: Array<string> = [];
+  lastCards: Array<string> = [];
   stackConfig: StackConfig;
   recentCard: string = '';
   answers: Answer[] = [];
 
-  constructor(private http: Http, public nav: NavController) {
+  constructor(private http: Http, public nav: NavController, public toastCtrl: ToastController,
+              private propositionService: PropositionService) {
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {
         return Math.min(Math.abs(offset) / (element.offsetWidth/2), 1);
@@ -55,6 +59,7 @@ export class SwipePage {
       });
   }
 
+  // TODO: Resolve the color bug when dragging but not coming back to white
   // Change the color when dragging a card
   static onItemMove(element, x, y, r) {
     var color = '';
@@ -75,15 +80,23 @@ export class SwipePage {
       proposition: this.cards[this.cards.length-1],
       approved: approved
     });
+    this.lastCards.push(this.cards[this.cards.length-1]);
     this.cards.pop();
-    this.recentCard = approved?
-      'Proposition approuvée':'Proposition désapprouvée';
     // Redirect to the StatsPage after the last card
     if (this.cards.length == 0) {
       this.nav.push(StatsPage, {answers: this.answers});
     }
   }
 
+  // Undo last action
+  undo() {
+    this.answers.pop();
+    this.cards.push(this.lastCards[this.lastCards.length-1]);
+    this.lastCards.pop();
+    this.cancelToast();
+  }
+
+  // TODO: Change the colors
   // http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
   static decimalToHex(d, padding) {
     var hex = Number(d).toString(16);
@@ -94,4 +107,12 @@ export class SwipePage {
     return hex;
   }
 
+  // Display a toast with the cancel information on it
+  cancelToast() {
+    let toast = this.toastCtrl.create({
+      message: "Opération annulée",
+      duration: 2000,
+    });
+    toast.present();
+  }
 }

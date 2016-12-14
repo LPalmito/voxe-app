@@ -2,31 +2,27 @@ import {Injectable} from "@angular/core";
 import {Http} from '@angular/http';
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
-
-export interface Candidate {
-  firstName: string,
-  id: string,
-  lastName: string,
-  namespace: string,
-  photo: {
-    sizes: {
-      large: {url: string},
-      medium: {url: string},
-      small: {url: string}
-    }
-  }
-}
+import {MainService, Candidate} from "./main.service";
 
 @Injectable()
 export class CandidateService {
-  server: string = "http://compare.voxe.org/api/v1/";
 
-  constructor(private http: Http) {}
+  constructor(private main: MainService) {}
+
+  getCandidates(): Observable<Array<Candidate>> {
+    return this.main.getElection()
+      .map(election => election.candidacies)
+      .map(candidacies => candidacies.map(candidacy => candidacy.candidates[0]));
+  }
+
+  getCandidateById(candidateId: string): Observable<Candidate> {
+    return this.getCandidates()
+      .map(candidates => candidates.filter(candidate => candidate.id == candidateId)[0])
+  }
 
   getCandidateByNameSpace(nameSpace: string): Observable<Candidate> {
-    return this.http.get(this.server+'candidates/search?name='+nameSpace)
-      .map(data => data.json().response.candidates)
-      .map(candidates => candidates.filter(candidate => candidate.namespace == nameSpace)[0]);
+    return this.getCandidates()
+      .map(candidates => candidates.filter(candidate => candidate.namespace == nameSpace)[0])
   }
 
 }
