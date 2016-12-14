@@ -7,6 +7,10 @@ import {StatsPage} from "../pages/stats/stats";
 import {InfoPage} from "../pages/info/info";
 import {SwingStackComponent} from "angular2-swing";
 import {SwingCardComponent} from "angular2-swing";
+import {MainService} from "../services/main.service";
+import {CandidateService} from "../services/candidates.service";
+import {TagService} from "../services/tags.service";
+import {PropositionService} from "../services/propositions.service";
 
 @NgModule({
   declarations: [
@@ -29,6 +33,11 @@ import {SwingCardComponent} from "angular2-swing";
     SwipePage,
     StatsPage
   ],
-  providers: []
+  providers: [
+    MainService,
+    CandidateService,
+    PropositionService,
+    TagService
+  ]
 })
 export class AppModule {}
