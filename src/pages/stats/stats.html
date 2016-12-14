@@ -63,31 +63,28 @@
   </ion-card>
 
   <!--Propositions summary-->
-  <ion-card>
-    <div *ngFor="let answer of answers">
-      <div *ngIf="answer.approved == true" class="proposition-yes">
-        <ion-avatar item-left>
-          <!--TODO put picture as an attribute in the input dic – or put just the name of the candidate?-->
-          <img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>
-        </ion-avatar>
-        <p>
-          {{answer.proposition}}
-        </p>
-      </div>
-      <div *ngIf="answer.approved == false" class="proposition-no">
-        <ion-avatar item-left>
-          <img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>
-        </ion-avatar>
-        <p>
-          {{answer.proposition}}
-        </p>
-      </div>
-    </div>
-  </ion-card>
+  <div *ngFor="let answer of answers" text-wrap>
+    <ion-item *ngIf="answer.approved == true">
+      <ion-avatar item-left>
+        <img src="../assets/img/candidat-jadot.jpg">
+      </ion-avatar>
+      <h2>{{answer.candidateId}} – <ion-icon name="checkmark" class="vote-yes"></ion-icon></h2>
+      <p>{{answer.proposition}}</p>
+    </ion-item>
+    <ion-item *ngIf="answer.approved == false">
+      <ion-avatar item-left>
+        <img src="../assets/img/candidat-jadot.jpg">
+      </ion-avatar>
+      <h2>{{answer.candidateId}} – <ion-icon name="close" class="vote-no"></ion-icon></h2>
+      <p>{{answer.proposition}}</p>
+    </ion-item>
+  </div>
 
+  <!--Go to home page button-->
   <button ion-button round class="again-button">Faire un autre test</button>
 
 </ion-content>
+
 
 
 

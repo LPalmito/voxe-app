@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {Answer} from "../swipe/swipe";
 import {NavParams} from "ionic-angular";
+import {NavController} from "ionic-angular";
 
 @Component({
   templateUrl: 'stats.html'
