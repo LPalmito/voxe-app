@@ -86,7 +86,7 @@ export interface Proposition {
   favorite_users_count: number,
   against_users_count: number,
   support_users_count: number,
-  tags: {id: number}[],
+  tags: {id: string}[],
   comments: {count: number},
   favorite_users: {count: number, data: string[]},
   against_users: {count: number, data: string[]},
@@ -106,6 +106,10 @@ export class MainService {
     return this.http.get(this.server+'elections/search')
       .map(data => data.json().response.elections)
       .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0]);
+  }
+
+  arrObs2ObsArr(arrObs: Array<Observable<any>>): Observable<Array<any>> {
+    return Observable.from(arrObs).flatMap(x => x);
   }
 
 }

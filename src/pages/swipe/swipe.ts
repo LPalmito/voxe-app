@@ -1,13 +1,11 @@
 import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import {AfterViewInit} from '@angular/component';
-import {Http} from '@angular/http';
 import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
 import {NavController} from "ionic-angular";
 import {StatsPage} from "../stats/stats";
-import { ToastController } from 'ionic-angular';
+import {ToastController } from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
-
 
 // When launching "npm install angular2-swing@^0.7.1 --save"
 // npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
@@ -24,7 +22,6 @@ export interface Answer {
 // http://stackoverflow.com/questions/39886792/directive-does-not-exist-in-type-component
 @Component({
   templateUrl: 'swipe.html',
-  providers: [PropositionService]
 })
 
 export class SwipePage {
@@ -38,8 +35,21 @@ export class SwipePage {
   recentCard: string = '';
   answers: Answer[] = [];
 
-  constructor(private http: Http, public nav: NavController, public toastCtrl: ToastController,
-              private propositionService: PropositionService) {
+  // TODO: Replace it by randomized generated ids
+  francoisFillonId = "578f480ab0bba9398100000b";
+  alainJuppeId = "57962957793b3f868d000012";
+  emploiId = "4ef479f9bc60fb000400009a";
+  economieId = "4ef479f9bc60fb00040000aa";
+  financeId = "4ef479f9bc60fb00040000be";
+  europeId = "4ef479fcbc60fb0004000204";
+  educationId = "4ef479f9bc60fb0004000052";
+  cultureId = "578504e585b1a8f7f6000094";
+  numeriqueId = "4ef479f8bc60fb000400002c";
+  justiceId = "4ef479f9bc60fb00040000cc";
+
+  constructor(public nav: NavController, public toastCtrl: ToastController,
+              private propositionService: PropositionService
+  ) {
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {
         return Math.min(Math.abs(offset) / (element.offsetWidth/2), 1);
@@ -50,10 +60,24 @@ export class SwipePage {
   }
 
   ngAfterViewInit() {
-    // TODO: Move the requests properly to the services
-    this.http.get("http://compare.voxe.org/api/v1/propositions/search?limit=10")
-      .map(data => data.json().response.propositions)
+    this.propositionService.getPropositionForSwipe(
+      [
+        this.francoisFillonId,
+        this.alainJuppeId
+      ],
+      [
+        // this.emploiId,
+        // this.economieId,
+        // this.financeId,
+        // this.europeId,
+        // this.educationId,
+        // this.cultureId,
+        this.numeriqueId,
+        // this.justiceId,
+      ]
+    )
       .subscribe(data => {
+        // TODO: Keep the whole proposition object instead?
         this.cards = data.map(proposition => proposition.text);
       });
   }
