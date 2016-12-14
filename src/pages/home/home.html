@@ -25,11 +25,11 @@
 
     <ion-grid *ngSwitchDefault>
 
-      <ion-row *ngFor="let card of cards">
-        <ion-col width-50>
+      <ion-row *ngFor="let row of cardsRows">
+        <ion-col width-50 *ngFor="let card of row">
 
           <ion-card>
-            <div class="card-title">
+            <div class="card-title" (click)="openCard(card)">
               {{card.title}}
             </div>
 
@@ -39,8 +39,9 @@
               <ion-row>
                 <img src={{card.icone}} height="30px" width="30px"/>
 
-                <button ion-button clear icon-left small>
-                  <ion-icon name="star"></ion-icon>
+                <button ion-button clear icon-left small (click)="starCard(card)">
+                  <ion-icon *ngIf="card.status==cardStatus.Star" name="star"></ion-icon>
+                  <ion-icon *ngIf="card.status==cardStatus.NoStar" name="star-outline"></ion-icon>
                 </button>
 
                 <button ion-button clear icon-only small>
@@ -52,17 +53,43 @@
           </ion-card>
         </ion-col>
 
-        <ion-col width-50>
-
-          
-        </ion-col>
-
       </ion-row>
 
     </ion-grid>
 
-
     <ion-grid *ngSwitchCase = "'fav'">
+
+      <ion-row *ngFor="let row of starCardsRows">
+        <ion-col width-50 *ngFor="let card of row">
+
+          <ion-card (click)="openCard(card)">
+            <div class="card-title">
+              {{card.title}}
+            </div>
+
+            <img src={{card.image}}/>
+
+            <ion-item>
+              <ion-row>
+                <img src={{card.icone}} height="30px" width="30px"/>
+
+                <button ion-button clear icon-left small (click)="starCard(card)">
+<!--                   <ion-icon *ngIf="card.status==CardStatus.Star" name="star"></ion-icon>
+                  <ion-icon *ngIf="card.status==CardStatus.NoStar" name="star-outline"></ion-icon>
+ -->            <ion-icon name="star"></ion-icon>    
+                </button>
+
+                <button ion-button clear icon-only small>
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-row>
+            </ion-item>
+
+          </ion-card>
+        </ion-col>
+
+      </ion-row>
+
 
     </ion-grid>
 
