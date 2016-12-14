@@ -23,6 +23,11 @@ export class Card {
 	status: CardStatus;
 }
 
+export class Row {
+	id: number;
+	cards: Card[];
+}
+
 @Component({
   templateUrl: 'home.html'
 })
@@ -72,6 +77,15 @@ export class HomePage {
 			//{candId1: , candId2: , tagId: }
 		}
 	}
+
+	/*
+	cardsInRows(cards) {
+		var rows: Row[];
+		for (var i=0 ; i<=cards.length ; i=i+2) {
+
+		}
+	}
+	*/
 
 	/*
 	starCard(card) {
