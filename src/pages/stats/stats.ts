@@ -3,11 +3,16 @@ import {Answer} from "../swipe/swipe";
 import {NavParams} from "ionic-angular";
 import {NavController} from "ionic-angular";
 import {HomePage} from "../home/home";
+import {Candidate, Tag} from "../../services/main.service";
 
 @Component({
   templateUrl: 'stats.html'
 })
 export class StatsPage {
+  candidateInfo = {candidateOneID : 'test', candidateTwoId : 'test2'};
+  themeInfo = {themeID: 5};
+  displayCandidateInfo = {};
+  displayThemeInfo = {};
   answers: Answer[];
   displayAnswers = {};
 
@@ -21,6 +26,9 @@ export class StatsPage {
         this.displayAnswers[answer.candidateId].no.push(answer.proposition);
     }
     );
+    this.displayCandidateInfo[this.candidateInfo.candidateOneID] = {name : "Yannick Jadot", photo: "../assets/img/candidat-jadot.jpg"};
+    this.displayCandidateInfo[this.candidateInfo.candidateTwoId] = {name : "Karima Delli", photo: "../assets/img/candidat-delli.jpg"};
+    this.displayThemeInfo[this.themeInfo.themeID] = {name: "Environnement et agriculture", photo: "../assets/img/icone-environnement.png"};
   }
   goToHomePage() {
     this.navCtrl.push(HomePage)

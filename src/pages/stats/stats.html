@@ -12,8 +12,8 @@
   <!--Head of stats page: theme-->
   <ion-card class="title-theme">
     <ion-card-header>
-      <img id="theme" src="../assets/img/icone-environnement.png"/>
-      Environnement et agriculture
+      <img id="theme" src="{{displayThemeInfo[themeInfo.themeID]['photo']}}"/>
+      {{displayThemeInfo[themeInfo.themeID]['name']}}
     </ion-card-header>
     <hr>
     <!--Pictures and names of candidates-->
@@ -22,21 +22,21 @@
         <ion-row>
           <ion-col width-50 class="image-candidate">
             <div>
-              <img class="candidate-stats" src="../assets/img/candidat-jadot.jpg"/>
+              <img class="candidate-stats" src="{{displayCandidateInfo[candidateInfo.candidateOneID]['photo']}}"/>
             </div>
           </ion-col>
-          <ion-col width-50>
+          <ion-col width-50 class="image-candidate">
             <div>
-              <img class="candidate-stats" src="../assets/img/candidat-delli.jpg"/>
+              <img class="candidate-stats" src="{{displayCandidateInfo[candidateInfo.candidateTwoId]['photo']}}"/>
             </div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col width-50 class="candidate-name">
-            Yannick Jadot
+            {{displayCandidateInfo[candidateInfo.candidateOneID]['name']}}
           </ion-col>
           <ion-col width-50 class="candidate-name">
-            Karima Delli
+            {{displayCandidateInfo[candidateInfo.candidateOneID]['name']}}
           </ion-col>
         </ion-row>
 
@@ -66,14 +66,15 @@
   <div *ngFor="let answer of answers" text-wrap>
     <ion-item *ngIf="answer.approved == true">
       <ion-avatar item-left>
-        <img src="../assets/img/candidat-jadot.jpg">
+        <img src="{{displayCandidateInfo[answer.candidateId]['photo']}}">
       </ion-avatar>
       <h2>{{answer.candidateId}} – <ion-icon name="checkmark" class="vote-yes"></ion-icon></h2>
       <p>{{answer.proposition}}</p>
     </ion-item>
     <ion-item *ngIf="answer.approved == false">
       <ion-avatar item-left>
-        <img src="../assets/img/candidat-jadot.jpg">
+        <!--{{displayCandidateInfo[answer.candidateId]['photo']}}-->
+        <img src="{{displayCandidateInfo[answer.candidateId]['photo']}}">
       </ion-avatar>
       <h2>{{answer.candidateId}} – <ion-icon name="close" class="vote-no"></ion-icon></h2>
       <p>{{answer.proposition}}</p>
