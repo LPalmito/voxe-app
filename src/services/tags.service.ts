@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {Http} from '@angular/http';
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
 import {MainService, Tag} from "./main.service";
@@ -16,12 +15,12 @@ export class TagService {
 
   getTagById(tagId: string): Observable<Tag> {
     return this.getTags()
-      .map(tags => tags.filter(tag => tag.id == tagId)[0])
+      .map(arr => arr.filter(x => x.id == tagId)[0])
   }
 
   getTagByNameSpace(nameSpace: string): Observable<Tag> {
     return this.getTags()
-      .map(tags => tags.filter(tag => tag.namespace == nameSpace)[0])
+      .map(arr => arr.filter(x => x.namespace == nameSpace)[0])
   }
 
 }

@@ -6,7 +6,6 @@ import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swi
 import {NavController} from "ionic-angular";
 import {StatsPage} from "../stats/stats";
 import { ToastController } from 'ionic-angular';
-import {MainService} from "../../services/main.service";
 import {PropositionService} from "../../services/propositions.service";
 
 

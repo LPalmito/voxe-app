@@ -3,9 +3,6 @@ import {Http} from '@angular/http';
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
 
-const server: string = "http://compare.voxe.org/api/v1/";
-const electionNameSpace: string = "primaire-de-la-droite-2016";
-
 export interface DataElections {
   meta: {code: number},
   response: {elections: Election[]}
@@ -100,13 +97,15 @@ export interface Proposition {
 
 @Injectable()
 export class MainService {
+  server: string = "http://compare.voxe.org/api/v1/";
+  electionNameSpace: string = "primaire-de-la-droite-2016";
 
   constructor(private http: Http) {}
 
   getElection(): Observable<Election> {
-    return this.http.get(server+'elections/search')
+    return this.http.get(this.server+'elections/search')
       .map(data => data.json().response.elections)
-      .map(elections => elections.filter(election => election.namespace == electionNameSpace)[0]);
+      .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0]);
   }
 
 }
