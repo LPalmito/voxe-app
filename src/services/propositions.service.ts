@@ -19,14 +19,34 @@ export class PropositionService {
       .map(arr => arr.filter(x => x.id == propositionId)[0]);
   }
 
-  getPropositionsForCandidacy(candidacyId: string): Observable<Array<Proposition>> {
-    return this.getPropositions()
-      .map(arr => arr.filter(x => x.candidacy.id == candidacyId));
+  getPropositionsForCandidacies(candidacyIds: string[]): Observable<Array<Proposition>> {
+    let url = this.main.server+'propositions/search?candidacyIds=';
+    candidacyIds.forEach(x => url += x+",");
+    return this.http.get(url)
+      .map(data => data.json().response.propositions)
+      .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
   }
 
-  // getPropositionsForTag(tagId: string): Observable<Array<Proposition>> {
-  //   return this.getPropositions()
-  //     .map(arr => arr.filter())
-  // }
+  getPropositionsForTags(tagIds: string[]): Observable<Array<Proposition>> {
+    let url = this.main.server+'propositions/search?tagIds=';
+    tagIds.forEach(x => url += x+",");
+    return this.http.get(url)
+      .map(data => data.json().response.propositions)
+      .map(arr => arr.filter(x => {
+          let tIds = x.tags.map(tag => tag.id);
+          let isKept = false;
+          tIds.forEach(tId => tagIds.forEach(tagId => {
+            if(tId == tagId) {
+              isKept = true;
+            };
+          }));
+          return isKept;
+      }));
+  }
+
+  getPropositionForSwipe(candidacyIds: string[], tagIds: string[]): Observable<Array<Proposition>> {
+    return this.getPropositionsForTags(tagIds)
+      .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
+  }
 
 }
