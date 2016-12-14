@@ -7,7 +7,6 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding class="independant-card">
 
   <!--Head of stats page: theme-->
@@ -64,66 +63,72 @@
   </ion-card>
 
   <!--Propositions summary-->
-  <ion-card>
-    <ion-item *ngFor="let answer of answers" *ngIf="answer.candidateId == 'test'" >
-      <ion-avatar item-left>
-        <img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>
-      </ion-avatar>
-      <p *ngIf="answer.approved == true" width-80 class="proposition-yes">
-        {{answer.proposition}}
-      </p>
-      <p *ngIf="answer.approved == false" width-80 class="proposition-no">
-        {{answer.proposition}}
-      </p>
-    </ion-item>
-    <ion-item *ngFor="let answer of answers" *ngIf="answer.candidateId == 'test2'" >
-      <ion-avatar item-left>
-        <img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>
-      </ion-avatar>
-      <p *ngIf="answer.approved == true" width-80 class="proposition-yes">
-        {{answer.proposition}}
-      </p>
-      <p *ngIf="answer.approved == false" width-80 class="proposition-no">
-        {{answer.proposition}}
-      </p>
-    </ion-item>
+  <!--<ion-card>-->
+    <!--<ion-item *ngFor="let answer of answers">-->
+    <!--<div *ngIf="answer.candidateId == 'test'">-->
+    <!--<ion-avatar item-left>-->
+    <!--<img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>-->
+    <!--</ion-avatar>-->
+    <!--</div>-->
+    <!--<p *ngIf="answer.approved == true" width-80 class="proposition-yes">-->
+    <!--{{answer.proposition}}-->
+    <!--</p>-->
+    <!--<p *ngIf="answer.approved == false" width-80 class="proposition-no">-->
+    <!--{{answer.proposition}}-->
+    <!--</p>-->
+    <!--</ion-item>-->
+    <!--<ion-item *ngFor="let answer of answers">-->
+    <!--<div *ngIf="answer.candidateId == 'test2'">-->
+    <!--<ion-avatar item-left>-->
+    <!--<img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>-->
+    <!--</ion-avatar>-->
+    <!--</div>-->
+    <!--<p *ngIf="answer.approved == true" width-80 class="proposition-yes">-->
+    <!--{{answer.proposition}}-->
+    <!--</p>-->
+    <!--<p *ngIf="answer.approved == false" width-80 class="proposition-no">-->
+    <!--{{answer.proposition}}-->
+    <!--</p>-->
+
+  <!--</ion-card>-->
+
+  <ion-card *ngFor="let answer of answers">
+    <ion-grid>
+      <ion-card-content *ngIf="answer.candidateId == 'test'" class="propositions-cards">
+        <ion-row>
+          <!--TODO use ion avatar-->
+          <!--TODO color on card and not text-->
+          <ion-avatar item-left>
+            <img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>
+          </ion-avatar>
+          <p *ngIf="answer.approved == true" width-80 class="proposition-yes">
+            {{answer.proposition}}
+          </p>
+          <p *ngIf="answer.approved == false" width-80 class="proposition-no">
+            {{answer.proposition}}
+          </p>
+        </ion-row>
+      </ion-card-content>
+      <ion-card-content *ngIf="answer.candidateId == 'test2'" class="propositions-cards">
+        <ion-row>
+          <ion-avatar item-left="">
+            <img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>
+          </ion-avatar>
+          <p *ngIf="answer.approved == true" width-80 class="proposition-yes">
+            {{answer.proposition}}
+          </p>
+          <p *ngIf="answer.approved == false" width-80 class="proposition-no">
+            {{answer.proposition}}
+          </p>
+        </ion-row>
+      </ion-card-content>
+    </ion-grid>
   </ion-card>
 
   <button ion-button round class="again-button">Faire un autre test</button>
 
 </ion-content>
-<!--<ion-card *ngFor="let answer of answers">-->
-<!--<ion-grid>-->
-<!--<ion-card-content *ngIf="answer.candidateId == 'test'" class="propositions-cards">-->
-<!--<ion-row>-->
-<!--&lt;!&ndash;TODO use ion avatar&ndash;&gt;-->
-<!--&lt;!&ndash;TODO color on card and not text&ndash;&gt;-->
-<!--<ion-avatar item-left>-->
-<!--<img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>-->
-<!--</ion-avatar>-->
-<!--<p *ngIf="answer.approved == true" width-80 class="proposition-yes">-->
-<!--{{answer.proposition}}-->
-<!--</p>-->
-<!--<p *ngIf="answer.approved == false" width-80 class="proposition-no">-->
-<!--{{answer.proposition}}-->
-<!--</p>-->
-<!--</ion-row>-->
-<!--</ion-card-content>-->
-<!--<ion-card-content *ngIf="answer.candidateId == 'test2'" class="propositions-cards">-->
-<!--<ion-row>-->
-<!--<ion-avatar item-left="">-->
-<!--<img class="candidate-proposition-picture" src="../assets/img/candidat-jadot.jpg"/>-->
-<!--</ion-avatar>-->
-<!--<p *ngIf="answer.approved == true" width-80 class="proposition-yes">-->
-<!--{{answer.proposition}}-->
-<!--</p>-->
-<!--<p *ngIf="answer.approved == false" width-80 class="proposition-no">-->
-<!--{{answer.proposition}}-->
-<!--</p>-->
-<!--</ion-row>-->
-<!--</ion-card-content>-->
-<!--</ion-grid>-->
-<!--</ion-card>-->
+
 
 
 
