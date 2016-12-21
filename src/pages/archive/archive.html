@@ -1,0 +1,45 @@
+<!-- HEADER -->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Archives</ion-title>    
+  </ion-navbar>
+</ion-header>
+
+<!-- CONTENT -->
+<ion-content class="card-background-page">
+
+    <!-- Rows of 2 cards each -->
+    <ion-grid>
+
+      <ion-row *ngFor="let row of cardsRows">
+        <ion-col width-50 *ngFor="let card of row">
+
+          <ion-card>
+            <div class="card-title">
+              {{card.title}}
+            </div>
+
+            <img src={{card.image}}/>
+
+            <ion-item>
+              <ion-row>
+                <img src={{card.icone}} height="30px" width="30px"/>
+
+                <!-- Remove the card from the 'archive' list -->
+                <button ion-button clear icon-only small (click)="restoreCard(card)">
+                  <ion-icon name="undo"></ion-icon>
+                </button>
+              </ion-row>
+            </ion-item>
+
+          </ion-card>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
+
+</ion-content>

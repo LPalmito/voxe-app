@@ -5,6 +5,7 @@ import {HomePage} from "../pages/home/home";
 import {SwipePage} from "../pages/swipe/swipe";
 import {StatsPage} from "../pages/stats/stats";
 import {InfoPage} from "../pages/info/info";
+import {ArchivePage} from "../pages/archive/archive";
 
 @Component({
   templateUrl: 'app.html'
@@ -27,7 +28,8 @@ export class VoxeApp {
       { title: 'Accueil', component: HomePage },
       { title: 'Swipe', component: SwipePage },
       { title: 'Stats', component: StatsPage },
-      { title: 'Info', component: InfoPage }
+      { title: 'Info', component: InfoPage },
+      { title: 'Archive', component: ArchivePage}
     ];
   }
 
