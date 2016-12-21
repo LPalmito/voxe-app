@@ -1,15 +1,16 @@
 import {Component} from "@angular/core";
-import {NavController} from "ionic-angular";
+import {NavController, NavParams} from "ionic-angular";
 
 @Component({
   templateUrl: 'info.html'
 })
 
 export class InfoPage {
-	id: 3;
-	title: string = "La Primaire de la Droite et du Centre";
-	img: string = "../assets/img/info-primaire-droite.png";
+	id: number = this.navParams.get('id');
+	title: string = this.navParams.get('title');
+	fiche: string = this.navParams.get('info');
 
-	constructor(public nav: NavController) {
+	constructor(public navParams: NavParams) {
 	}
+
 }
