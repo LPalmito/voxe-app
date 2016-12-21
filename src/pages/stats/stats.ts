@@ -3,7 +3,7 @@ import {Answer} from "../swipe/swipe";
 import {NavParams} from "ionic-angular";
 import {NavController} from "ionic-angular";
 import {HomePage} from "../home/home";
-import {Candidate, Tag} from "../../services/main.service";
+// import {Candidate, Tag} from "../../services/main.service";
 
 @Component({
   templateUrl: 'stats.html'
