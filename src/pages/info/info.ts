@@ -6,11 +6,8 @@ import {NavController, NavParams} from "ionic-angular";
 })
 
 export class InfoPage {
-	id: number = this.navParams.get('id');
-	title: string = this.navParams.get('title');
-	fiche: string = this.navParams.get('info');
+	infoPage: string = this.navParams.get('infoPage');
 
 	constructor(public navParams: NavParams) {
 	}
-
 }

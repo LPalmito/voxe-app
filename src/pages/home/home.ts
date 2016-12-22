@@ -20,15 +20,18 @@ export enum CardIsArchive {
 }
 
 export class Card {
-	id: number;
 	type: CardType;
 	title: string;
 	image: string;
-	icone: string;
+	icon: string;
+	tagId: string;
 	status: CardStatus;
 	isArchive: CardIsArchive;
-	info: string;
+	infoPage: string;
+	candidate1Id: string;
+	candidate2Id: string;
 }
+
 
 @Component({
   templateUrl: 'home.html'
@@ -39,37 +42,71 @@ export class HomePage {
 	public cardStatus = CardStatus;
 	public cardIsArchive = CardIsArchive;
 
+	francoisFillonId = "578f480ab0bba9398100000b";
+	alainJuppeId = "57962957793b3f868d000012";
+	emploiId = "4ef479f9bc60fb000400009a";
+	economieId = "4ef479f9bc60fb00040000aa";
+	financeId = "4ef479f9bc60fb00040000be";
+	europeId = "4ef479fcbc60fb0004000204";
+	educationId = "4ef479f9bc60fb0004000052";
+	cultureId = "578504e585b1a8f7f6000094";
+	numeriqueId = "4ef479f8bc60fb000400002c";
+	justiceId = "4ef479f9bc60fb00040000cc";
+
+
 	cards: Card[] = [
 		{
-			id: 1,
 			type: CardType.Info,
 			title: "La fiscalite",
 			image: "../assets/img/home-fiscalite.jpg",
-			icone: "../assets/img/icone-economie-24.png",
+			icon: "../assets/img/icone-economie-24.png",
+			tagId: "",
 			status: CardStatus.NoStar,
 			isArchive: CardIsArchive.No,
-			info: "../assets/img/info-fiscalite.png"
+			infoPage: "../assets/img/info-fiscalite.png",
+			candidate1Id: "",
+			candidate2Id: ""
+
 		},
 		{
-			id: 2,
 			type: CardType.Info,
 			title: "Le centre Cigéo",
 			image: "../assets/img/home-cigeo.jpg",
-			icone: "../assets/img/icone-environnement-24.png",
+			icon: "../assets/img/icone-environnement-24.png",
+			tagId: "",
 			status: CardStatus.NoStar,
 			isArchive: CardIsArchive.No,
-			info: "../assets/img/info-cigeo.png"
+			infoPage: "../assets/img/info-cigeo.png",
+			candidate1Id: "",
+			candidate2Id: ""
+
 		},
 		{
-			id: 3,
 			type: CardType.Info,
 			title: "La primaire de la droite et du centre",
 			image: "../assets/img/home-primaire.jpg",
-			icone: "../assets/img/icone-institutions-24.png",
+			icon: "../assets/img/icone-institutions-24.png",
+			tagId: "",
 			status: CardStatus.NoStar,
 			isArchive: CardIsArchive.No,
-			info: "../assets/img/info-primaire-droite.png"
+			infoPage: "../assets/img/info-primaire-droite.png",
+			candidate1Id: "",
+			candidate2Id: ""
+
+		},
+		{
+			type: CardType.Swipe,
+			title: "François Fillon / Alain Juppé",
+			image: "../assets/img/home-primaire.jpg",
+			icon: "../assets/img/icone-technologie-24.png",
+			tagId: this.numeriqueId,
+			status: CardStatus.NoStar,
+			isArchive: CardIsArchive.No,
+			infoPage: "",
+			candidate1Id: this.francoisFillonId,
+			candidate2Id: this.alainJuppeId
 		}
+
 	];
 	
 	cardsRows: Card[][] = this.putCardsInRows(this.getNoArchive(this.cards));
@@ -81,12 +118,11 @@ export class HomePage {
 // Navigation methods
 	openCard(card: Card) {
 		if (card.type == CardType.Info) {
-			this.nav.push(InfoPage, {id:card.id, title:card.title, info: card.info});
+			this.nav.push(InfoPage, {infoPage:card.infoPage});
 		}
 
 		else if (card.type == CardType.Swipe) {
-			this.nav.push(SwipePage);
-			//{candId1: , candId2: , tagId: }
+			this.nav.push(SwipePage, {tagId: card.tagId, candidate1Id: card.candidate1Id, candidate2Id: card.candidate2Id});
 		}
 	}
 

@@ -2,7 +2,7 @@ import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import {AfterViewInit} from '@angular/component';
 import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
-import {NavController} from "ionic-angular";
+import {NavController, NavParams} from "ionic-angular";
 import {StatsPage} from "../stats/stats";
 import {ToastController } from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
@@ -34,20 +34,23 @@ export class SwipePage {
   stackConfig: StackConfig;
   recentCard: string = '';
   answers: Answer[] = [];
+  candidateOneId: string;
+  candidateTwoId: string;
+  tagId: string;
 
   // TODO: Replace it by randomized generated ids
-  francoisFillonId = "578f480ab0bba9398100000b";
-  alainJuppeId = "57962957793b3f868d000012";
-  emploiId = "4ef479f9bc60fb000400009a";
-  economieId = "4ef479f9bc60fb00040000aa";
-  financeId = "4ef479f9bc60fb00040000be";
-  europeId = "4ef479fcbc60fb0004000204";
-  educationId = "4ef479f9bc60fb0004000052";
-  cultureId = "578504e585b1a8f7f6000094";
-  numeriqueId = "4ef479f8bc60fb000400002c";
-  justiceId = "4ef479f9bc60fb00040000cc";
+  // francoisFillonId = "578f480ab0bba9398100000b";
+  // alainJuppeId = "57962957793b3f868d000012";
+  // emploiId = "4ef479f9bc60fb000400009a";
+  // economieId = "4ef479f9bc60fb00040000aa";
+  // financeId = "4ef479f9bc60fb00040000be";
+  // europeId = "4ef479fcbc60fb0004000204";
+  // educationId = "4ef479f9bc60fb0004000052";
+  // cultureId = "578504e585b1a8f7f6000094";
+  // numeriqueId = "4ef479f8bc60fb000400002c";
+  // justiceId = "4ef479f9bc60fb00040000cc";
 
-  constructor(public nav: NavController, public toastCtrl: ToastController,
+  constructor(public nav: NavController, public navParams: NavParams, public toastCtrl: ToastController,
               private propositionService: PropositionService
   ) {
     this.stackConfig = {
@@ -57,23 +60,19 @@ export class SwipePage {
       transform: (element, x, y, r) => SwipePage.onItemMove(element, x, y, r),
       throwOutDistance: d => 800
     };
+    this.candidateOneId = this.navParams.get('candidate1Id');
+    this.candidateTwoId = this.navParams.get('candidate2Id');
+    this.tagId = this.navParams.get('tagId');
   }
 
   ngAfterViewInit() {
     this.propositionService.getPropositionForSwipe(
       [
-        this.francoisFillonId,
-        this.alainJuppeId
+        this.candidateOneId,
+        this.candidateTwoId
       ],
       [
-        // this.emploiId,
-        // this.economieId,
-        // this.financeId,
-        // this.europeId,
-        // this.educationId,
-        // this.cultureId,
-        this.numeriqueId,
-        // this.justiceId,
+        this.tagId
       ]
     )
       .subscribe(data => {
@@ -107,7 +106,7 @@ export class SwipePage {
     this.cards.pop();
     // Redirect to the StatsPage after the last card
     if (this.cards.length == 0) {
-      this.nav.push(StatsPage, {answers: this.answers});
+      this.nav.push(StatsPage, {answers: this.answers, candidateOneId: this.candidateOneId, candidateTwoId: this.candidateTwoId, tagId: this.tagId});
     }
   }
 
