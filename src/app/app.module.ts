@@ -12,6 +12,7 @@ import {MainService} from "../services/main.service";
 import {CandidateService} from "../services/candidates.service";
 import {TagService} from "../services/tags.service";
 import {PropositionService} from "../services/propositions.service";
+import {provideStore} from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,18 @@ import {PropositionService} from "../services/propositions.service";
     StatsPage
   ],
   providers: [
+    provideStore({
+      // nav,
+      // electionNameSpace,
+      // candidacies,
+      // homeCards,
+      // infoUrl,
+      // tagIds,
+      // candidacyIds,
+      // swipePropositions,
+      // donePropositions,
+      // answers
+    }),
     MainService,
     CandidateService,
     PropositionService,

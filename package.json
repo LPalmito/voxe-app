@@ -23,6 +23,8 @@
     "@angular/platform-browser-dynamic": "2.3.1",
     "@angular/platform-server": "2.3.1",
     "@ionic/storage": "^1.0.3",
+    "@ngrx/core": "^1.2.0",
+    "@ngrx/store": "^2.2.1",
     "angular2-swing": "^0.10.0",
     "ionic-angular": "^2.0.0-rc.1",
     "ionic-native": "^2.2.3",
