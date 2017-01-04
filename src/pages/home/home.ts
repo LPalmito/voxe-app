@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavController, NavParams} from "ionic-angular";
+import {NavController} from "ionic-angular";
 import {InfoPage} from "../info/info";
 import {SwipePage} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
@@ -108,7 +108,7 @@ export class HomePage {
 		}
 
 	];
-	
+
 	cardsRows: Card[][] = this.putCardsInRows(this.getNoArchive(this.cards));
 	starCardsRows: Card[][] = this.putCardsInRows(this.getStars(this.getNoArchive(this.cards)));
 
@@ -137,7 +137,7 @@ export class HomePage {
 		for (var i=0 ; i<cards.length-1 ; i=i+2) {
 			rows.push([cards[i],cards[i+1]]);
 		}
-		
+
 		if (cards.length==1) {
 			rows.push([cards[0]]);
 		}

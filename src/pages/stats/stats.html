@@ -22,21 +22,21 @@
         <ion-row>
           <ion-col width-50 class="image-candidate">
             <div>
-              <img class="candidate-stats" src="{{displayCandidateInfo[candidateInfo.candidateOneID]['photo']}}"/>
+              <img class="candidate-stats" src="{{displayCandidateInfo[candidateInfo.candidateIds[0]]['photo']}}"/>
             </div>
           </ion-col>
           <ion-col width-50 class="image-candidate">
             <div>
-              <img class="candidate-stats" src="{{displayCandidateInfo[candidateInfo.candidateTwoId]['photo']}}"/>
+              <img class="candidate-stats" src="{{displayCandidateInfo[candidateInfo.candidateIds[1]]['photo']}}"/>
             </div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col width-50 class="candidate-name">
-            {{displayCandidateInfo[candidateInfo.candidateOneID]['name']}}
+            {{displayCandidateInfo[candidateInfo.candidateIds[0]]['name']}}
           </ion-col>
           <ion-col width-50 class="candidate-name">
-            {{displayCandidateInfo[candidateInfo.candidateOneID]['name']}}
+            {{displayCandidateInfo[candidateInfo.candidateIds[1]]['name']}}
           </ion-col>
         </ion-row>
 
@@ -85,10 +85,3 @@
   <button (click)="goToHomePage()" ion-button round class="again-button">Faire un autre test</button>
 
 </ion-content>
-
-
-
-
-
-
-

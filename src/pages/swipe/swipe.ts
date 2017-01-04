@@ -7,10 +7,6 @@ import {StatsPage} from "../stats/stats";
 import {ToastController } from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 
-// When launching "npm install angular2-swing@^0.7.1 --save"
-// npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
-// npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.0.15: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
-
 // TODO: Change the structure to accept the "ask" attribute
 export interface Answer {
   candidateId: string,
@@ -32,11 +28,9 @@ export class SwipePage {
   cards: Array<string> = [];
   lastCards: Array<string> = [];
   stackConfig: StackConfig;
-  recentCard: string = '';
   answers: Answer[] = [];
-  candidateOneId: string;
-  candidateTwoId: string;
-  tagId: string;
+  candidateIds: string[];
+  tagIds: string[];
 
   // TODO: Replace it by randomized generated ids
   // francoisFillonId = "578f480ab0bba9398100000b";
@@ -60,21 +54,12 @@ export class SwipePage {
       transform: (element, x, y, r) => SwipePage.onItemMove(element, x, y, r),
       throwOutDistance: d => 800
     };
-    this.candidateOneId = this.navParams.get('candidate1Id');
-    this.candidateTwoId = this.navParams.get('candidate2Id');
-    this.tagId = this.navParams.get('tagId');
+    this.candidateIds = this.navParams.get('candidateIds');
+    this.tagIds = this.navParams.get('tagIds');
   }
 
   ngAfterViewInit() {
-    this.propositionService.getPropositionForSwipe(
-      [
-        this.candidateOneId,
-        this.candidateTwoId
-      ],
-      [
-        this.tagId
-      ]
-    )
+    this.propositionService.getPropositionForSwipe(this.candidateIds, this.tagIds)
       .subscribe(data => {
         // TODO: Keep the whole proposition object instead?
         this.cards = data.map(proposition => proposition.text);
@@ -106,7 +91,7 @@ export class SwipePage {
     this.cards.pop();
     // Redirect to the StatsPage after the last card
     if (this.cards.length == 0) {
-      this.nav.push(StatsPage, {answers: this.answers, candidateOneId: this.candidateOneId, candidateTwoId: this.candidateTwoId, tagId: this.tagId});
+      this.nav.push(StatsPage, {answers: this.answers, candidateIds: this.candidateIds, tagIds: this.tagIds});
     }
   }
 
