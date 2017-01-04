@@ -33,5 +33,3 @@ export class StatsPage {
     this.navCtrl.push(HomePage)
   }
 }
-
-

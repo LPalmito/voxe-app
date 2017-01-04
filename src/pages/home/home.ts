@@ -75,7 +75,7 @@ export class HomePage {
 			candidateIds: [this.francoisFillonId, this.alainJuppeId]
 		}
 	];
-	
+
 	cardsRows: Array<InfoCard|SwipeCard>[] = this.putCardsInRows(this.getNoArchive(this.cards));
 	starCardsRows: Array<InfoCard|SwipeCard>[] = this.putCardsInRows(this.getStars(this.getNoArchive(this.cards)));
 
@@ -103,7 +103,7 @@ export class HomePage {
 		for (var i=0 ; i<cards.length-1 ; i=i+2) {
 			rows.push([cards[i],cards[i+1]]);
 		}
-		
+
 		if (cards.length==1) {
 			rows.push([cards[0]]);
 		}
@@ -132,32 +132,14 @@ export class HomePage {
 
 // Getters
 	getStars(cards: Array<InfoCard|SwipeCard>) {
-		var starCards: Array<InfoCard|SwipeCard> = [];
-		for (var i=0 ; i<cards.length ; i++) {
-			if (cards[i].isStar == true) {
-				starCards.push(cards[i]);
-			}
-		}
-		return starCards;
+    return cards.filter(card => card.isStar);
 	}
 
 	getNoArchive(cards: Array<InfoCard|SwipeCard>) {
-		var visibleCards: Array<InfoCard|SwipeCard> = [];
-		for (var i=0 ; i<cards.length ; i++) {
-			if (cards[i].isArchive == false) {
-				visibleCards.push(cards[i]);
-			}
-		}
-		return visibleCards;
+		return cards.filter(card => !card.isArchive);
 	}
 
 	getArchives(cards: Array<InfoCard|SwipeCard>) {
-		var archiveCards: Array<InfoCard|SwipeCard> = [];
-		for (var i=0 ; i<cards.length ; i++) {
-			if (cards[i].isArchive == true) {
-				archiveCards.push(cards[i]);
-			}
-		}
-		return archiveCards;
+		return cards.filter(card => card.isArchive);
 	}
 }

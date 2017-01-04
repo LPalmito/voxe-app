@@ -25,9 +25,9 @@ export class SwipePage {
   @ViewChildren('mycards1') swingCards: QueryList<SwingCardComponent>;
 
   // TODO: Create a 'Card' or 'Proposition' object?
+  stackConfig: StackConfig;
   cards: Array<string> = [];
   lastCards: Array<string> = [];
-  stackConfig: StackConfig;
   answers: Answer[] = [];
   candidateIds: string[];
   tagIds: string[];
