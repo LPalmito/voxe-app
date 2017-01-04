@@ -50,12 +50,12 @@
 
             <ion-item>
               <ion-row>
-                <img src={{card.icon}} height="30px" width="30px"/>
+                <img src={{icon}} height="30px" width="30px"/>
 
                 <!-- Mark a card as favorite -->
                 <button ion-button clear icon-left small (click)="starCard(card)">
-                  <ion-icon *ngIf="card.status==cardStatus.Star" name="star"></ion-icon>
-                  <ion-icon *ngIf="card.status==cardStatus.NoStar" name="star-outline"></ion-icon>
+                  <ion-icon *ngIf="card.isStar==true" name="star"></ion-icon>
+                  <ion-icon *ngIf="card.isStar==false" name="star-outline"></ion-icon>
                 </button>
 
                 <!-- Mark a card as archive -->
@@ -87,7 +87,7 @@
 
             <ion-item>
               <ion-row>
-                <img src={{card.icon}} height="30px" width="30px"/>
+                <img src={{icon}} height="30px" width="30px"/>
 
                 <button ion-button clear icon-left small (click)="starCard(card)">
                 <ion-icon name="star"></ion-icon>    

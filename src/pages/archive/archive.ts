@@ -1,8 +1,6 @@
 import {Component} from "@angular/core";
-import {NavParams} from "ionic-angular";
-import {HomePage} from "../home/home";
-import {Card} from "../home/home";
-import {CardIsArchive} from "../home/home";
+import {NavController, NavParams} from "ionic-angular";
+import {Card, InfoCard, SwipeCard, HomePage} from "../home/home";
 
 @Component({
   templateUrl: 'archive.html'
@@ -11,13 +9,14 @@ import {CardIsArchive} from "../home/home";
 export class ArchivePage {
 
 	home: HomePage = this.navParams.get('home');
-	cardsRows: Card[][] = this.home.putCardsInRows(this.home.getArchives(this.home.cards));
+	cardsRows: Array<InfoCard|SwipeCard>[] = this.home.putCardsInRows(this.home.getArchives(this.home.cards));
+	icon: string = this.home.icon;
 
 	constructor(public navParams: NavParams) {
 	}
 
 	restoreCard(card: Card) {
-		card.isArchive = CardIsArchive.No;
+		card.isArchive = false;
 		this.home.cardsRows = this.home.putCardsInRows(this.home.getNoArchive(this.home.cards));
 		this.home.starCardsRows = this.home.putCardsInRows(this.home.getStars(this.home.getNoArchive(this.home.cards)));
 		this.cardsRows = this.home.putCardsInRows(this.home.getArchives(this.home.cards));

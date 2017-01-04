@@ -1,35 +1,24 @@
 import {Component} from "@angular/core";
-import {NavController} from "ionic-angular";
+import {NavController, NavParams} from "ionic-angular";
 import {InfoPage} from "../info/info";
 import {SwipePage} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
 
-export enum CardType {
-	Info,
-	Swipe
-}
-
-export enum CardStatus {
-	Star,
-	NoStar
-}
-
-export enum CardIsArchive {
-	Yes,
-	No
-}
 
 export class Card {
-	type: CardType;
 	title: string;
 	image: string;
-	icon: string;
-	tagId: string;
-	status: CardStatus;
-	isArchive: CardIsArchive;
+	tagIds: string[];
+	isStar: boolean;
+	isArchive: boolean;
+}
+
+export class InfoCard extends Card {
 	infoPage: string;
-	candidate1Id: string;
-	candidate2Id: string;
+}
+
+export class SwipeCard extends Card {
+	candidateIds: string[];
 }
 
 
@@ -38,9 +27,6 @@ export class Card {
 })
 
 export class HomePage {
-	public cardType = CardType;
-	public cardStatus = CardStatus;
-	public cardIsArchive = CardIsArchive;
 
 	francoisFillonId = "578f480ab0bba9398100000b";
 	alainJuppeId = "57962957793b3f868d000012";
@@ -53,76 +39,56 @@ export class HomePage {
 	numeriqueId = "4ef479f8bc60fb000400002c";
 	justiceId = "4ef479f9bc60fb00040000cc";
 
+	icon: string = "../assets/img/icone-economie-24.png";
 
-	cards: Card[] = [
+	cards: Array<InfoCard|SwipeCard> = [
 		{
-			type: CardType.Info,
 			title: "La fiscalite",
 			image: "../assets/img/home-fiscalite.jpg",
-			icon: "../assets/img/icone-economie-24.png",
-			tagId: "",
-			status: CardStatus.NoStar,
-			isArchive: CardIsArchive.No,
-			infoPage: "../assets/img/info-fiscalite.png",
-			candidate1Id: "",
-			candidate2Id: ""
-
+			tagIds: [this.economieId],
+			isStar: false,
+			isArchive: false,
+			infoPage: "../assets/img/info-fiscalite.png"
 		},
 		{
-			type: CardType.Info,
 			title: "Le centre Cigéo",
 			image: "../assets/img/home-cigeo.jpg",
-			icon: "../assets/img/icone-environnement-24.png",
-			tagId: "",
-			status: CardStatus.NoStar,
-			isArchive: CardIsArchive.No,
-			infoPage: "../assets/img/info-cigeo.png",
-			candidate1Id: "",
-			candidate2Id: ""
-
+			tagIds: [this.justiceId],
+			isStar: false,
+			isArchive: false,
+			infoPage: "../assets/img/info-cigeo.png"
 		},
 		{
-			type: CardType.Info,
 			title: "La primaire de la droite et du centre",
 			image: "../assets/img/home-primaire.jpg",
-			icon: "../assets/img/icone-institutions-24.png",
-			tagId: "",
-			status: CardStatus.NoStar,
-			isArchive: CardIsArchive.No,
-			infoPage: "../assets/img/info-primaire-droite.png",
-			candidate1Id: "",
-			candidate2Id: ""
-
+			tagIds: [this.cultureId],
+			isStar: false,
+			isArchive: false,
+			infoPage: "../assets/img/info-primaire-droite.png"
 		},
 		{
-			type: CardType.Swipe,
-			title: "François Fillon / Alain Juppé",
+			title: "François Fillon | Alain Juppé",
 			image: "../assets/img/home-primaire.jpg",
-			icon: "../assets/img/icone-technologie-24.png",
-			tagId: this.numeriqueId,
-			status: CardStatus.NoStar,
-			isArchive: CardIsArchive.No,
-			infoPage: "",
-			candidate1Id: this.francoisFillonId,
-			candidate2Id: this.alainJuppeId
+			tagIds: [this.numeriqueId],
+			isStar: false,
+			isArchive: false,
+			candidateIds: [this.francoisFillonId, this.alainJuppeId]
 		}
-
 	];
-
-	cardsRows: Card[][] = this.putCardsInRows(this.getNoArchive(this.cards));
-	starCardsRows: Card[][] = this.putCardsInRows(this.getStars(this.getNoArchive(this.cards)));
+	
+	cardsRows: Array<InfoCard|SwipeCard>[] = this.putCardsInRows(this.getNoArchive(this.cards));
+	starCardsRows: Array<InfoCard|SwipeCard>[] = this.putCardsInRows(this.getStars(this.getNoArchive(this.cards)));
 
 	constructor(public nav: NavController) {
 	}
 
 // Navigation methods
 	openCard(card: Card) {
-		if (card.type == CardType.Info) {
-			this.nav.push(InfoPage, {infoPage:card.infoPage});
+		if (card instanceof InfoCard) {
+			this.nav.push(InfoPage, {infoPage: card.infoPage});
 		}
-
-		else if (card.type == CardType.Swipe) {
-			this.nav.push(SwipePage, {tagId: card.tagId, candidate1Id: card.candidate1Id, candidate2Id: card.candidate2Id});
+		else if (card instanceof SwipeCard) {
+			this.nav.push(SwipePage, {tagIds: card.tagIds, candidateIds: card.candidateIds});
 		}
 	}
 
@@ -132,12 +98,12 @@ export class HomePage {
 
 // Action methods
 	// Takes an array of cards and returns an array of rows (a row is an array of 2 cards)
-	putCardsInRows(cards: Card[]) {
-		var rows: Card[][] = [];
+	putCardsInRows(cards: Array<InfoCard|SwipeCard>) {
+		var rows: Array<InfoCard|SwipeCard>[] = [];
 		for (var i=0 ; i<cards.length-1 ; i=i+2) {
 			rows.push([cards[i],cards[i+1]]);
 		}
-
+		
 		if (cards.length==1) {
 			rows.push([cards[0]]);
 		}
@@ -148,47 +114,47 @@ export class HomePage {
 	}
 
 	starCard(card: Card) {
-		if (card.status == CardStatus.Star) {
-			card.status = CardStatus.NoStar;
+		if (card.isStar == true) {
+			card.isStar = false;
 			this.starCardsRows = this.putCardsInRows(this.getStars(this.cards));
 		}
-		else if (card.status == CardStatus.NoStar) {
-			card.status = CardStatus.Star;
+		else if (card.isStar == false) {
+			card.isStar = true;
 			this.starCardsRows = this.putCardsInRows(this.getStars(this.cards));
 		}
 	}
 
 	archiveCard(card: Card) {
-		card.isArchive = CardIsArchive.Yes;
+		card.isArchive = true;
 		this.cardsRows = this.putCardsInRows(this.getNoArchive(this.cards));
 		this.starCardsRows = this.putCardsInRows(this.getNoArchive(this.getStars(this.cards)));
 	}
 
 // Getters
-	getStars(cards: Card[]) {
-		var starCards: Card[] = [];
+	getStars(cards: Array<InfoCard|SwipeCard>) {
+		var starCards: Array<InfoCard|SwipeCard> = [];
 		for (var i=0 ; i<cards.length ; i++) {
-			if (cards[i].status == CardStatus.Star) {
+			if (cards[i].isStar == true) {
 				starCards.push(cards[i]);
 			}
 		}
 		return starCards;
 	}
 
-	getNoArchive(cards: Card[]) {
-		var visibleCards: Card[] = [];
+	getNoArchive(cards: Array<InfoCard|SwipeCard>) {
+		var visibleCards: Array<InfoCard|SwipeCard> = [];
 		for (var i=0 ; i<cards.length ; i++) {
-			if (cards[i].isArchive == CardIsArchive.No) {
+			if (cards[i].isArchive == false) {
 				visibleCards.push(cards[i]);
 			}
 		}
 		return visibleCards;
 	}
 
-	getArchives(cards: Card[]) {
-		var archiveCards: Card[] = [];
+	getArchives(cards: Array<InfoCard|SwipeCard>) {
+		var archiveCards: Array<InfoCard|SwipeCard> = [];
 		for (var i=0 ; i<cards.length ; i++) {
-			if (cards[i].isArchive == CardIsArchive.Yes) {
+			if (cards[i].isArchive == true) {
 				archiveCards.push(cards[i]);
 			}
 		}
