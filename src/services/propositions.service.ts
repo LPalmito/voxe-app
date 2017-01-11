@@ -10,7 +10,7 @@ export class PropositionService {
   constructor(private http: Http, private main: MainService) {}
 
   getPropositions(): Observable<Array<Proposition>> {
-    return this.http.get(this.main.server+'propositions/search')
+    return this.http.get(this.main.ser+'propositions/search')
       .map(data => data.json().response.propositions);
   }
 
@@ -20,7 +20,7 @@ export class PropositionService {
   }
 
   getPropositionsForCandidacies(candidacyIds: string[]): Observable<Array<Proposition>> {
-    let url = this.main.server+'propositions/search?candidacyIds=';
+    let url = this.main.ser+'propositions/search?candidacyIds=';
     candidacyIds.forEach(x => url += x+",");
     return this.http.get(url)
       .map(data => data.json().response.propositions)
@@ -28,7 +28,7 @@ export class PropositionService {
   }
 
   getPropositionsForTags(tagIds: string[]): Observable<Array<Proposition>> {
-    let url = this.main.server+'propositions/search?tagIds=';
+    let url = this.main.ser+'propositions/search?tagIds=';
     tagIds.forEach(x => url += x+",");
     return this.http.get(url)
       .map(data => data.json().response.propositions)

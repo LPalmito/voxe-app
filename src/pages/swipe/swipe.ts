@@ -6,6 +6,7 @@ import {NavController, NavParams} from "ionic-angular";
 import {StatsPage} from "../stats/stats";
 import {ToastController } from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
+import {CandidateService} from "../../services/candidates.service";
 
 // TODO: Change the structure to accept the "ask" attribute
 export interface Answer {
@@ -45,7 +46,7 @@ export class SwipePage {
   // justiceId = "4ef479f9bc60fb00040000cc";
 
   constructor(public nav: NavController, public navParams: NavParams, public toastCtrl: ToastController,
-              private propositionService: PropositionService
+              private propositionService: PropositionService, private candidateService: CandidateService
   ) {
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {
@@ -59,6 +60,7 @@ export class SwipePage {
   }
 
   ngAfterViewInit() {
+    this.candidateService.getCandidates();
     this.propositionService.getPropositionForSwipe(this.candidateIds, this.tagIds)
       .subscribe(data => {
         // TODO: Keep the whole proposition object instead?

@@ -1,8 +1,9 @@
 import {Component} from "@angular/core";
-import {NavController, NavParams} from "ionic-angular";
+import {NavController} from "ionic-angular";
 import {InfoPage} from "../info/info";
 import {SwipePage} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
+import {MainService} from "../../services/main.service";
 
 
 export class Card {
@@ -79,17 +80,24 @@ export class HomePage {
 	cardsRows: Array<InfoCard|SwipeCard>[] = this.putCardsInRows(this.getNoArchive(this.cards));
 	starCardsRows: Array<InfoCard|SwipeCard>[] = this.putCardsInRows(this.getStars(this.getNoArchive(this.cards)));
 
-	constructor(public nav: NavController) {
-	}
+	constructor(public nav: NavController, private main: MainService) {
+    this.main.initParams();
+  }
 
 // Navigation methods
-	openCard(card: Card) {
-		if (card instanceof InfoCard) {
-			this.nav.push(InfoPage, {infoPage: card.infoPage});
-		}
-		else if (card instanceof SwipeCard) {
+	openCard(card: SwipeCard) {
+    // TODO: Coucou Galisti ! Il se passe un truc bizarre ici :
+    // + "card instanceof InfoCard" dans la console me renvoie "false"
+    // + "card instanceof SwipeCard" dans la console me renvoie "false"
+    // + "card instanceof Card" dans la console me renvoie "ReferenceError: Card is not defined"
+    // Je ne suis pas sûr de comprendre comment fonctionne "instanceof"
+    // Il faudrait sûrement trouver un autre moyen de faire la distinction entre SwipeCard et InfoCard... Un booléen ? Un Enum ?
+		// if (card instanceof InfoCard) {
+		// 	this.nav.push(InfoPage, {infoPage: card.infoPage});
+		// }
+		// else if (card instanceof SwipeCard) {
 			this.nav.push(SwipePage, {tagIds: card.tagIds, candidateIds: card.candidateIds});
-		}
+		// }
 	}
 
 	goToArchivePage() {

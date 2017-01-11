@@ -2,6 +2,11 @@ import {Injectable} from "@angular/core";
 import {Http} from '@angular/http';
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
+import {Store} from "@ngrx/store";
+import {AppStore} from "../store";
+import {NavController} from "ionic-angular";
+import {SET_SERVER} from "../reducers/server.reducer";
+import {SET_ELECTION_NAME_SPACE} from "../reducers/election-name-space.reducer";
 
 export interface DataElections {
   meta: {code: number},
@@ -97,13 +102,30 @@ export interface Proposition {
 
 @Injectable()
 export class MainService {
-  server: string = "http://compare.voxe.org/api/v1/";
-  electionNameSpace: string = "primaire-de-la-droite-2016";
+  // server: string = "http://compare.voxe.org/api/v1/";
+  // electionNameSpace: string = "primaire-de-la-droite-2016";
+  nav: Observable<NavController>;
+  server: Observable<string>;
+  electionNameSpace: Observable<string>;
+  ser: string;
+  electNameSpace: string;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private store: Store<AppStore>) {
+  }
+  // TODO: HAAAAAAAAAA! WHY THE SERVER KEEPS SAYING IT'S UNDEFINED?!
+
+  initParams() {
+    this.store.dispatch({type: SET_SERVER, payload: "http://compare.voxe.org/api/v1/"});
+    this.store.dispatch({type: SET_ELECTION_NAME_SPACE, payload: "primaire-de-la-droite-2016"});
+    this.nav = this.store.select('nav');
+    this.server = this.store.select('server');
+    this.electionNameSpace = this.store.select('electionNameSpace');
+    this.server.subscribe(x => this.ser = x);
+    this.electionNameSpace.subscribe(x => this.electNameSpace = x);
+  }
 
   getElection(): Observable<Election> {
-    return this.http.get(this.server+'elections/search')
+    return this.http.get(this.ser+'elections/search')
       .map(data => data.json().response.elections)
       .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0]);
   }

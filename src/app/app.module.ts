@@ -41,7 +41,7 @@ import {provideStore} from '@ngrx/store';
     provideStore({
       // nav,
       // electionNameSpace,
-      // candidacies,
+      // candidates,
       // homeCards,
       // infoUrl,
       // tagIds,

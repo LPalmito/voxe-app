@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavController, NavParams} from "ionic-angular";
+import {NavParams} from "ionic-angular";
 import {Card, InfoCard, SwipeCard, HomePage} from "../home/home";
 
 @Component({

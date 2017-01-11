@@ -1,24 +1,25 @@
 import {NavController} from "ionic-angular";
-import {Candidacy, Proposition} from "./services/main.service";
+import {Proposition, Candidate} from "./services/main.service";
 import {InfoCard, SwipeCard} from "./pages/home/home";
 import {Answer} from "./pages/swipe/swipe";
 
 export interface AppStore {
 
-  nav: NavController                      // Pour la navigation entre les pages
+  nav: NavController                      // For navigation purposes
 
-  electionNameSpace: string               // NameSpace de l’élection concernée
-  candidacies: Candidacy[]                // Candidatures à l’élection
+  // TODO: Add an "election" object instead of those two?
+  electionNameSpace: string               // NameSpace of the election
+  candidates: Candidate[]                 // Election's candidates
 
-  homeCards: Array<InfoCard|SwipeCard>    // Cards de la home
+  homeCards: Array<InfoCard|SwipeCard>    // Home's cards
 
-  infoUrl: string                         // URL de l’info
+  infoUrl: string                         // Info card's URL
 
-  tagIds: string[]                        // Ids des tags du swipe
-  candidacyIds: string[]                  // Ids des candidatures du swipe
+  tagIds: string[]                        // Swipe tag ids
+  candidacyIds: string[]                  // Swipe candidacy ids
 
-  swipePropositions: Proposition[]        // Propositions à swiper
-  donePropositions: Proposition[]         // Propositions déjà swipées
-  answers: Answer[]                       // Réponses aux propositions
+  swipePropositions: Proposition[]        // Propositions to swipe
+  donePropositions: Proposition[]         // Propositions already swiped
+  answers: Answer[]                       // Proposition's answers
 
 }
