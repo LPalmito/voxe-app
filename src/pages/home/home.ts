@@ -4,6 +4,8 @@ import {InfoPage} from "../info/info";
 import {SwipePage} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
 import {MainService} from "../../services/main.service";
+import {CandidateService} from "../../services/candidates.service";
+import {PropositionService} from "../../services/propositions.service";
 
 export enum CardType {
   Info,
@@ -90,12 +92,18 @@ export class HomePage {
 	cardsRows: Array<InfoCard|SwipeCard>[] = this.putCardsInRows(this.getNoArchive(this.cards));
 	starCardsRows: Array<InfoCard|SwipeCard>[] = this.putCardsInRows(this.getStars(this.getNoArchive(this.cards)));
 
-	constructor(public nav: NavController, private main: MainService) {
+	constructor(public nav: NavController, private main: MainService,
+    private candidateService: CandidateService, private propositionService: PropositionService) {
     this.main.initParams();
   }
 
 // Navigation methods
 	openCard(card: InfoCard|SwipeCard) {
+    // // FOR TESTS ONLY
+    // this.candidateService.getCandidates()
+    //   .subscribe(x => console.log("candidates: ", x));
+    // this.propositionService.getPropositions()
+    //   .subscribe(x => console.log("propositions: ", x));
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
       this.nav.push(InfoPage, {infoUrl: infoCard.infoUrl});

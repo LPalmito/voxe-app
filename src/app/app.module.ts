@@ -17,11 +17,13 @@ import {answers} from "../reducers/answers.reducer";
 import {cards} from "../reducers/cards.reducer";
 import {donePropositions} from "../reducers/done-propositions.reducer";
 import {electionNameSpace} from "../reducers/election-name-space.reducer";
+import {candidates} from "../reducers/candidates.reducer";
 import {infoUrl} from "../reducers/info-url.reducer";
 import {server} from "../reducers/server.reducer";
 import {swipePropositions} from "../reducers/swipe-propositions.reducer";
 import {tagIds} from "../reducers/tag-ids.reducer";
 import {candidacyIds} from "../reducers/candidacy-ids.reducer";
+import {nav} from "../reducers/nav.reducer";
 
 
 @NgModule({
@@ -49,6 +51,7 @@ import {candidacyIds} from "../reducers/candidacy-ids.reducer";
   ],
   providers: [
     provideStore({
+      nav,
       answers,
       cards,
       donePropositions,
@@ -57,12 +60,13 @@ import {candidacyIds} from "../reducers/candidacy-ids.reducer";
       server,
       swipePropositions,
       tagIds,
-      candidacyIds
+      candidacyIds,
+      candidates
     }),
     MainService,
     CandidateService,
     PropositionService,
-    TagService,
+    TagService
   ]
 })
 

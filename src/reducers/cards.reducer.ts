@@ -22,7 +22,7 @@ export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
       return state;
     case STAR_CARD:
       let card = state[state.indexOf(payload)];
-      if (card.isStar == true) {
+      if (card.isStar) {
         card.isStar = false;
       }
       else {

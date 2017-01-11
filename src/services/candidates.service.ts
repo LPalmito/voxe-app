@@ -4,6 +4,7 @@ import 'rxjs/Rx';
 import {MainService, Candidate} from "./main.service";
 import {AppStore} from "../store";
 import {Store} from "@ngrx/store";
+import {SET_CANDIDATES} from "../reducers/candidates.reducer";
 
 @Injectable()
 export class CandidateService {
@@ -14,18 +15,20 @@ export class CandidateService {
   }
 
   getCandidates(): Observable<Array<Candidate>> {
-    let candidates = this.candidates.flatMap(storeCandidates => {
+    return this.candidates.flatMap(storeCandidates => {
       if(storeCandidates != undefined) {
-        return this.candidates
+        return this.candidates;
       }
       else {
         return this.main.getElection()
           .map(election => election.candidacies)
-          .map(candidacies => candidacies.map(candidacy => candidacy.candidates[0]));
+          .map(candidacies => candidacies.map(candidacy => candidacy.candidates[0]))
+          .map(candidates => {
+            this.store.dispatch({type: SET_CANDIDATES, payload: candidates});
+            return candidates;
+        });
       }
     });
-    candidates.subscribe(x => console.log("candidates: ", x));
-    return candidates
   }
 
   getCandidateById(candidateId: string): Observable<Candidate> {
