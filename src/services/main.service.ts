@@ -124,7 +124,7 @@ export class MainService {
   getElection(): Observable<Election> {
     return this.http.get(this.ser+'elections/search')
       .map(data => data.json().response.elections)
-      .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0]);
+      .map(elections => elections.filter(election => election.namespace == this.electNameSpace)[0]);
   }
 
   arrObs2ObsArr(arrObs: Array<Observable<any>>): Observable<Array<any>> {

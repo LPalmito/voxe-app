@@ -10,6 +10,7 @@ export interface AppStore {
   // TODO: Add an "election" object instead of those two?
   electionNameSpace: string               // NameSpace of the election
   candidates: Candidate[]                 // Election's candidates
+  propositions: Proposition[]             // Elections's propositions
 
   homeCards: Array<InfoCard|SwipeCard>    // Home's cards
 
