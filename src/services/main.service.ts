@@ -102,8 +102,6 @@ export interface Proposition {
 
 @Injectable()
 export class MainService {
-  // server: string = "http://compare.voxe.org/api/v1/";
-  // electionNameSpace: string = "primaire-de-la-droite-2016";
   nav: Observable<NavController>;
   server: Observable<string>;
   electionNameSpace: Observable<string>;
@@ -112,7 +110,6 @@ export class MainService {
 
   constructor(private http: Http, private store: Store<AppStore>) {
   }
-  // TODO: HAAAAAAAAAA! WHY THE SERVER KEEPS SAYING IT'S UNDEFINED?!
 
   initParams() {
     this.store.dispatch({type: SET_SERVER, payload: "http://compare.voxe.org/api/v1/"});
