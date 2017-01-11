@@ -13,6 +13,8 @@ import {CandidateService} from "../services/candidates.service";
 import {TagService} from "../services/tags.service";
 import {PropositionService} from "../services/propositions.service";
 import {provideStore} from '@ngrx/store';
+import {server} from "../reducers/server.reducer";
+import {electionNameSpace} from "../reducers/election-name-space.reducer";
 
 @NgModule({
   declarations: [
@@ -39,16 +41,8 @@ import {provideStore} from '@ngrx/store';
   ],
   providers: [
     provideStore({
-      // nav,
-      // electionNameSpace,
-      // candidates,
-      // homeCards,
-      // infoUrl,
-      // tagIds,
-      // candidacyIds,
-      // swipePropositions,
-      // donePropositions,
-      // answers
+      server,
+      electionNameSpace,
     }),
     MainService,
     CandidateService,
@@ -56,4 +50,5 @@ import {provideStore} from '@ngrx/store';
     TagService
   ]
 })
+
 export class AppModule {}
