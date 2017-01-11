@@ -1,5 +1,6 @@
 import {Card, SwipeCard, InfoCard} from "../pages/home/home";
 
+export const SET_CARDS = 'SET_CARDS';
 export const ADD_CARD = 'ADD_CARD';
 export const DELETE_CARD = 'DELETE_CARD';
 export const ARCHIVE_CARD = 'ARCHIVE_CARD';
@@ -8,6 +9,8 @@ export const STAR_CARD = 'STAR_CARD';
 
 export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
   switch (type) {
+    case SET_CARDS:
+      return payload;
     case ADD_CARD:
       state.unshift(payload);
       return state;
