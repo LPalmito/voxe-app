@@ -6,7 +6,7 @@ import {NavParams} from "ionic-angular";
 })
 
 export class InfoPage {
-	infoPage: string = this.navParams.get('infoPage');
+	infoUrl: string = this.navParams.get('infoUrl');
 
 	constructor(public navParams: NavParams) {
 	}

@@ -8,6 +8,8 @@ import {HomePage} from "../home/home";
 @Component({
   templateUrl: 'stats.html'
 })
+
+//TODO: Homogénéiser les noms (candidate->candidacy, theme->tag, etc) avec les autres pages
 export class StatsPage {
   candidateInfo = {candidateOneID : 'test', candidateTwoId : 'test2'};
   themeInfo = {themeID: 5};

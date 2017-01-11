@@ -7,11 +7,12 @@ import {StatsPage} from "../stats/stats";
 import {ToastController } from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
+import {Proposition} from "../../services/main.service";
 
 // TODO: Change the structure to accept the "ask" attribute
 export interface Answer {
   candidateId: string,
-  proposition: string,
+  proposition: Proposition,
   approved: boolean
 }
 
@@ -23,14 +24,15 @@ export interface Answer {
 
 export class SwipePage {
   @ViewChild('myswing1') swingStack: SwingStackComponent;
-  @ViewChildren('mycards1') swingCards: QueryList<SwingCardComponent>;
+  @ViewChildren('mypropositions1') swingPropositions: QueryList<SwingCardComponent>;
 
-  // TODO: Create a 'Card' or 'Proposition' object?
+  propositions: Array<Proposition> = [];
+  lastPropositions: Array<Proposition> = [];
   stackConfig: StackConfig;
-  cards: Array<string> = [];
-  lastCards: Array<string> = [];
+  //propositions: Array<string> = [];
+  //lastPropositions: Array<string> = [];
   answers: Answer[] = [];
-  candidateIds: string[];
+  candidacyIds: string[];
   tagIds: string[];
 
   // TODO: Replace it by randomized generated ids
@@ -55,17 +57,14 @@ export class SwipePage {
       transform: (element, x, y, r) => SwipePage.onItemMove(element, x, y, r),
       throwOutDistance: d => 800
     };
-    this.candidateIds = this.navParams.get('candidateIds');
+    this.candidacyIds = this.navParams.get('candidacyIds');
     this.tagIds = this.navParams.get('tagIds');
   }
 
   ngAfterViewInit() {
     this.candidateService.getCandidates();
-    this.propositionService.getPropositionForSwipe(this.candidateIds, this.tagIds)
-      .subscribe(data => {
-        // TODO: Keep the whole proposition object instead?
-        this.cards = data.map(proposition => proposition.text);
-      });
+    this.propositionService.getPropositionForSwipe(this.candidacyIds, this.tagIds)
+      .subscribe(data => this.propositions = data);
   }
 
   // TODO: Resolve the color bug when dragging but not coming back to white
@@ -85,23 +84,23 @@ export class SwipePage {
   // Save the answer of the user
   voteUp(approved: boolean) {
     this.answers.push({
-      candidateId: "test",
-      proposition: this.cards[this.cards.length-1],
+      candidacyId: "test",
+      proposition: this.propositions[this.propositions.length-1],
       approved: approved
     });
-    this.lastCards.push(this.cards[this.cards.length-1]);
-    this.cards.pop();
+    this.lastPropositions.push(this.propositions[this.propositions.length-1]);
+    this.propositions.pop();
     // Redirect to the StatsPage after the last card
-    if (this.cards.length == 0) {
-      this.nav.push(StatsPage, {answers: this.answers, candidateIds: this.candidateIds, tagIds: this.tagIds});
+    if (this.propositions.length == 0) {
+      this.nav.push(StatsPage, {answers: this.answers, candidacyIds: this.candidacyIds, tagIds: this.tagIds});
     }
   }
 
   // Undo last action
   undo() {
     this.answers.pop();
-    this.cards.push(this.lastCards[this.lastCards.length-1]);
-    this.lastCards.pop();
+    this.propositions.push(this.lastPropositions[this.lastPropositions.length-1]);
+    this.lastPropositions.pop();
     this.cancelToast();
   }
 

@@ -19,12 +19,12 @@ export class Card {
 }
 
 export class InfoCard extends Card {
-	infoPage: string;
+	infoUrl: string;
 	type: CardType = CardType.Info;
 }
 
 export class SwipeCard extends Card {
-	candidateIds: string[];
+	candidacyIds: string[];
 	type: CardType = CardType.Swipe;
 }
 
@@ -56,7 +56,7 @@ export class HomePage {
 			isStar: false,
 			isArchive: false,
       type: CardType.Info,
-			infoPage: "../assets/img/info-fiscalite.png"
+			infoUrl: "../assets/img/info-fiscalite.png"
 		},
 		{
 			title: "Le centre Cigéo",
@@ -65,7 +65,7 @@ export class HomePage {
 			isStar: false,
 			isArchive: false,
       type: CardType.Info,
-			infoPage: "../assets/img/info-cigeo.png"
+			infoUrl: "../assets/img/info-cigeo.png"
 		},
 		{
 			title: "La primaire de la droite et du centre",
@@ -74,7 +74,7 @@ export class HomePage {
 			isStar: false,
 			isArchive: false,
       type: CardType.Info,
-			infoPage: "../assets/img/info-primaire-droite.png"
+			infoUrl: "../assets/img/info-primaire-droite.png"
 		},
 		{
 			title: "François Fillon | Alain Juppé",
@@ -83,7 +83,7 @@ export class HomePage {
 			isStar: false,
 			isArchive: false,
       type: CardType.Swipe,
-			candidateIds: [this.francoisFillonId, this.alainJuppeId]
+			candidacyIds: [this.francoisFillonId, this.alainJuppeId]
 		}
 	];
 
@@ -98,11 +98,11 @@ export class HomePage {
 	openCard(card: InfoCard|SwipeCard) {
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
-      this.nav.push(InfoPage, {infoPage: infoCard.infoPage});
+      this.nav.push(InfoPage, {infoUrl: infoCard.infoUrl});
     }
     else if (card.type == CardType.Swipe) {
       let swipeCard = <SwipeCard> card;
-      this.nav.push(SwipePage, {tagIds: swipeCard.tagIds, candidateIds: swipeCard.candidateIds});
+      this.nav.push(SwipePage, {tagIds: swipeCard.tagIds, candidacyIds: swipeCard.candidacyIds});
     }
   }
 
