@@ -17,6 +17,7 @@ import {answers} from "../reducers/answers.reducer";
 import {cards} from "../reducers/cards.reducer";
 import {donePropositions} from "../reducers/done-propositions.reducer";
 import {electionNameSpace} from "../reducers/election-name-space.reducer";
+import {candidates} from "../reducers/candidates.reducer";
 import {infoUrl} from "../reducers/info-url.reducer";
 import {server} from "../reducers/server.reducer";
 import {swipePropositions} from "../reducers/swipe-propositions.reducer";
@@ -58,11 +59,12 @@ import {candidacyIds} from "../reducers/candidacy-ids.reducer";
       swipePropositions,
       tagIds,
       candidacyIds
+      candidates
     }),
     MainService,
     CandidateService,
     PropositionService,
-    TagService,
+    TagService
   ]
 })
 
