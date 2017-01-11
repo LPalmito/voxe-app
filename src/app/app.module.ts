@@ -23,6 +23,7 @@ import {server} from "../reducers/server.reducer";
 import {swipePropositions} from "../reducers/swipe-propositions.reducer";
 import {tagIds} from "../reducers/tag-ids.reducer";
 import {candidacyIds} from "../reducers/candidacy-ids.reducer";
+import {nav} from "../reducers/nav.reducer";
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import {candidacyIds} from "../reducers/candidacy-ids.reducer";
   ],
   providers: [
     provideStore({
+      nav,
       answers,
       cards,
       donePropositions,
@@ -58,7 +60,7 @@ import {candidacyIds} from "../reducers/candidacy-ids.reducer";
       server,
       swipePropositions,
       tagIds,
-      candidacyIds
+      candidacyIds,
       candidates
     }),
     MainService,
