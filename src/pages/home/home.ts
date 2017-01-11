@@ -5,6 +5,10 @@ import {SwipePage} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
 import {MainService} from "../../services/main.service";
 
+export enum CardType {
+  Info,
+  Swipe
+}
 
 export class Card {
 	title: string;
@@ -16,10 +20,12 @@ export class Card {
 
 export class InfoCard extends Card {
 	infoPage: string;
+	type: CardType = CardType.Info;
 }
 
 export class SwipeCard extends Card {
 	candidateIds: string[];
+	type: CardType = CardType.Swipe;
 }
 
 
@@ -49,6 +55,7 @@ export class HomePage {
 			tagIds: [this.economieId],
 			isStar: false,
 			isArchive: false,
+      type: CardType.Info,
 			infoPage: "../assets/img/info-fiscalite.png"
 		},
 		{
@@ -57,6 +64,7 @@ export class HomePage {
 			tagIds: [this.justiceId],
 			isStar: false,
 			isArchive: false,
+      type: CardType.Info,
 			infoPage: "../assets/img/info-cigeo.png"
 		},
 		{
@@ -65,6 +73,7 @@ export class HomePage {
 			tagIds: [this.cultureId],
 			isStar: false,
 			isArchive: false,
+      type: CardType.Info,
 			infoPage: "../assets/img/info-primaire-droite.png"
 		},
 		{
@@ -73,6 +82,7 @@ export class HomePage {
 			tagIds: [this.numeriqueId],
 			isStar: false,
 			isArchive: false,
+      type: CardType.Swipe,
 			candidateIds: [this.francoisFillonId, this.alainJuppeId]
 		}
 	];
@@ -85,20 +95,16 @@ export class HomePage {
   }
 
 // Navigation methods
-	openCard(card: SwipeCard) {
-    // TODO: Coucou Galisti ! Il se passe un truc bizarre ici :
-    // + "card instanceof InfoCard" dans la console me renvoie "false"
-    // + "card instanceof SwipeCard" dans la console me renvoie "false"
-    // + "card instanceof Card" dans la console me renvoie "ReferenceError: Card is not defined"
-    // Je ne suis pas sûr de comprendre comment fonctionne "instanceof"
-    // Il faudrait sûrement trouver un autre moyen de faire la distinction entre SwipeCard et InfoCard... Un booléen ? Un Enum ?
-		// if (card instanceof InfoCard) {
-		// 	this.nav.push(InfoPage, {infoPage: card.infoPage});
-		// }
-		// else if (card instanceof SwipeCard) {
-			this.nav.push(SwipePage, {tagIds: card.tagIds, candidateIds: card.candidateIds});
-		// }
-	}
+	openCard(card: InfoCard|SwipeCard) {
+    if (card.type == CardType.Info) {
+      let infoCard = <InfoCard> card;
+      this.nav.push(InfoPage, {infoPage: infoCard.infoPage});
+    }
+    else if (card.type == CardType.Swipe) {
+      let swipeCard = <SwipeCard> card;
+      this.nav.push(SwipePage, {tagIds: swipeCard.tagIds, candidateIds: swipeCard.candidateIds});
+    }
+  }
 
 	goToArchivePage() {
 		this.nav.push(ArchivePage, {home: this});
