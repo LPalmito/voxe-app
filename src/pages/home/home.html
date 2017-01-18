@@ -42,7 +42,7 @@
         <ion-col width-50 *ngFor="let card of row">
 
           <ion-card>
-            <div class="card-title" (click)="openCard(card)">
+            <div class="card-title" (click)="openCard(card)" *ngIf="card.type==CardType.Swipe">
               {{card.title}}
             </div>
 
@@ -79,7 +79,7 @@
         <ion-col width-50 *ngFor="let card of row">
 
           <ion-card>
-            <div class="card-title" (click)="openCard(card)">
+            <div class="card-title" (click)="openCard(card)" *ngIf="card.type==CardType.Swipe">
               {{card.title}}
             </div>
 
@@ -90,7 +90,7 @@
                 <img src={{icon}} height="30px" width="30px"/>
 
                 <button ion-button clear icon-left small (click)="starCard(card)">
-                <ion-icon name="star"></ion-icon>    
+                <ion-icon name="star"></ion-icon>
                 </button>
 
                 <button ion-button clear icon-only small (click)="archiveCard(card)">

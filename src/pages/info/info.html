@@ -8,5 +8,7 @@
 </ion-header>
 
 <ion-content class="info">
-	<img src={{infoUrl}}/>
+  <div *ngFor="let link of infoUrl">
+  	<img src={{link}}/>
+  </div>
 </ion-content>
