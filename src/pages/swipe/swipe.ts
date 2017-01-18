@@ -3,7 +3,7 @@ import {AfterViewInit} from '@angular/component';
 import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
 import {StatsPage} from "../stats/stats";
-import {ToastController } from 'ionic-angular';
+import {ToastController, NavController} from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
 import {Proposition} from "../../services/main.service";
@@ -15,7 +15,6 @@ import {
 } from "../../reducers/to-swipe-propositions.reducer";
 import {PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS} from "../../reducers/swiped-propositions.reducer";
 import {PUSH_ANSWER, POP_ANSWER} from "../../reducers/answers.reducer";
-import {GO_TO} from "../../reducers/nav.reducer";
 
 // TODO: Change the structure to accept the "ask" attribute
 export interface Answer {
@@ -40,26 +39,17 @@ export class SwipePage {
   candidacyIds: string[];
   tagIds: string[];
 
-  // TODO: Replace it by randomized generated ids
-  // francoisFillonId = "578f480ab0bba9398100000b";
-  // alainJuppeId = "57962957793b3f868d000012";
-  // emploiId = "4ef479f9bc60fb000400009a";
-  // economieId = "4ef479f9bc60fb00040000aa";
-  // financeId = "4ef479f9bc60fb00040000be";
-  // europeId = "4ef479fcbc60fb0004000204";
-  // educationId = "4ef479f9bc60fb0004000052";
-  // cultureId = "578504e585b1a8f7f6000094";
-  // numeriqueId = "4ef479f8bc60fb000400002c";
-  // justiceId = "4ef479f9bc60fb00040000cc";
-
-  constructor(public toastCtrl: ToastController, public store: Store<AppStore>,
+  constructor(public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService, private candidateService: CandidateService) {
     // From the store
-    store.select('toSwipePropositions').subscribe(x => this.toSwipePropositions = x);
-    store.select('swipedPropositions').subscribe(x => this.swipedPropositions = x);
-    store.select('answers').subscribe(x => this.answers = x);
-    store.select('candidacyIds').subscribe(x => this.candidacyIds = x);
-    store.select('tagIds').subscribe(x => this.tagIds = x);
+    store.select('candidacyIds').subscribe(x => this.candidacyIds = <Array<string>>x);
+    store.select('tagIds').subscribe(x => this.tagIds = <Array<string>>x);
+    store.select('toSwipePropositions').subscribe(x => this.toSwipePropositions = <Array<Proposition>>x);
+    store.select('swipedPropositions').subscribe(x => this.swipedPropositions = <Array<Proposition>>x);
+    store.select('answers').subscribe(x => this.answers = <Array<Answer>>x);
+    // Initialisation of the propositions to swipe
+    this.propositionService.getPropositionForSwipe(this.candidacyIds, this.tagIds)
+      .subscribe(arr => this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: arr}));
     // Initialisation of the stack
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {
@@ -98,7 +88,8 @@ export class SwipePage {
     this.store.dispatch({type: PUSH_ANSWER, payload: answer});
     // Redirect to the StatsPage after the last card
     if (this.toSwipePropositions.length == 0) {
-      this.store.dispatch({type: GO_TO, payload: StatsPage});
+      this.nav.push(StatsPage);
+      // this.store.dispatch({type: GO_TO, payload: StatsPage});
     }
   }
 

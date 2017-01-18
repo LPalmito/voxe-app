@@ -9,7 +9,7 @@ import {MainService} from "../../services/main.service";
 })
 
 export class InfoPage {
-  infoUrl: string;
+  infoUrl: string[];
 
   constructor(public store: Store<AppStore>, private main: MainService) {
     this.main.infoUrl.subscribe(data => this.infoUrl = data);

@@ -15,15 +15,14 @@ import {PropositionService} from "../services/propositions.service";
 import {provideStore} from '@ngrx/store';
 import {answers} from "../reducers/answers.reducer";
 import {cards} from "../reducers/cards.reducer";
-import {donePropositions} from "../reducers/swiped-propositions.reducer";
+import {swipedPropositions} from "../reducers/swiped-propositions.reducer";
 import {election} from "../reducers/election.reducer";
-import {candidates} from "../reducers/candidates.reducer";
 import {infoUrl} from "../reducers/info-url.reducer";
-import {server} from "../reducers/server.reducer";
 import {toSwipePropositions} from "../reducers/to-swipe-propositions.reducer";
 import {tagIds} from "../reducers/tag-ids.reducer";
 import {candidacyIds} from "../reducers/candidacy-ids.reducer";
 import {nav} from "../reducers/nav.reducer";
+import {propositions} from "../reducers/propositions.reducer";
 
 
 @NgModule({
@@ -54,14 +53,13 @@ import {nav} from "../reducers/nav.reducer";
       nav,
       answers,
       cards,
-      donePropositions,
+      swipedPropositions,
       election,
       infoUrl,
-      server,
       toSwipePropositions,
       tagIds,
       candidacyIds,
-      candidates
+      propositions
     }),
     MainService,
     CandidateService,

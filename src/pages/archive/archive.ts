@@ -3,6 +3,7 @@ import {Card, InfoCard, SwipeCard} from "../home/home";
 import {Store} from "@ngrx/store";
 import {AppStore} from "../../store";
 import {MainService} from "../../services/main.service";
+import {RESTORE_CARD} from "../../reducers/cards.reducer";
 
 @Component({
   templateUrl: 'archive.html'
@@ -10,8 +11,7 @@ import {MainService} from "../../services/main.service";
 
 export class ArchivePage {
 
-	// OLD home: HomePage = this.navParams.get('home');
-	cardsRows: Array<InfoCard|SwipeCard>[];// = this.main.putCardsInRows(this.main.getArchives(this.store.cards));
+	cardsRows: Array<InfoCard|SwipeCard>[];
 
   // TODO Computer l'icon en fonction du tagId
 	icon: string = "../assets/img/icone-economie-24.png";
@@ -21,6 +21,6 @@ export class ArchivePage {
 	}
 
 	restoreCard(card: Card) {
-    this.store.dispatch({type: 'RESTORE_CARD', payload: card});
+    this.store.dispatch({type: RESTORE_CARD, payload: card});
 	}
 }

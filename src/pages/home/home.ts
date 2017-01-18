@@ -3,10 +3,14 @@ import {InfoPage} from "../info/info";
 import {SwipePage} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
 import {MainService} from "../../services/main.service";
-import {CandidateService} from "../../services/candidates.service";
-import {PropositionService} from "../../services/propositions.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
+import {SET_INFO_URL} from "../../reducers/info-url.reducer";
+import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
+import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
+import {STAR_CARD, ARCHIVE_CARD, SET_CARDS} from "../../reducers/cards.reducer";
+import {NavController} from "ionic-angular";
+import {PropositionService} from "../../services/propositions.service";
 
 export enum CardType {
   Info,
@@ -14,7 +18,6 @@ export enum CardType {
 }
 
 export class Card {
-	//title: string;
 	image: string;
 	tagIds: string[];
 	isStar: boolean;
@@ -42,16 +45,20 @@ export class HomePage {
 	//TODO computer l'icon en fonction du tagId
   icon: string = "../assets/img/icone-economie-24.png";
 
-	cardsRows: Array<InfoCard|SwipeCard>[]; //= this.main.putCardsInRows(this.main.getNoArchive(this.store.cards));
-	starCardsRows: Array<InfoCard|SwipeCard>[]; //= this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(this.store.cards)));
+	cardsRows: Array<InfoCard|SwipeCard>[];
+	starCardsRows: Array<InfoCard|SwipeCard>[];
 
-	constructor(private main: MainService, private candidateService: CandidateService, private propositionService: PropositionService,
-              public store: Store<AppStore>) {
-    this.main.initParams();
-    this.main.cards.subscribe(function(data) {
-      this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(data));
-      this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(data)));
+	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
+              private propositionService: PropositionService) {
+    this.main.cards.subscribe(cards => {
+      if(cards != undefined) {
+        this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
+        this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(cards));
+      }
     });
+    this.propositionService.propositions.subscribe(x => console.log("propositions: ", x));
+    this.propositionService.getPropositionsForElection();
+    // For tests purposes only
 
     // HARD CODAGE A ENLEVER PLUS TARD
     let cards: Array<InfoCard|SwipeCard> = [
@@ -177,7 +184,7 @@ export class HomePage {
         candidacyIds: [this.main.francoisFillonId, this.main.alainJuppeId]
       }
     ];
-    this.store.dispatch({type: 'SET_CARDS', payload: cards});
+    this.store.dispatch({type: SET_CARDS, payload: cards});
   }
 
 // Navigation methods
@@ -190,39 +197,35 @@ export class HomePage {
 
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
-      //OLD this.nav.push(InfoPage, {infoUrl: infoCard.infoUrl});
-      this.store.dispatch({type: 'SET_INFO_URL', payload: infoCard.infoUrl});
-      this.store.dispatch({type: 'GO_TO', payload: InfoPage});
+      this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl});
+      this.nav.push(InfoPage);
+      // this.store.dispatch({type: GO_TO, payload: InfoPage});
     }
     else if (card.type == CardType.Swipe) {
       let swipeCard = <SwipeCard> card;
-      //OLD this.nav.push(SwipePage, {tagIds: swipeCard.tagIds, candidacyIds: swipeCard.candidacyIds});
-      this.store.dispatch({type: 'SET_TAG_IDS', payload: swipeCard.tagIds});
-      this.store.dispatch({type: 'SET_CANDIDACY_IDS', payload: swipeCard.candidacyIds});
-      this.store.dispatch({type: 'GO_TO', payload: SwipePage});
+      this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
+      this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
+      this.nav.push(SwipePage);
+      // this.store.dispatch({type: GO_TO, payload: SwipePage});
     }
   }
 
 	goToArchivePage() {
-    //OLD this.nav.push(ArchivePage, {home: this});
-    this.store.dispatch({type: 'GO_TO', payload: ArchivePage});
+    this.nav.push(ArchivePage);
+    // this.store.dispatch({type: GO_TO, payload: ArchivePage});
 	}
 
 	starCard(card: Card) {
-	  // OLD
-		//if (card.isStar == true) {
-		//	card.isStar = false;
-		//	this.starCardsRows = this.putCardsInRows(this.getStars(this.cards));
-		//}
-		//else if (card.isStar == false) {
-		//	card.isStar = true;
-		//	this.starCardsRows = this.putCardsInRows(this.getStars(this.cards));
-		//}
-    this.store.dispatch({type: 'STAR_CARD', payload: card});
+    this.store.dispatch({type: STAR_CARD, payload: card});
 	}
 
 	archiveCard(card: Card) {
-		//OLD card.isArchive = true;
-    this.store.dispatch({type: 'ARCHIVE_CARD', payload: card});
+    this.store.dispatch({type: ARCHIVE_CARD, payload: card});
 	}
+
+	// Helper to know if a card is a SwipeCard or not
+	isSwipeCard(card: SwipeCard|InfoCard) {
+    return card.type == CardType.Swipe;
+  }
+
 }

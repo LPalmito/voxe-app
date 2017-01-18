@@ -6,7 +6,8 @@ import {Store} from "@ngrx/store";
 import {AppStore} from "../store";
 import {NavController} from "ionic-angular";
 import {SET_ELECTION} from "../reducers/election.reducer";
-import {Card, InfoCard, SwipeCard, CardType} from "../pages/home/home";
+import {InfoCard, SwipeCard} from "../pages/home/home";
+import {Answer} from "../pages/swipe/swipe";
 
 export interface DataElections {
   meta: {code: number},
@@ -107,19 +108,23 @@ export class MainService {
   electionNameSpace = "primaire-de-la-droite-2016";
   election: Observable<Election>;
   nav: Observable<NavController>;
+  cards: Observable<Array<InfoCard|SwipeCard>>;
+  infoUrl: Observable<Array<string>>;
+  answers: Observable<Array<Answer>>;
 
   constructor(private http: Http, private store: Store<AppStore>) {
-    this.cards = this.store.select('cards');
-    this.infoUrl = this.store.select('infoUrl');
-  }
-
-  initParams() {
-    this.store.dispatch({type: SET_SERVER, payload: "http://compare.voxe.org/api/v1/"});
-    this.store.dispatch({type: SET_ELECTION_NAME_SPACE, payload: "primaire-de-la-droite-2016"});
-    this.nav = this.store.select('nav');
+    this.election = store.select('election');
+    this.nav = store.select('nav');
+    this.cards = store.select('cards');
+    this.infoUrl = store.select('infoUrl');
+    this.answers = store.select('answers');
   }
 
   getElection(): Observable<Election> {
+    return this.election;
+  }
+
+  getElectionViaVoxe(): Observable<Election> {
     return this.http.get(this.server+'elections/search')
       .map(data => data.json().response.elections)
       .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0])
@@ -147,11 +152,10 @@ export class MainService {
 
   // Takes an array of cards and returns an array of rows (a row is an array of 2 cards)
   putCardsInRows(cards: Array<InfoCard|SwipeCard>) {
-    var rows: Array<InfoCard|SwipeCard>[] = [];
-    for (var i=0 ; i<cards.length-1 ; i=i+2) {
+    let rows: Array<InfoCard|SwipeCard>[] = [];
+    for (let i=0; i<cards.length-1; i+=2) {
       rows.push([cards[i],cards[i+1]]);
     }
-
     if (cards.length==1) {
       rows.push([cards[0]]);
     }
@@ -160,7 +164,6 @@ export class MainService {
     }
     return rows;
   }
-
 
   // SALE HARD CODAGE TEMPORAIRE
   francoisFillonId = "578f480ab0bba9398100000b";

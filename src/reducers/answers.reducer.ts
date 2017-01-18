@@ -4,7 +4,7 @@ export const POP_ANSWER = 'POP_ANSWER';
 export const PUSH_ANSWER = 'PUSH_ANSWER';
 export const CLEAR_ANSWERS = 'CLEAR_ANSWERS';
 
-export const answers = (state: Answer[], {type,payload}) => {
+export const answers = (state: Answer[] = [], {type,payload}) => {
   switch (type) {
     case POP_ANSWER:
       state.pop();

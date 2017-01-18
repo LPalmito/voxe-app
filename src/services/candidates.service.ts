@@ -2,17 +2,21 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
 import {MainService, Candidate, Candidacy} from "./main.service";
+import {AppStore} from "../store";
+import {Store} from "@ngrx/store";
 
 @Injectable()
 export class CandidateService {
   candidacies: Observable<Array<Candidacy>>;
   candidates: Observable<Array<Candidate>>;
+  candidacyIds: Observable<Array<string>>;
 
-  constructor(private main: MainService) {
+  constructor(private main: MainService, public store: Store<AppStore>) {
     this.candidacies = this.main.election
       .map(election => election.candidacies);
     this.candidates = this.candidacies
       .map(candidacies => candidacies.map(candidacy => candidacy.candidates[0]));
+    this.candidacyIds = store.select('candidacyIds');
   }
 
   getCandidacies(): Observable<Array<Candidacy>> {

@@ -5,6 +5,7 @@ import {Answer} from "./pages/swipe/swipe";
 
 export interface AppStore {
 
+  // TODO: Deal with the evil nav controller
   nav: NavController;                     // For navigation purposes
 
   election: Election                      // Chosen election

@@ -1,12 +1,12 @@
 import {Component} from "@angular/core";
 import {Answer} from "../swipe/swipe";
-import {NavController} from "ionic-angular";
 import {HomePage} from "../home/home";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {CandidateService} from "../../services/candidates.service";
-import {Tag, Candidate, Candidacy} from "../../services/main.service";
+import {Tag, Candidate, Candidacy, MainService} from "../../services/main.service";
 import {TagService} from "../../services/tags.service";
+import {NavController} from "ionic-angular";
 
 @Component({
   templateUrl: 'stats.html'
@@ -19,16 +19,16 @@ export class StatsPage {
   answers: Answer[];
   displayAnswers = {}; // candidacyIds as keys, {yes: tagId[], no: tagId[], photo: string} as values
 
-  constructor(public navCtrl: NavController, public store: Store<AppStore>,
+  constructor(public store: Store<AppStore>, public main: MainService, public nav: NavController,
               private candidateService: CandidateService, private tagService: TagService) {
     // Get answers
-    store.select('answers').subscribe(x => this.answers = x);
+    this.main.answers.subscribe(x => this.answers = <Array<Answer>>x);
     // Get tags
-    store.select('tagIds').subscribe(tagIds => tagIds.forEach(tagId => {
+    this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
       this.tagService.getTagById(tagId).map(tag => this.tags.push(tag));
     }));
     // Get candidates
-    store.select('candidacyIds').subscribe(candidacyIds => candidacyIds.forEach(candidacyId => {
+    this.candidateService.candidacyIds.subscribe(candidacyIds => candidacyIds.forEach(candidacyId => {
       this.candidateService.getCandidacyById(candidacyId).map(candidacy => {
         this.candidacies.push(candidacy);
         this.candidates.push(candidacy.candidates[0]);
@@ -36,11 +36,12 @@ export class StatsPage {
     }));
     // Create the displayAnswers object
     this.answers.forEach(answer => {
-      if(this.displayAnswers[answer.proposition.candidacy.id] == null)
+      if(this.displayAnswers[answer.proposition.candidacy.id] == null) {
         let photo = this.candidacies
           .filter(x => x.id == answer.proposition.candidacy.id)
           .map(x => x.candidates[0].photo)[0];
         this.displayAnswers[answer.proposition.candidacy.id] = {yes: [], no: [], photo: photo};
+      }
       answer.approved?
         this.displayAnswers[answer.proposition.candidacy.id].yes.push(answer.proposition):
         this.displayAnswers[answer.proposition.candidacy.id].no.push(answer.proposition);
@@ -52,12 +53,13 @@ export class StatsPage {
     return tag.icon.prefix + tag.icon.sizes[size] + tag.icon.name;
   }
 
-  // To get the url of a candidate photo: candidate.photo[size] (for the size: 'small' <-> 50, 'medium' <-> 100, 'large' <-> 300)
+  // Helper to get the url of a candidate photo: candidate.photo[size] (for the size: 'small' <-> 50, 'medium' <-> 100, 'large' <-> 300)
   getPhoto(candidate: Candidate, size: string): string {
     return candidate.photo[size];
   }
 
   goHome() {
-    this.store.dispatch({type: SET_NAV, payload: HomePage});
+    this.nav.push(HomePage);
+    // this.store.dispatch({type: GO_TO, payload: HomePage});
   }
 }

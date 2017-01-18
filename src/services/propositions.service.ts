@@ -16,11 +16,18 @@ export class PropositionService {
   }
 
   getPropositionsForElection(): Observable<Array<Proposition>> {
-    return this.main.election
+    let election = this.main.getElection();
+    return election
       .map(election => election.tags)
       .map(tags => tags.map(tag => tag.id))
-      .flatMap(tagIds => this.getPropositionsForTagsViaVoxe(tagIds))
-      .map(propositions => this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions}));
+      .flatMap(tagIds => {
+        console.log("Hey!");
+        return this.getPropositionsForTagsViaVoxe(tagIds);
+      })
+      .map(propositions => {
+        this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
+        return propositions;
+      });
   }
 
   getPropositionById(propositionId: string): Observable<Proposition> {
@@ -52,7 +59,7 @@ export class PropositionService {
       .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
   }
 
-  // Unused: Get the propositions according to a search by candidacy ids in Voxe API
+  // Get the propositions according to a search by candidacy ids in Voxe API
   getPropositionsForCandidaciesViaVoxe(candidacyIds: string[]): Observable<Array<Proposition>> {
     let url = this.main.server+'propositions/search?candidacyIds=';
     candidacyIds.forEach(x => url += x+",");
@@ -61,7 +68,7 @@ export class PropositionService {
       .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
   }
 
-  // Unused : Get the propositions according to a search by tag ids in Voxe API
+  // Get the propositions according to a search by tag ids in Voxe API
   getPropositionsForTagsViaVoxe(tagIds: string[]): Observable<Array<Proposition>> {
     let url = this.main.server+'propositions/search?tagIds=';
     tagIds.forEach(x => url += x+",");
@@ -73,7 +80,7 @@ export class PropositionService {
           tIds.forEach(tId => tagIds.forEach(tagId => {
             if(tId == tagId) {
               isKept = true;
-            };
+            }
           }));
           return isKept;
       }));

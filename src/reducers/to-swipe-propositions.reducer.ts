@@ -4,7 +4,7 @@ export const SET_TO_SWIPE_PROPOSITIONS = 'SET_TO_SWIPE_PROPOSITIONS';
 export const PUSH_TO_SWIPE_PROPOSITIONS = 'PUSH_TO_SWIPE_PROPOSITIONS';
 export const POP_TO_SWIPE_PROPOSITIONS = 'POP_TO_SWIPE_PROPOSITIONS';
 
-export const toSwipePropositions = (state: Proposition[], {type,payload}) => {
+export const toSwipePropositions = (state: Proposition[] = [], {type,payload}) => {
   switch (type) {
     case SET_TO_SWIPE_PROPOSITIONS:
       return payload;
