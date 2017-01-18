@@ -14,7 +14,7 @@ export enum CardType {
 }
 
 export class Card {
-	title: string;
+	//title: string;
 	image: string;
 	tagIds: string[];
 	isStar: boolean;
@@ -22,12 +22,13 @@ export class Card {
 }
 
 export class InfoCard extends Card {
-	infoUrl: string;
+	infoUrl: string[];
 	type: CardType = CardType.Info;
 }
 
 export class SwipeCard extends Card {
-	candidacyIds: string[];
+	title: string;
+  candidacyIds: string[];
 	type: CardType = CardType.Swipe;
 }
 
@@ -54,36 +55,121 @@ export class HomePage {
 
     // HARD CODAGE A ENLEVER PLUS TARD
     let cards: Array<InfoCard|SwipeCard> = [
-      {
-        title: "La fiscalite",
-        image: "../assets/img/home-fiscalite.jpg",
+       {
+        image: "../assets/img/home-role-president.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: "../assets/img/info-fiscalite.png"
+        infoUrl: ["../assets/img/info-role-president.png"]
       },
-      {
-        title: "Le centre Cigéo",
-        image: "../assets/img/home-cigeo.jpg",
-        tagIds: [this.main.justiceId],
+       {
+        image: "../assets/img/home-carte-scolaire.png",
+        tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: "../assets/img/info-cigeo.png"
+        infoUrl: ["../assets/img/info-carte-scolaire.png"]
       },
-      {
-        title: "La primaire de la droite et du centre",
-        image: "../assets/img/home-primaire.jpg",
-        tagIds: [this.main.cultureId],
+       {
+        image: "../assets/img/home-primaire-droite.png",
+        tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: "../assets/img/info-primaire-droite.png"
+        infoUrl: ["../assets/img/info-primaire-droite.png","../assets/img/info-primaire-droite-2.png"]
+      },
+       {
+        image: "../assets/img/home-dette-publique.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-dette-publique.png","../assets/img/info-dette-publique-2.png"]
+      },
+       {
+        image: "../assets/img/home-crise-migratoire.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-crise-migratoire.png","../assets/img/info-crise-migratoire-2.png"]
+      },
+       {
+        image: "../assets/img/home-etat-d-urgence.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-etat-d-urgence.png"]
+      },
+       {
+        image: "../assets/img/home-prison.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-prison.png"]
+      },
+       {
+        image: "../assets/img/home-religion-ecole.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-religion-ecole.png","../assets/img/info-religion-ecole-2.png","../assets/img/info-religion-ecole-3.png"]
+      },
+       {
+        image: "../assets/img/home-cumul-mandats.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-cumul-mandats.png","../assets/img/info-cumul-mandats-2.png"]
+      },
+       {
+        image: "../assets/img/home-prelevement-source.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-prelevement-source.png","../assets/img/info-prelevement-source-2.png"]
+      },
+       {
+        image: "../assets/img/home-fiscalite.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-fiscalite.png","../assets/img/info-fiscalite-2.png"]
+      },
+       {
+        image: "../assets/img/home-fiche-s.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-fiche-s.png","../assets/img/info-fiche-s-2.png"]
+      },
+       {
+        image: "../assets/img/home-primaire-ecologiste.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-primaire-ecologiste.png"]
+      },
+       {
+        image: "../assets/img/home-cigeo.png",
+        tagIds: [this.main.economieId],
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        infoUrl: ["../assets/img/info-cigeo.png","../assets/img/info-cigeo-2.png"]
       },
       {
-        title: "François Fillon | Alain Juppé",
-        image: "../assets/img/home-primaire.jpg",
+        title: "",
+        image: "../assets/img/home-juppe-fillon.png",
         tagIds: [this.main.numeriqueId],
         isStar: false,
         isArchive: false,

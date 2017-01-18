@@ -29,7 +29,7 @@ export class StatsPage {
     });
     this.displayCandidateInfo[this.candidateInfo.candidateOneID] = {name : "Yannick Jadot", photo: "../assets/img/candidat-jadot.jpg"};
     this.displayCandidateInfo[this.candidateInfo.candidateTwoId] = {name : "Karima Delli", photo: "../assets/img/candidat-delli.jpg"};
-    this.displayThemeInfo[this.themeInfo.themeID] = {name: "Environnement et agriculture", photo: "../assets/img/icone-environnement.png"};
+    this.displayThemeInfo[this.themeInfo.themeID] = {name: "Environnement et agriculture", photo: "../assets/img/icone-environnement-24.png"};
   }
   goToHomePage() {
     this.navCtrl.push(HomePage)
