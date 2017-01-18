@@ -13,15 +13,16 @@
 <!--STACK OF CARDS-->
   <div swing-stack #myswing1 id="card-stack"
        [stackConfig]="stackConfig" (throwoutleft)="voteUp(false)" (throwoutright)="voteUp(true)">
-    <ion-card #mycards1 swing-card *ngFor="let c of cards">
+    <ion-card #mycards1 swing-card *ngFor="let p of toSwipePropositions">
       <!--TITLE-->
       <ion-card-header>
-        <p>{{10-cards.length+1}}/10</p>
+        <p>{{swipedPropositions.length+1}}/{{toSwipePropositions.length+swipedPropositions.length}}</p>
+        <!--TODO: Use the tag and the image from the proposition object here-->
         <h2>Education et recherche</h2>
         <img src="../../assets/img/icone-education-24.png">
       </ion-card-header>
       <!--CONTENT-->
-      <ion-card-content><div>{{c}}</div></ion-card-content>
+      <ion-card-content><div>{{p.text}}</div></ion-card-content>
     </ion-card>
   </div>
 
@@ -33,11 +34,11 @@
       <p>Désapprouver</p>
     </ion-col>
     <!--CANCEL-->
-    <ion-col class="undo width-28" (click)="undo()" *ngIf="lastCards.length > 0">
+    <ion-col class="undo width-28" (click)="undo()" *ngIf="swipedPropositions.length > 0">
       <ion-icon name="undo"></ion-icon>
       <p>Annuler</p>
     </ion-col>
-    <ion-col class="undo width-28" *ngIf="lastCards.length == 0"></ion-col>
+    <ion-col class="undo width-28" *ngIf="swipedPropositions.length == 0"></ion-col>
     <!--APPROVED-->
     <ion-col class="approved width-36" (click)="voteUp(true)">
       <ion-icon name="checkmark"></ion-icon>

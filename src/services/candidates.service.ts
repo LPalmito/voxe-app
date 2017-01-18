@@ -1,43 +1,45 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
-import {MainService, Candidate} from "./main.service";
-import {AppStore} from "../store";
-import {Store} from "@ngrx/store";
-import {SET_CANDIDATES} from "../reducers/candidates.reducer";
+import {MainService, Candidate, Candidacy} from "./main.service";
 
 @Injectable()
 export class CandidateService {
+  candidacies: Observable<Array<Candidacy>>;
   candidates: Observable<Array<Candidate>>;
 
-  constructor(private main: MainService, private store: Store<AppStore>) {
-    this.candidates = store.select('candidates');
+  constructor(private main: MainService) {
+    this.candidacies = this.main.election
+      .map(election => election.candidacies);
+    this.candidates = this.candidacies
+      .map(candidacies => candidacies.map(candidacy => candidacy.candidates[0]));
+  }
+
+  getCandidacies(): Observable<Array<Candidacy>> {
+    return this.candidacies
   }
 
   getCandidates(): Observable<Array<Candidate>> {
-    return this.candidates.flatMap(storeCandidates => {
-      if(storeCandidates != undefined) {
-        return this.candidates;
-      }
-      else {
-        return this.main.getElection()
-          .map(election => election.candidacies)
-          .map(candidacies => candidacies.map(candidacy => candidacy.candidates[0]))
-          .map(candidates => {
-            this.store.dispatch({type: SET_CANDIDATES, payload: candidates});
-            return candidates;
-        });
-      }
-    });
+    return this.candidates
+  }
+
+  getCandidacyById(candidacyId: string): Observable<Candidacy> {
+    return this.candidacies
+      .map(candidacies => candidacies.filter(candidacy => candidacy.id == candidacyId)[0])
   }
 
   getCandidateById(candidateId: string): Observable<Candidate> {
-    return this.getCandidates()
+    return this.candidates
       .map(candidates => candidates.filter(candidate => candidate.id == candidateId)[0])
   }
 
+  getCandidacyByNameSpace(nameSpace: string): Observable<Candidacy> {
+    return this.candidacies
+      .map(candidates => candidates.filter(candidate => candidate.namespace == nameSpace)[0])
+  }
+
   getCandidateByNameSpace(nameSpace: string): Observable<Candidate> {
-    return this.getCandidates()
+    return this.candidates
       .map(candidates => candidates.filter(candidate => candidate.namespace == nameSpace)[0])
   }
 

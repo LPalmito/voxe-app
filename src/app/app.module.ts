@@ -15,12 +15,12 @@ import {PropositionService} from "../services/propositions.service";
 import {provideStore} from '@ngrx/store';
 import {answers} from "../reducers/answers.reducer";
 import {cards} from "../reducers/cards.reducer";
-import {donePropositions} from "../reducers/done-propositions.reducer";
-import {electionNameSpace} from "../reducers/election-name-space.reducer";
+import {donePropositions} from "../reducers/swiped-propositions.reducer";
+import {election} from "../reducers/election.reducer";
 import {candidates} from "../reducers/candidates.reducer";
 import {infoUrl} from "../reducers/info-url.reducer";
 import {server} from "../reducers/server.reducer";
-import {swipePropositions} from "../reducers/swipe-propositions.reducer";
+import {toSwipePropositions} from "../reducers/to-swipe-propositions.reducer";
 import {tagIds} from "../reducers/tag-ids.reducer";
 import {candidacyIds} from "../reducers/candidacy-ids.reducer";
 import {nav} from "../reducers/nav.reducer";
@@ -55,10 +55,10 @@ import {nav} from "../reducers/nav.reducer";
       answers,
       cards,
       donePropositions,
-      electionNameSpace,
+      election,
       infoUrl,
       server,
-      swipePropositions,
+      toSwipePropositions,
       tagIds,
       candidacyIds,
       candidates

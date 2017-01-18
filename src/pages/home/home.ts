@@ -5,8 +5,8 @@ import {ArchivePage} from "../archive/archive";
 import {MainService} from "../../services/main.service";
 import {CandidateService} from "../../services/candidates.service";
 import {PropositionService} from "../../services/propositions.service";
-import {Store} from "@ngrx/store";
 import {AppStore} from "../../store";
+import {Store} from "@ngrx/store";
 
 export enum CardType {
   Info,
@@ -180,6 +180,7 @@ export class HomePage {
     this.store.dispatch({type: 'SET_CARDS', payload: cards});
   }
 
+// Navigation methods
 	openCard(card: InfoCard|SwipeCard) {
     // // FOR TESTS ONLY
     // this.candidateService.getCandidates()

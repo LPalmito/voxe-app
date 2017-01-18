@@ -5,8 +5,7 @@ import 'rxjs/Rx';
 import {Store} from "@ngrx/store";
 import {AppStore} from "../store";
 import {NavController} from "ionic-angular";
-import {SET_SERVER} from "../reducers/server.reducer";
-import {SET_ELECTION_NAME_SPACE} from "../reducers/election-name-space.reducer";
+import {SET_ELECTION} from "../reducers/election.reducer";
 import {Card, InfoCard, SwipeCard, CardType} from "../pages/home/home";
 
 export interface DataElections {
@@ -103,13 +102,11 @@ export interface Proposition {
 
 @Injectable()
 export class MainService {
+  // TODO: Add a back-office to allow Voxe to change those 2 parameters?
+  server = "http://compare.voxe.org/api/v1/";
+  electionNameSpace = "primaire-de-la-droite-2016";
+  election: Observable<Election>;
   nav: Observable<NavController>;
-  server: Observable<string>;
-  electionNameSpace: Observable<string>;
-  ser: string;
-  electNameSpace: string;
-  cards: Observable<Array<Card>>;
-  infoUrl: Observable<string>;
 
   constructor(private http: Http, private store: Store<AppStore>) {
     this.cards = this.store.select('cards');
@@ -120,16 +117,16 @@ export class MainService {
     this.store.dispatch({type: SET_SERVER, payload: "http://compare.voxe.org/api/v1/"});
     this.store.dispatch({type: SET_ELECTION_NAME_SPACE, payload: "primaire-de-la-droite-2016"});
     this.nav = this.store.select('nav');
-    this.server = this.store.select('server');
-    this.electionNameSpace = this.store.select('electionNameSpace');
-    this.server.subscribe(x => this.ser = x);
-    this.electionNameSpace.subscribe(x => this.electNameSpace = x);
   }
 
   getElection(): Observable<Election> {
-    return this.http.get(this.ser+'elections/search')
+    return this.http.get(this.server+'elections/search')
       .map(data => data.json().response.elections)
-      .map(elections => elections.filter(election => election.namespace == this.electNameSpace)[0]);
+      .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0])
+      .map(election => {
+        this.store.dispatch({type: SET_ELECTION, payload: election});
+        return election;
+      });
   }
 
   arrObs2ObsArr(arrObs: Array<Observable<any>>): Observable<Array<any>> {

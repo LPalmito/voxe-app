@@ -15,40 +15,58 @@ export class PropositionService {
     this.propositions = store.select('propositions');
   }
 
-  // TODO: Add the ability to add propositions individually in case it's not already in the propositions of the store?
-  getPropositions(): Observable<Array<Proposition>> {
-    return this.propositions.flatMap(storePropositions => {
-      if(storePropositions != undefined)
-        return this.propositions;
-      else {
-        return this.http.get(this.main.ser+'propositions/search')
-          .map(data => data.json().response.propositions)
-          .map(propositions => {
-            this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
-            return propositions;
-          });
-      }
-    });
+  getPropositionsForElection(): Observable<Array<Proposition>> {
+    return this.main.election
+      .map(election => election.tags)
+      .map(tags => tags.map(tag => tag.id))
+      .flatMap(tagIds => this.getPropositionsForTagsViaVoxe(tagIds))
+      .map(propositions => this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions}));
   }
 
   getPropositionById(propositionId: string): Observable<Proposition> {
-    return this.getPropositions()
+    return this.propositions
       .map(arr => arr.filter(x => x.id == propositionId)[0]);
   }
 
   getPropositionsForCandidacies(candidacyIds: string[]): Observable<Array<Proposition>> {
-    let url = this.main.ser+'propositions/search?candidacyIds=';
-    candidacyIds.forEach(x => url += x+",");
-    return this.http.get(url)
-      .map(data => data.json().response.propositions)
+    return this.propositions
       .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
   }
 
   getPropositionsForTags(tagIds: string[]): Observable<Array<Proposition>> {
-    let url = this.main.ser+'propositions/search?tagIds=';
+    return this.propositions
+      .map(arr => arr.filter(x => {
+        let tIds = x.tags.map(tag => tag.id);
+        let isKept = false;
+        tIds.forEach(tId => tagIds.forEach(tagId => {
+          if(tId == tagId) {
+            isKept = true;
+          };
+        }));
+        return isKept;
+      }));
+  }
+
+  getPropositionForSwipe(candidacyIds: string[], tagIds: string[]): Observable<Array<Proposition>> {
+    return this.getPropositionsForTags(tagIds)
+      .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
+  }
+
+  // Unused: Get the propositions according to a search by candidacy ids in Voxe API
+  getPropositionsForCandidaciesViaVoxe(candidacyIds: string[]): Observable<Array<Proposition>> {
+    let url = this.main.server+'propositions/search?candidacyIds=';
+    candidacyIds.forEach(x => url += x+",");
+    return this.http.get(url)
+      .map(data => data.json().response.toSwipePropositions)
+      .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
+  }
+
+  // Unused : Get the propositions according to a search by tag ids in Voxe API
+  getPropositionsForTagsViaVoxe(tagIds: string[]): Observable<Array<Proposition>> {
+    let url = this.main.server+'propositions/search?tagIds=';
     tagIds.forEach(x => url += x+",");
     return this.http.get(url)
-      .map(data => data.json().response.propositions)
+      .map(data => data.json().response.toSwipePropositions)
       .map(arr => arr.filter(x => {
           let tIds = x.tags.map(tag => tag.id);
           let isKept = false;
@@ -59,11 +77,6 @@ export class PropositionService {
           }));
           return isKept;
       }));
-  }
-
-  getPropositionForSwipe(candidacyIds: string[], tagIds: string[]): Observable<Array<Proposition>> {
-    return this.getPropositionsForTags(tagIds)
-      .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
   }
 
 }

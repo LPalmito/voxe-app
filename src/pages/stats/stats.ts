@@ -1,37 +1,63 @@
 import {Component} from "@angular/core";
 import {Answer} from "../swipe/swipe";
-import {NavParams} from "ionic-angular";
 import {NavController} from "ionic-angular";
 import {HomePage} from "../home/home";
-// import {Candidate, Tag} from "../../services/main.service";
+import {AppStore} from "../../store";
+import {Store} from "@ngrx/store";
+import {CandidateService} from "../../services/candidates.service";
+import {Tag, Candidate, Candidacy} from "../../services/main.service";
+import {TagService} from "../../services/tags.service";
 
 @Component({
   templateUrl: 'stats.html'
 })
 
-//TODO: Homogénéiser les noms (candidate->candidacy, theme->tag, etc) avec les autres pages
 export class StatsPage {
-  candidateInfo = {candidateOneID : 'test', candidateTwoId : 'test2'};
-  themeInfo = {themeID: 5};
-  displayCandidateInfo = {};
-  displayThemeInfo = {};
+  tags: Tag[];
+  candidacies: Candidacy[];
+  candidates: Candidate[];
   answers: Answer[];
-  displayAnswers = {};
+  displayAnswers = {}; // candidacyIds as keys, {yes: tagId[], no: tagId[], photo: string} as values
 
-  constructor(navParams: NavParams, public navCtrl: NavController) {
-    this.answers = navParams.get('answers');
+  constructor(public navCtrl: NavController, public store: Store<AppStore>,
+              private candidateService: CandidateService, private tagService: TagService) {
+    // Get answers
+    store.select('answers').subscribe(x => this.answers = x);
+    // Get tags
+    store.select('tagIds').subscribe(tagIds => tagIds.forEach(tagId => {
+      this.tagService.getTagById(tagId).map(tag => this.tags.push(tag));
+    }));
+    // Get candidates
+    store.select('candidacyIds').subscribe(candidacyIds => candidacyIds.forEach(candidacyId => {
+      this.candidateService.getCandidacyById(candidacyId).map(candidacy => {
+        this.candidacies.push(candidacy);
+        this.candidates.push(candidacy.candidates[0]);
+      })
+    }));
+    // Create the displayAnswers object
     this.answers.forEach(answer => {
-      if(this.displayAnswers[answer.candidateId] == null)
-        this.displayAnswers[answer.candidateId] = {yes: [], no: []};
+      if(this.displayAnswers[answer.proposition.candidacy.id] == null)
+        let photo = this.candidacies
+          .filter(x => x.id == answer.proposition.candidacy.id)
+          .map(x => x.candidates[0].photo)[0];
+        this.displayAnswers[answer.proposition.candidacy.id] = {yes: [], no: [], photo: photo};
       answer.approved?
-        this.displayAnswers[answer.candidateId].yes.push(answer.proposition):
-        this.displayAnswers[answer.candidateId].no.push(answer.proposition);
+        this.displayAnswers[answer.proposition.candidacy.id].yes.push(answer.proposition):
+        this.displayAnswers[answer.proposition.candidacy.id].no.push(answer.proposition);
     });
-    this.displayCandidateInfo[this.candidateInfo.candidateOneID] = {name : "Yannick Jadot", photo: "../assets/img/candidat-jadot.jpg"};
-    this.displayCandidateInfo[this.candidateInfo.candidateTwoId] = {name : "Karima Delli", photo: "../assets/img/candidat-delli.jpg"};
-    this.displayThemeInfo[this.themeInfo.themeID] = {name: "Environnement et agriculture", photo: "../assets/img/icone-environnement-24.png"};
   }
-  goToHomePage() {
-    this.navCtrl.push(HomePage)
+
+  // Helper to get the url of a tag icon (for the size: 0 <-> 32, 1 <-> 64)
+  getIcon(tag: Tag, size: number): string {
+    return tag.icon.prefix + tag.icon.sizes[size] + tag.icon.name;
+  }
+
+  // To get the url of a candidate photo: candidate.photo[size] (for the size: 'small' <-> 50, 'medium' <-> 100, 'large' <-> 300)
+  getPhoto(candidate: Candidate, size: string): string {
+    return candidate.photo[size];
+  }
+
+  goHome() {
+    this.store.dispatch({type: SET_NAV, payload: HomePage});
   }
 }

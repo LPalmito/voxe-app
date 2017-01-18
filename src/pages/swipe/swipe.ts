@@ -2,16 +2,23 @@ import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import {AfterViewInit} from '@angular/component';
 import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
-import {NavController, NavParams} from "ionic-angular";
 import {StatsPage} from "../stats/stats";
 import {ToastController } from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
 import {Proposition} from "../../services/main.service";
+import {AppStore} from "../../store";
+import {Store} from "@ngrx/store";
+import {
+  SET_TO_SWIPE_PROPOSITIONS, POP_TO_SWIPE_PROPOSITIONS,
+  PUSH_TO_SWIPE_PROPOSITIONS
+} from "../../reducers/to-swipe-propositions.reducer";
+import {PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS} from "../../reducers/swiped-propositions.reducer";
+import {PUSH_ANSWER, POP_ANSWER} from "../../reducers/answers.reducer";
+import {GO_TO} from "../../reducers/nav.reducer";
 
 // TODO: Change the structure to accept the "ask" attribute
 export interface Answer {
-  candidateId: string,
   proposition: Proposition,
   approved: boolean
 }
@@ -26,12 +33,10 @@ export class SwipePage {
   @ViewChild('myswing1') swingStack: SwingStackComponent;
   @ViewChildren('mypropositions1') swingPropositions: QueryList<SwingCardComponent>;
 
-  propositions: Array<Proposition> = [];
-  lastPropositions: Array<Proposition> = [];
   stackConfig: StackConfig;
-  //propositions: Array<string> = [];
-  //lastPropositions: Array<string> = [];
-  answers: Answer[] = [];
+  toSwipePropositions: Array<Proposition>;
+  swipedPropositions: Array<Proposition>;
+  answers: Answer[];
   candidacyIds: string[];
   tagIds: string[];
 
@@ -47,9 +52,15 @@ export class SwipePage {
   // numeriqueId = "4ef479f8bc60fb000400002c";
   // justiceId = "4ef479f9bc60fb00040000cc";
 
-  constructor(public nav: NavController, public navParams: NavParams, public toastCtrl: ToastController,
-              private propositionService: PropositionService, private candidateService: CandidateService
-  ) {
+  constructor(public toastCtrl: ToastController, public store: Store<AppStore>,
+              private propositionService: PropositionService, private candidateService: CandidateService) {
+    // From the store
+    store.select('toSwipePropositions').subscribe(x => this.toSwipePropositions = x);
+    store.select('swipedPropositions').subscribe(x => this.swipedPropositions = x);
+    store.select('answers').subscribe(x => this.answers = x);
+    store.select('candidacyIds').subscribe(x => this.candidacyIds = x);
+    store.select('tagIds').subscribe(x => this.tagIds = x);
+    // Initialisation of the stack
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {
         return Math.min(Math.abs(offset) / (element.offsetWidth/2), 1);
@@ -57,14 +68,12 @@ export class SwipePage {
       transform: (element, x, y, r) => SwipePage.onItemMove(element, x, y, r),
       throwOutDistance: d => 800
     };
-    this.candidacyIds = this.navParams.get('candidacyIds');
-    this.tagIds = this.navParams.get('tagIds');
   }
 
   ngAfterViewInit() {
     this.candidateService.getCandidates();
     this.propositionService.getPropositionForSwipe(this.candidacyIds, this.tagIds)
-      .subscribe(data => this.propositions = data);
+      .subscribe(data => this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: data}));
   }
 
   // TODO: Resolve the color bug when dragging but not coming back to white
@@ -83,24 +92,21 @@ export class SwipePage {
 
   // Save the answer of the user
   voteUp(approved: boolean) {
-    this.answers.push({
-      candidacyId: "test",
-      proposition: this.propositions[this.propositions.length-1],
-      approved: approved
-    });
-    this.lastPropositions.push(this.propositions[this.propositions.length-1]);
-    this.propositions.pop();
+    let answer = {proposition: this.last(this.toSwipePropositions), approved: approved};
+    this.store.dispatch({type: PUSH_SWIPED_PROPOSITIONS, payload: this.last(this.toSwipePropositions)});
+    this.store.dispatch({type: POP_TO_SWIPE_PROPOSITIONS, payload: null});
+    this.store.dispatch({type: PUSH_ANSWER, payload: answer});
     // Redirect to the StatsPage after the last card
-    if (this.propositions.length == 0) {
-      this.nav.push(StatsPage, {answers: this.answers, candidacyIds: this.candidacyIds, tagIds: this.tagIds});
+    if (this.toSwipePropositions.length == 0) {
+      this.store.dispatch({type: GO_TO, payload: StatsPage});
     }
   }
 
   // Undo last action
   undo() {
-    this.answers.pop();
-    this.propositions.push(this.lastPropositions[this.lastPropositions.length-1]);
-    this.lastPropositions.pop();
+    this.store.dispatch({type: POP_ANSWER, payload: null});
+    this.store.dispatch({type: PUSH_TO_SWIPE_PROPOSITIONS, payload: this.last(this.swipedPropositions)});
+    this.store.dispatch({type: POP_SWIPED_PROPOSITIONS, payload: null});
     this.cancelToast();
   }
 
@@ -123,4 +129,10 @@ export class SwipePage {
     });
     toast.present();
   }
+
+  // Helper to get the las element of an array
+  last(arr) {
+    return arr[arr.length-1]
+  }
+
 }

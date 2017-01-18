@@ -9,52 +9,46 @@
 
 <ion-content padding class="independant-card">
 
-  <!--Head of stats page: theme-->
+  <!--Head of stats page: tag-->
+  <!--TODO: Think about a template for several tags-->
   <ion-card class="title-theme">
     <ion-card-header>
-      <img id="theme" src="{{displayThemeInfo[themeInfo.themeID]['photo']}}"/>
-      {{displayThemeInfo[themeInfo.themeID]['name']}}
+      <img id="theme" src="{{getIcon(tags[0], 0)}}"/>
+      {{tags[0].name}}
     </ion-card-header>
     <hr>
     <!--Pictures and names of candidates-->
     <ion-card-content>
       <ion-grid>
+        <!--TODO: Think about to adapt the template for more than 2 candidates-->
         <ion-row>
-          <ion-col width-50 class="image-candidate">
+          <ion-col width-50 class="image-candidate" *ngFor="let c of candidates">
             <div>
-              <img class="candidate-stats" src="{{displayCandidateInfo[candidateInfo.candidateIds[0]]['photo']}}"/>
-            </div>
-          </ion-col>
-          <ion-col width-50 class="image-candidate">
-            <div>
-              <img class="candidate-stats" src="{{displayCandidateInfo[candidateInfo.candidateIds[1]]['photo']}}"/>
+              <img class="candidate-stats" src="{{getPhoto(c, 'small')}}"/>
             </div>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col width-50 class="candidate-name">
-            {{displayCandidateInfo[candidateInfo.candidateIds[0]]['name']}}
-          </ion-col>
-          <ion-col width-50 class="candidate-name">
-            {{displayCandidateInfo[candidateInfo.candidateIds[1]]['name']}}
+          <ion-col width-50 class="candidate-name" *ngFor="let c of candidates">
+            {{c.firstName}} {{c.lastName}}
           </ion-col>
         </ion-row>
 
         <!--Swipe results-->
         <ion-row>
           <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers['test'].yes" name="checkmark" class="vote-yes"></ion-icon>
+            <ion-icon *ngFor="let proposition of displayAnswers[candidates[0].id].yes" name="checkmark" class="vote-yes"></ion-icon>
           </ion-col>
           <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers['test'].yes" name="checkmark" class="vote-yes"></ion-icon>
+            <ion-icon *ngFor="let proposition of displayAnswers[candidates[0].id].yes" name="checkmark" class="vote-yes"></ion-icon>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers['test'].no" name="close" class="vote-no"></ion-icon>
+            <ion-icon *ngFor="let proposition of displayAnswers[candidates[1].id].no" name="close" class="vote-no"></ion-icon>
           </ion-col>
           <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers['test'].no" name="close" class="vote-no"></ion-icon>
+            <ion-icon *ngFor="let proposition of displayAnswers[candidates[1].id].no" name="close" class="vote-no"></ion-icon>
           </ion-col>
         </ion-row>
 
@@ -62,19 +56,19 @@
     </ion-card-content>
   </ion-card>
 
+  <!--TODO: Find a way to retrieve the candidate photo here => add the url in the displayAnswers object?-->
   <!--Propositions summary-->
   <div *ngFor="let answer of answers" text-wrap>
     <ion-item *ngIf="answer.approved == true">
       <ion-avatar item-left>
-        <img src="{{displayCandidateInfo[answer.candidateId]['photo']}}">
+        <img src="{{displayAnswers[answer.candidateId].photo}}">
       </ion-avatar>
       <h2>{{answer.candidateId}} – <ion-icon name="checkmark" class="vote-yes"></ion-icon></h2>
       <p>{{answer.proposition}}</p>
     </ion-item>
     <ion-item *ngIf="answer.approved == false">
       <ion-avatar item-left>
-        <!--{{displayCandidateInfo[answer.candidateId]['photo']}}-->
-        <img src="{{displayCandidateInfo[answer.candidateId]['photo']}}">
+        <img src="{{displayAnswers[answer.candidateId].photo}}">
       </ion-avatar>
       <h2>{{answer.candidateId}} – <ion-icon name="close" class="vote-no"></ion-icon></h2>
       <p>{{answer.proposition}}</p>
@@ -82,6 +76,6 @@
   </div>
 
   <!--Go to home page button-->
-  <button (click)="goToHomePage()" ion-button round class="again-button">Faire un autre test</button>
+  <button (click)="goHome()" ion-button round class="again-button">Faire un autre test</button>
 
 </ion-content>
