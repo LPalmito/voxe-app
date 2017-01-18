@@ -1,13 +1,17 @@
 import {Component} from "@angular/core";
-import {NavParams} from "ionic-angular";
+import {Store} from "@ngrx/store";
+import {AppStore} from "../../store";
+import {MainService} from "../../services/main.service";
+
 
 @Component({
   templateUrl: 'info.html'
 })
 
 export class InfoPage {
-	infoUrl: string = this.navParams.get('infoUrl');
+  infoUrl: string;
 
-	constructor(public navParams: NavParams) {
-	}
+  constructor(public store: Store<AppStore>, private main: MainService) {
+    this.main.infoUrl.subscribe(data => this.infoUrl = data);
+  }
 }

@@ -7,6 +7,7 @@ import {AppStore} from "../store";
 import {NavController} from "ionic-angular";
 import {SET_SERVER} from "../reducers/server.reducer";
 import {SET_ELECTION_NAME_SPACE} from "../reducers/election-name-space.reducer";
+import {Card, InfoCard, SwipeCard, CardType} from "../pages/home/home";
 
 export interface DataElections {
   meta: {code: number},
@@ -107,8 +108,12 @@ export class MainService {
   electionNameSpace: Observable<string>;
   ser: string;
   electNameSpace: string;
+  cards: Observable<Array<Card>>;
+  infoUrl: Observable<string>;
 
   constructor(private http: Http, private store: Store<AppStore>) {
+    this.cards = this.store.select('cards');
+    this.infoUrl = this.store.select('infoUrl');
   }
 
   initParams() {
@@ -130,5 +135,46 @@ export class MainService {
   arrObs2ObsArr(arrObs: Array<Observable<any>>): Observable<Array<any>> {
     return Observable.from(arrObs).flatMap(x => x);
   }
+
+  getStars(cards: Array<InfoCard|SwipeCard>) {
+    return cards.filter(card => card.isStar);
+  }
+
+  getNoArchive(cards: Array<InfoCard|SwipeCard>) {
+    return cards.filter(card => !card.isArchive);
+  }
+
+  getArchives(cards: Array<InfoCard|SwipeCard>) {
+    return cards.filter(card => card.isArchive);
+  }
+
+  // Takes an array of cards and returns an array of rows (a row is an array of 2 cards)
+  putCardsInRows(cards: Array<InfoCard|SwipeCard>) {
+    var rows: Array<InfoCard|SwipeCard>[] = [];
+    for (var i=0 ; i<cards.length-1 ; i=i+2) {
+      rows.push([cards[i],cards[i+1]]);
+    }
+
+    if (cards.length==1) {
+      rows.push([cards[0]]);
+    }
+    else if (cards.length%2!=0) {
+      rows.push([cards[cards.length-1]]);
+    }
+    return rows;
+  }
+
+
+  // SALE HARD CODAGE TEMPORAIRE
+  francoisFillonId = "578f480ab0bba9398100000b";
+  alainJuppeId = "57962957793b3f868d000012";
+  emploiId = "4ef479f9bc60fb000400009a";
+  economieId = "4ef479f9bc60fb00040000aa";
+  financeId = "4ef479f9bc60fb00040000be";
+  europeId = "4ef479fcbc60fb0004000204";
+  educationId = "4ef479f9bc60fb0004000052";
+  cultureId = "578504e585b1a8f7f6000094";
+  numeriqueId = "4ef479f8bc60fb000400002c";
+  justiceId = "4ef479f9bc60fb00040000cc";
 
 }
