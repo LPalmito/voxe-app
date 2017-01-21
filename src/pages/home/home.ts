@@ -56,8 +56,8 @@ export class HomePage {
         this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(cards));
       }
     });
-    this.propositionService.propositions.subscribe(x => console.log("propositions: ", x));
-    this.propositionService.getPropositionsForElection();
+    this.main.getElectionViaVoxe().subscribe(x => console.log("election: ", x));
+    this.propositionService.getPropositionsForElection().subscribe(x => console.log("propositions: ", x));
     // For tests purposes only
 
     // HARD CODAGE A ENLEVER PLUS TARD

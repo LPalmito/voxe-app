@@ -15,6 +15,7 @@ import {
 } from "../../reducers/to-swipe-propositions.reducer";
 import {PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS} from "../../reducers/swiped-propositions.reducer";
 import {PUSH_ANSWER, POP_ANSWER} from "../../reducers/answers.reducer";
+import {TagService} from "../../services/tags.service";
 
 // TODO: Change the structure to accept the "ask" attribute
 export interface Answer {
@@ -40,15 +41,15 @@ export class SwipePage {
   tagIds: string[];
 
   constructor(public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController,
-              private propositionService: PropositionService, private candidateService: CandidateService) {
-    // From the store
-    store.select('candidacyIds').subscribe(x => this.candidacyIds = <Array<string>>x);
-    store.select('tagIds').subscribe(x => this.tagIds = <Array<string>>x);
-    store.select('toSwipePropositions').subscribe(x => this.toSwipePropositions = <Array<Proposition>>x);
-    store.select('swipedPropositions').subscribe(x => this.swipedPropositions = <Array<Proposition>>x);
-    store.select('answers').subscribe(x => this.answers = <Array<Answer>>x);
+              private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService) {
+    // From services
+    this.candidateService.candidacyIds.subscribe(x => this.candidacyIds = <Array<string>>x);
+    this.tagService.tagIds.subscribe(x => this.tagIds = <Array<string>>x);
+    this.propositionService.toSwipePropositions.subscribe(x => this.toSwipePropositions = <Array<Proposition>>x);
+    this.propositionService.swipedPropositions.subscribe(x => this.swipedPropositions = <Array<Proposition>>x);
+    this.propositionService.answers.subscribe(x => this.answers = <Array<Answer>>x);
     // Initialisation of the propositions to swipe
-    this.propositionService.getPropositionForSwipe(this.candidacyIds, this.tagIds)
+    this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds)
       .subscribe(arr => this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: arr}));
     // Initialisation of the stack
     this.stackConfig = {
@@ -62,7 +63,7 @@ export class SwipePage {
 
   ngAfterViewInit() {
     this.candidateService.getCandidates();
-    this.propositionService.getPropositionForSwipe(this.candidacyIds, this.tagIds)
+    this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds)
       .subscribe(data => this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: data}));
   }
 

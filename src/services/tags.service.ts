@@ -14,7 +14,7 @@ export class TagService {
   }
 
   getTags(): Observable<Array<Tag>> {
-    return this.main.getElectionViaVoxe()
+    return this.main.election
       .map(election => election.tags)
   }
 
