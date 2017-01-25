@@ -103,9 +103,9 @@ export interface Proposition {
 
 @Injectable()
 export class MainService {
-  // TODO: Add a back-office to allow Voxe to change those 2 parameters?
   server = "http://compare.voxe.org/api/v1/";
   electionNameSpace = "primaire-de-la-droite-2016";
+  //electionNameSpace = "primaire-de-la-gauche-(à-venir)";
   election: Observable<Election>;
   nav: Observable<NavController>;
   cards: Observable<Array<InfoCard|SwipeCard>>;
@@ -120,13 +120,16 @@ export class MainService {
     this.answers = store.select('answers');
   }
 
+  // OK
   getElectionViaVoxe(): Observable<Election> {
     return this.http.get(this.server+'elections/search')
-      .map(data => data.json().response.elections)
-      .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0])
-      .map(election => {
-        this.store.dispatch({type: SET_ELECTION, payload: election});
-        return election;
+      .map(data => {
+        //console.log("data:"+data.json());
+        return data.json().response.elections;
+      })
+      .map(elections => {
+        //console.log("elections:"+elections);
+        return elections.filter(election => election.namespace == this.electionNameSpace)[0];
       });
   }
 
@@ -189,6 +192,8 @@ export class MainService {
   // SALE HARD CODAGE TEMPORAIRE
   francoisFillonId = "578f480ab0bba9398100000b";
   alainJuppeId = "57962957793b3f868d000012";
+  vincentPeillonId = "58511f947ab19e01d2000076";
+  benoitHamonId = "5851168e7ab19e6a87000043";
   emploiId = "4ef479f9bc60fb000400009a";
   economieId = "4ef479f9bc60fb00040000aa";
   financeId = "4ef479f9bc60fb00040000be";

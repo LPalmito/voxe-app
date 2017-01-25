@@ -9,6 +9,8 @@ import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
 import {STAR_CARD, ARCHIVE_CARD, SET_CARDS} from "../../reducers/cards.reducer";
+import {SET_ELECTION} from "../../reducers/election.reducer";
+import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController} from "ionic-angular";
 import {PropositionService} from "../../services/propositions.service";
 
@@ -42,7 +44,6 @@ export class SwipeCard extends Card {
 
 export class HomePage {
 
-	//TODO computer l'icon en fonction du tagId
   icon: string = "../assets/img/icone-economie-24.png";
 
 	cardsRows: Array<InfoCard|SwipeCard>[];
@@ -50,15 +51,27 @@ export class HomePage {
 
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService) {
+    
+    //Initialise les cartes. OK
     this.main.cards.subscribe(cards => {
       if(cards != undefined) {
         this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
         this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(cards));
       }
     });
-    this.main.getElectionViaVoxe().subscribe(x => console.log("election: ", x));
-    this.propositionService.getPropositionsForElection().subscribe(x => console.log("propositions: ", x));
-    // For tests purposes only
+
+    //Initialise l'élection. OK
+    this.main.getElectionViaVoxe().subscribe(election => {
+      //console.log("election:"+election);
+      this.store.dispatch({type: SET_ELECTION, payload: election});
+    });
+
+    //Initialise les propositions. OK
+    this.propositionService.getPropositionsForElection().subscribe(propositions => {
+      //console.log("propositions:"+propositions);
+      this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
+      //this.store.select('propositions').subscribe(x => console.log(x));
+    });
 
     // HARD CODAGE A ENLEVER PLUS TARD
     let cards: Array<InfoCard|SwipeCard> = [
@@ -181,7 +194,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Swipe,
-        candidacyIds: [this.main.francoisFillonId, this.main.alainJuppeId]
+        candidacyIds: [this.main.vincentPeillonId, this.main.benoitHamonId]
       }
     ];
     this.store.dispatch({type: SET_CARDS, payload: cards});

@@ -44,13 +44,19 @@ export class SwipePage {
               private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService) {
     // From services
     this.candidateService.candidacyIds.subscribe(x => this.candidacyIds = <Array<string>>x);
+        console.log(this.candidacyIds);
     this.tagService.tagIds.subscribe(x => this.tagIds = <Array<string>>x);
+        console.log(this.tagIds);
     this.propositionService.toSwipePropositions.subscribe(x => this.toSwipePropositions = <Array<Proposition>>x);
+        console.log(this.toSwipePropositions);
     this.propositionService.swipedPropositions.subscribe(x => this.swipedPropositions = <Array<Proposition>>x);
+        console.log(this.swipedPropositions);
     this.propositionService.answers.subscribe(x => this.answers = <Array<Answer>>x);
+
     // Initialisation of the propositions to swipe
     this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds)
       .subscribe(arr => this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: arr}));
+      
     // Initialisation of the stack
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {

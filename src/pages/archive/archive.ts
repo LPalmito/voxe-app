@@ -13,7 +13,6 @@ export class ArchivePage {
 
 	cardsRows: Array<InfoCard|SwipeCard>[];
 
-  // TODO Computer l'icon en fonction du tagId
 	icon: string = "../assets/img/icone-economie-24.png";
 
 	constructor(private main: MainService, public store: Store<AppStore>) {

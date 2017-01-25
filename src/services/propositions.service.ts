@@ -22,14 +22,24 @@ export class PropositionService {
     this.answers = store.select('answers');
   }
 
+  // NE RETOURNE QUE 500 PROPOSITIONS
   getPropositionsForElection(): Observable<Array<Proposition>> {
+    //this.main.election.subscribe(x => console.log("main.election:"+x));
     return this.main.election
-      .map(election => election != undefined ? election.tags : [])
-      .map(tags => tags.map(tag => tag.id))
-      .flatMap(tagIds => this.getPropositionsForTagsViaVoxe(tagIds))
-      .map(propositions => {
-        this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
-        return propositions;
+      .map(election => {
+        //console.log("election:"+election);
+        return election != undefined ? election.tags : [];
+      })
+      .map(tags => {
+        //console.log("tags:"+tags);
+        return tags.map(tag => {
+          //console.log("tag:"+tag);
+          return tag.id;
+          });
+      })
+      .flatMap(tagIds => {
+        //console.log("tagIds:"+tagIds);
+        return this.getPropositionsForTagsViaVoxe(tagIds);
       });
   }
 
@@ -43,7 +53,10 @@ export class PropositionService {
       .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
   }
 
+
+  //NE RETOURNE QU'UN ARRAY DE 15 PROPOSITIONS : alors qu'il y en a + de 15 sur le comparateur rien qu'avec FF et AJ
   getPropositionsForTags(tagIds: string[]): Observable<Array<Proposition>> {
+    this.propositions.subscribe(x => console.log("this.propositions:"+x));
     let result = this.propositions
       .map(arr => arr.filter(x => {
         let tIds = x.tags.map(tag => tag.id);
@@ -70,11 +83,13 @@ export class PropositionService {
       .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
   }
 
+  // NE RETOURNE QUE 500 PROPOSITIONS
   // TODO: Think about another way to add the propositions than all at the same time
   // Get the propositions according to a search by tag ids in Voxe API
   getPropositionsForTagsViaVoxe(tagIds: string[]): Observable<Array<Proposition>> {
     let url = this.main.server+'propositions/search?tagIds=';
     tagIds.forEach(x => url += x+",");
+    //console.log(url);
     let result = this.http.get(url)
       .map(data => data.json().response.propositions)
       .map(arr => arr.filter(x => {
@@ -82,7 +97,7 @@ export class PropositionService {
           return this.main.hasCommonElement(tIds, tagIds);
       }))
       .first();
-    result.subscribe(x => console.log("getPropositionsForTagsViaVoxe: ", x));
+    //result.subscribe(x => console.log("getPropositionsForTagsViaVoxe: ", x));
     return result;
   }
 
