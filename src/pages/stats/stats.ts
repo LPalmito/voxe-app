@@ -13,10 +13,10 @@ import {NavController} from "ionic-angular";
 })
 
 export class StatsPage {
-  tags: Tag[];
-  candidacies: Candidacy[];
-  candidates: Candidate[];
-  answers: Answer[];
+  tags: Tag[] = [];
+  candidacies: Candidacy[] = [];
+  candidates: Candidate[] = [];
+  answers: Answer[] = [];
   displayAnswers = {}; // candidacyIds as keys, {yes: tagId[], no: tagId[], photo: string} as values
 
   constructor(public store: Store<AppStore>, public main: MainService, public nav: NavController,
@@ -29,14 +29,14 @@ export class StatsPage {
     }));
     // Get candidates
     this.candidateService.candidacyIds.subscribe(candidacyIds => candidacyIds.forEach(candidacyId => {
-      this.candidateService.getCandidacyById(candidacyId).map(candidacy => {
+      this.candidateService.getCandidacyById(candidacyId).subscribe(candidacy => {
         this.candidacies.push(candidacy);
         this.candidates.push(candidacy.candidates[0]);
       })
     }));
     // Create the displayAnswers object
     this.answers.forEach(answer => {
-      if(this.displayAnswers[answer.proposition.candidacy.id] == null) {
+      if(this.displayAnswers != {} && this.displayAnswers[answer.proposition.candidacy.id] == null) {
         let photo = this.candidacies
           .filter(x => x.id == answer.proposition.candidacy.id)
           .map(x => x.candidates[0].photo)[0];
@@ -55,7 +55,7 @@ export class StatsPage {
 
   // Helper to get the url of a candidate photo: candidate.photo[size] (for the size: 'small' <-> 50, 'medium' <-> 100, 'large' <-> 300)
   getPhoto(candidate: Candidate, size: string): string {
-    return candidate.photo[size];
+    return candidate.photo.sizes[size].url;
   }
 
   goHome() {
