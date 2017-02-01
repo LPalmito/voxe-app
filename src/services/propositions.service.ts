@@ -31,9 +31,9 @@ export class PropositionService {
         return election != undefined ? election.tags : [];
       })
       .map(tags => {
-        console.log("tags:"+tags);
+        // console.log("tags:"+tags);
         return tags.map(tag => {
-          console.log("tag:"+tag);
+          // console.log("tag:"+tag);
           return tag.id;
           });
       })
@@ -86,35 +86,76 @@ export class PropositionService {
   // NE RETOURNE QUE 500 PROPOSITIONS
   // TODO: Think about another way to add the propositions than all at the same time
   // Get the propositions according to a search by tag ids in Voxe API
-  getPropositionsForTagsViaVoxe(tagIds: string[]): Observable<Array<Proposition>> {
+  getPropositionsForTagsViaVoxe(tagIds: string[], previousResults: Proposition[] = [], offset: number = 0): Observable<Array<Proposition>> {
 
+    // J'ai découpé chaque étape pour pouvoir console.logger
     var url = this.main.server+'propositions/search?tagIds=';
     tagIds.forEach(x => url += x+",");
-    console.log(url);
-    url += "&offset=";
+    console.log("forEach tagId: "+url);
 
-    var results: Array<Proposition> = []; 
+    var sliceUrl = url.slice(0,-1)+'&offset=';
+    console.log("sliceUrl: "+sliceUrl);
+    
+    var offsetToString = offset.toString();
+    console.log("offsetToString: "+offsetToString);
+    
+    var offsetUrl = sliceUrl+offsetToString;
+    console.log("offsetUrl: "+offsetUrl);
 
-    var offset = 0;
-    var arrlength = 500;
+    var results: Array<Proposition> = [];
+    var arrlength: number = 0;
 
-    while (arrlength == 500) {
-        
-      let result = this.http.get(url+offset)
-        .map(data => data.json().response.propositions);
+    // Le vrai 'result' qu'on devrait utiliser est offsetResult
+    // Les autres sont là pour le test, pour voir s'il y a un problème dans l'URL
+    var result = this.http.get(url)
+      .map(data => data.json().response.propositions);
+    var sliceResult = this.http.get(sliceUrl)
+      .map(data => data.json().response.propositions);
+    var offsetResult = this.http.get(offsetUrl)
+      .map(data => data.json().response.propositions);
 
-      result.subscribe(x => console.log("getPropositionsForTagsViaVoxe: "+x));
+    // Aucune des 3 subscriptions ci-dessous n'affiche quoi que ce soit dans la console.
+    result.subscribe(arr => {
+      console.log(arr);
+      results = previousResults.concat(arr);
+      arrlength = arr.length;
+    });
 
-      result.subscribe(arr => arrlength = arr.length);
-      offset++;
-      console.log("arrlength: "+arrlength);
-      console.log("offset: "+offset);
+    sliceResult.subscribe(arr => console.log(arr));
+    offsetResult.subscribe(arr => console.log(arr));
 
-      result.subscribe(x => results.concat(x));
-      console.log(results.length);
-
+    while(results.length == 0) {
+      setTimeout(function() {}, 1000);
     }
 
-    return Observable.from([results]);
+    if(arrlength == 500) {
+      return this.getPropositionsForTagsViaVoxe(tagIds, results, offset+1);
+    }
+    else {
+      return Observable.from([results]);
+    }
+
+    // Cette version sortait une erreur car la fonction n'avait pas de 'return' apparent (il était dans la boucle if/else)
+    // var results: Array<Proposition> = [];
+    // var offset: Observable<number> = Observable.from([0]);
+    // var result: Observable<Array<Proposition>> = Observable.from([[]]);
+
+    // offset.subscribe(nb => {
+    //   result = this.http.get(url+nb.toString())
+    //     .map(data => data.json().response.propositions);
+
+    //   result.subscribe(arr => {
+    //     results = results.concat(arr);
+    //     console.log("results.length: "+results.length);
+        
+    //     if(arr.length == 500) {
+    //       offset = Observable.from([nb+1]);
+    //     }
+
+    //     else {
+    //       return Observable.from([results]);
+    //     }
+    //   });
+    // });
   }
 }
