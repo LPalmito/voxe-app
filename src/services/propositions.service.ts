@@ -24,22 +24,22 @@ export class PropositionService {
 
   // NE RETOURNE QUE 500 PROPOSITIONS
   getPropositionsForElection(): Observable<Array<Proposition>> {
-    //this.main.election.subscribe(x => console.log("main.election:"+x));
+    this.main.election.subscribe(x => console.log("main.election:"+x));
     return this.main.election
       .map(election => {
-        //console.log("election:"+election);
+        console.log("election:"+election);
         return election != undefined ? election.tags : [];
       })
       .map(tags => {
-        //console.log("tags:"+tags);
+        console.log("tags:"+tags);
         return tags.map(tag => {
-          //console.log("tag:"+tag);
+          console.log("tag:"+tag);
           return tag.id;
           });
       })
       .flatMap(tagIds => {
-        //console.log("tagIds:"+tagIds);
-        return this.getPropositionsForTagsViaVoxe(tagIds);
+        console.log("tagIds:"+tagIds);
+        return tagIds.length != 0 ? this.getPropositionsForTagsViaVoxe(tagIds) : Observable.from([[]]);
       });
   }
 
@@ -87,18 +87,34 @@ export class PropositionService {
   // TODO: Think about another way to add the propositions than all at the same time
   // Get the propositions according to a search by tag ids in Voxe API
   getPropositionsForTagsViaVoxe(tagIds: string[]): Observable<Array<Proposition>> {
-    let url = this.main.server+'propositions/search?tagIds=';
-    tagIds.forEach(x => url += x+",");
-    //console.log(url);
-    let result = this.http.get(url)
-      .map(data => data.json().response.propositions)
-      .map(arr => arr.filter(x => {
-          let tIds = x.tags.map(tag => tag.id);
-          return this.main.hasCommonElement(tIds, tagIds);
-      }))
-      .first();
-    //result.subscribe(x => console.log("getPropositionsForTagsViaVoxe: ", x));
-    return result;
-  }
 
+    var url = this.main.server+'propositions/search?tagIds=';
+    tagIds.forEach(x => url += x+",");
+    console.log(url);
+    url += "&offset=";
+
+    var results: Array<Proposition> = []; 
+
+    var offset = 0;
+    var arrlength = 500;
+
+    while (arrlength == 500) {
+        
+      let result = this.http.get(url+offset)
+        .map(data => data.json().response.propositions);
+
+      result.subscribe(x => console.log("getPropositionsForTagsViaVoxe: "+x));
+
+      result.subscribe(arr => arrlength = arr.length);
+      offset++;
+      console.log("arrlength: "+arrlength);
+      console.log("offset: "+offset);
+
+      result.subscribe(x => results.concat(x));
+      console.log(results.length);
+
+    }
+
+    return Observable.from([results]);
+  }
 }
