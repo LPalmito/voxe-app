@@ -134,6 +134,7 @@ export class MainService {
   }
 
   // Helper which returns true if the 2 arrays have a common element
+  // Pourquoi pas avec des indexOf() ?
   hasCommonElement(arr1: Array<any>, arr2: Array<any>): boolean {
     for(var i=0; i<arr1.length; i++) {
       for(var j=0; j<arr2.length; j++) {

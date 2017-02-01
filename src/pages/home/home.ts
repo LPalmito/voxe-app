@@ -56,7 +56,9 @@ export class HomePage {
     this.main.cards.subscribe(cards => {
       if(cards != undefined) {
         this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
+        console.log("starCardsRows: "+this.starCardsRows);
         this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(cards));
+        console.log("cardsRows: "+this.cardsRows);
       }
     });
 
@@ -68,7 +70,7 @@ export class HomePage {
 
     //Initialise les propositions. OK
     this.propositionService.getPropositionsForElection().subscribe(propositions => {
-      //console.log("propositions:"+propositions);
+      console.log("propositions:"+propositions);
       this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
       //this.store.select('propositions').subscribe(x => console.log(x));
     });
