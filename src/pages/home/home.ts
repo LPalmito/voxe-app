@@ -50,7 +50,7 @@ export class HomePage {
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService) {
 
-    //Initialise les cartes. OK
+    // Initialize the cards
     this.main.cards.subscribe(cards => {
       if(cards != undefined) {
         this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
@@ -58,20 +58,19 @@ export class HomePage {
       }
     });
 
-    //Initialise l'élection. OK
+    // Initialize the election
     this.main.getElectionViaVoxe().subscribe(election => {
-      //console.log("election:"+election);
       this.store.dispatch({type: SET_ELECTION, payload: election});
+      console.log('election: ', election);
     });
 
-    //Initialise les propositions. OK
+    // Initialize the propositions
     this.propositionService.getPropositionsForElection().subscribe(propositions => {
-      console.log("propositions:"+propositions);
       this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
-      //this.store.select('propositions').subscribe(x => console.log(x));
+      console.log("propositions: ", propositions);
     });
 
-    // HARD CODAGE A ENLEVER PLUS TARD
+    // TODO: Delete it, only for test purposes
     let cards: Array<InfoCard|SwipeCard> = [
        {
         image: "../assets/img/home-role-president.png",
@@ -195,12 +194,14 @@ export class HomePage {
         candidacyIds: [this.main.vincentPeillonId, this.main.benoitHamonId]
       }
     ];
+
     this.store.dispatch({type: SET_CARDS, payload: cards});
+
   }
 
 // Navigation methods
+
 	openCard(card: InfoCard|SwipeCard) {
-    // // FOR TESTS ONLY
     // this.candidateService.getCandidates()
     //   .subscribe(x => console.log("candidates: ", x));
     // this.propositionService.getPropositions()
