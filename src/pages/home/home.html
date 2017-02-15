@@ -88,7 +88,8 @@
               <ion-row>
 
                 <button ion-button clear icon-left small (click)="starCard(card)">
-                <ion-icon name="star"></ion-icon>
+                  <ion-icon *ngIf="card.isStar==true" name="star"></ion-icon>
+                  <ion-icon *ngIf="card.isStar==false" name="star-outline"></ion-icon>
                 </button>
 
                 <button ion-button clear icon-only small (click)="archiveCard(card)">

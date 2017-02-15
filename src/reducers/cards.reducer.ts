@@ -24,10 +24,15 @@ export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
       state[state.indexOf(payload)].isArchive = false;
       return state;
     case STAR_CARD:
-      // console.log(state[state.indexOf(payload)].isStar);
-      state[state.indexOf(payload)].isStar = !state[state.indexOf(payload)].isStar;
-      // console.log(state[state.indexOf(payload)].isStar);
-      return state;
+      return state.map(card => {
+        if (card == payload) {
+          card.isStar = !card.isStar;
+          return card;
+        }
+        else {
+          return card;
+        }
+      });
     default:
       return state;
   }

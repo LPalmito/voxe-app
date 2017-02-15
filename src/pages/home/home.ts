@@ -52,6 +52,7 @@ export class HomePage {
 
     //Initialise les cartes. OK
     this.main.cards.subscribe(cards => {
+      console.log("Initialisation");
       if(cards != undefined) {
         this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
         console.log("starCardsRows: "+this.starCardsRows);
