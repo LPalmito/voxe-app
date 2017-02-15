@@ -120,17 +120,12 @@ export class MainService {
     this.answers = store.select('answers');
   }
 
-  // OK
   getElectionViaVoxe(): Observable<Election> {
     return this.http.get(this.server+'elections/search')
-      .map(data => {
-        //console.log("data:"+data.json());
-        return data.json().response.elections;
-      })
-      .map(elections => {
-        //console.log("elections:"+elections);
-        return elections.filter(election => election.namespace == this.electionNameSpace)[0];
-      });
+      .map(data => data.json().response.elections)
+      .map(elections => elections.filter(election => {
+        return election.namespace == this.electionNameSpace
+    })[0]);
   }
 
   // Helper which returns true if the 2 arrays have a common element
@@ -139,23 +134,11 @@ export class MainService {
     for(var i=0; i<arr1.length; i++) {
       for(var j=0; j<arr2.length; j++) {
         if(arr1[i] == arr2[j]) {
-          // console.log("I'm about to return a true!");
           return true;
         }
       }
     }
-    // console.log("And... that's a false again!");
     return false;
-    // arr1.forEach(x1 => {
-    //   arr2.forEach(x2 => {
-    //     if(x1 == x2) {
-    //       console.log("I'm about to return true!");
-    //       return true;
-    //     }
-    //   });
-    // });
-    // console.log("And... that's a false again!");
-    // return false;
   }
 
   // Helper which transforms an array of observables in an observable of an array
