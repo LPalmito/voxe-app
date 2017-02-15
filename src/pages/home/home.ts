@@ -73,120 +73,120 @@ export class HomePage {
     // TODO: Delete it, only for test purposes
     let cards: Array<InfoCard|SwipeCard> = [
        {
-        image: "../assets/img/home-role-president.png",
+        image: "assets/img/home-role-president.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-role-president.png"]
+        infoUrl: ["assets/img/info-role-president.png"]
       },
        {
-        image: "../assets/img/home-carte-scolaire.png",
+        image: "assets/img/home-carte-scolaire.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-carte-scolaire.png"]
+        infoUrl: ["assets/img/info-carte-scolaire.png"]
       },
        {
-        image: "../assets/img/home-primaire-droite.png",
+        image: "assets/img/home-primaire-droite.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-primaire-droite.png","../assets/img/info-primaire-droite-2.png"]
+        infoUrl: ["assets/img/info-primaire-droite.png","assets/img/info-primaire-droite-2.png"]
       },
        {
-        image: "../assets/img/home-dette-publique.png",
+        image: "assets/img/home-dette-publique.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-dette-publique.png","../assets/img/info-dette-publique-2.png"]
+        infoUrl: ["assets/img/info-dette-publique.png","assets/img/info-dette-publique-2.png"]
       },
        {
-        image: "../assets/img/home-crise-migratoire.png",
+        image: "assets/img/home-crise-migratoire.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-crise-migratoire.png","../assets/img/info-crise-migratoire-2.png"]
+        infoUrl: ["assets/img/info-crise-migratoire.png","assets/img/info-crise-migratoire-2.png"]
       },
        {
-        image: "../assets/img/home-etat-d-urgence.png",
+        image: "assets/img/home-etat-d-urgence.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-etat-d-urgence.png"]
+        infoUrl: ["assets/img/info-etat-d-urgence.png"]
       },
        {
-        image: "../assets/img/home-prison.png",
+        image: "assets/img/home-prison.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-prison.png"]
+        infoUrl: ["assets/img/info-prison.png"]
       },
        {
-        image: "../assets/img/home-religion-ecole.png",
+        image: "assets/img/home-religion-ecole.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-religion-ecole.png","../assets/img/info-religion-ecole-2.png","../assets/img/info-religion-ecole-3.png"]
+        infoUrl: ["assets/img/info-religion-ecole.png","assets/img/info-religion-ecole-2.png","assets/img/info-religion-ecole-3.png"]
       },
        {
-        image: "../assets/img/home-cumul-mandats.png",
+        image: "assets/img/home-cumul-mandats.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-cumul-mandats.png","../assets/img/info-cumul-mandats-2.png"]
+        infoUrl: ["assets/img/info-cumul-mandats.png","assets/img/info-cumul-mandats-2.png"]
       },
        {
-        image: "../assets/img/home-prelevement-source.png",
+        image: "assets/img/home-prelevement-source.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-prelevement-source.png","../assets/img/info-prelevement-source-2.png"]
+        infoUrl: ["assets/img/info-prelevement-source.png","assets/img/info-prelevement-source-2.png"]
       },
        {
-        image: "../assets/img/home-fiscalite.png",
+        image: "assets/img/home-fiscalite.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-fiscalite.png","../assets/img/info-fiscalite-2.png"]
+        infoUrl: ["assets/img/info-fiscalite.png","assets/img/info-fiscalite-2.png"]
       },
        {
-        image: "../assets/img/home-fiche-s.png",
+        image: "assets/img/home-fiche-s.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-fiche-s.png","../assets/img/info-fiche-s-2.png"]
+        infoUrl: ["assets/img/info-fiche-s.png","assets/img/info-fiche-s-2.png"]
       },
        {
-        image: "../assets/img/home-primaire-ecologiste.png",
+        image: "assets/img/home-primaire-ecologiste.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-primaire-ecologiste.png"]
+        infoUrl: ["assets/img/info-primaire-ecologiste.png"]
       },
        {
-        image: "../assets/img/home-cigeo.png",
+        image: "assets/img/home-cigeo.png",
         tagIds: [this.main.economieId],
         isStar: false,
         isArchive: false,
         type: CardType.Info,
-        infoUrl: ["../assets/img/info-cigeo.png","../assets/img/info-cigeo-2.png"]
+        infoUrl: ["assets/img/info-cigeo.png","assets/img/info-cigeo-2.png"]
       },
       {
         title: "",
-        image: "../assets/img/home-juppe-fillon.png",
+        image: "assets/img/home-juppe-fillon.png",
         tagIds: [this.main.numeriqueId],
         isStar: false,
         isArchive: false,
