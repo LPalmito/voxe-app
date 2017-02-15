@@ -18,16 +18,35 @@ export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
       state.splice(state.indexOf(payload),1);
       return state;
     case ARCHIVE_CARD:
-      state[state.indexOf(payload)].isArchive = true;
-      return state;
+      return state.map(card => {
+        if (card == payload) {
+          card.isArchive = true;
+          return card;
+        }
+        else {
+          return card;
+        }
+      });
     case RESTORE_CARD:
-      state[state.indexOf(payload)].isArchive = false;
-      return state;
+      return state.map(card => {
+        if (card == payload) {
+          card.isArchive = false;
+          return card;
+        }
+        else {
+          return card;
+        }
+      });
     case STAR_CARD:
-      // console.log(state[state.indexOf(payload)].isStar);
-      state[state.indexOf(payload)].isStar = !state[state.indexOf(payload)].isStar;
-      // console.log(state[state.indexOf(payload)].isStar);
-      return state;
+      return state.map(card => {
+        if (card == payload) {
+          card.isStar = !card.isStar;
+          return card;
+        }
+        else {
+          return card;
+        }
+      });
     default:
       return state;
   }

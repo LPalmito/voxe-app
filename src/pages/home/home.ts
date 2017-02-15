@@ -44,8 +44,6 @@ export class SwipeCard extends Card {
 
 export class HomePage {
 
-  icon: string = "../assets/img/icone-economie-24.png";
-
 	cardsRows: Array<InfoCard|SwipeCard>[];
 	starCardsRows: Array<InfoCard|SwipeCard>[];
 
