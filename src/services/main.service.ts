@@ -164,7 +164,6 @@ export class MainService {
   }
 
   getStars(cards: Array<InfoCard|SwipeCard>) {
-    console.log("getStars");
     return cards.filter(card => card.isStar);
   }
 
