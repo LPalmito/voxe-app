@@ -39,14 +39,11 @@ export class PropositionService {
 
   getPropositionsForTags(tagIds: string[]): Observable<Array<Proposition>> {
     return this.propositions.flatMap(propositions => {
+      let arePropositionsAlreadyInStore = this.main.filterPropositionsByTagIds(propositions, tagIds).length != 0;
 
       // If propositions are already in the store, filter it into nestedPropositions and return an observable of it
-      if(propositions.length != 0) {
-        let nestedPropositions = propositions.filter(proposition => {
-          let tIds = proposition.tags.map(tag => tag.id);
-          return this.main.hasCommonElement(tIds, tagIds);
-        });
-
+      if(arePropositionsAlreadyInStore) {
+        let nestedPropositions = this.main.filterPropositionsByTagIds(propositions, tagIds);
         return Observable.from([nestedPropositions]);
       }
 
@@ -54,22 +51,16 @@ export class PropositionService {
       else {
         return this.getPropositionsForTagsViaVoxe(tagIds)
           .map(nestedNewPropositions => {
-            return nestedNewPropositions.filter(nestedNewProposition => {
-              let tIds = nestedNewProposition.tags.map(tag => tag.id);
-              return this.main.hasCommonElement(tIds, tagIds);
-            });
-          })
-          .first();
+            return this.main.filterPropositionsByTagIds(nestedNewPropositions, tagIds);
+          }).first();
       }
 
     }).first();
   }
 
   getPropositionsForSwipe(candidacyIds: string[], tagIds: string[]): Observable<Array<Proposition>> {
-    let result = this.getPropositionsForTags(tagIds)
+    return this.getPropositionsForTags(tagIds)
       .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
-    result.subscribe(x => console.log("getPropositionsForSwipe: ", x));
-    return result;
   }
 
   // Unused at the moment
