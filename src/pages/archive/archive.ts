@@ -13,8 +13,6 @@ export class ArchivePage {
 
 	cardsRows: Array<InfoCard|SwipeCard>[];
 
-	icon: string = "../assets/img/icone-economie-24.png";
-
 	constructor(private main: MainService, public store: Store<AppStore>) {
 	  this.main.cards.subscribe(data => this.cardsRows = this.main.putCardsInRows(this.main.getArchives(data)));
 	}
