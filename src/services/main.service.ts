@@ -5,7 +5,6 @@ import 'rxjs/Rx';
 import {Store} from "@ngrx/store";
 import {AppStore} from "../store";
 import {NavController} from "ionic-angular";
-import {SET_ELECTION} from "../reducers/election.reducer";
 import {InfoCard, SwipeCard} from "../pages/home/home";
 import {Answer} from "../pages/swipe/swipe";
 
@@ -144,6 +143,14 @@ export class MainService {
   // Helper which transforms an array of observables in an observable of an array
   arrObs2ObsArr(arrObs: Array<Observable<any>>): Observable<Array<any>> {
     return Observable.from(arrObs).flatMap(x => x);
+  }
+
+  // Helper which returns an array of the propositions with one of the tags
+  filterPropositionsByTagIds(propositions: Proposition[], tagIds: string[]) {
+    return propositions.filter(proposition => {
+      let tIds = proposition.tags.map(tag => tag.id);
+      return this.hasCommonElement(tIds, tagIds);
+    });
   }
 
   getStars(cards: Array<InfoCard|SwipeCard>) {

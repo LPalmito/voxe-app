@@ -193,7 +193,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Swipe,
-        candidacyIds: [this.main.vincentPeillonId, this.main.benoitHamonId]
+        candidacyIds: [this.main.alainJuppeId, this.main.francoisFillonId]
       }
     ];
 
@@ -204,11 +204,6 @@ export class HomePage {
 // Navigation methods
 
 	openCard(card: InfoCard|SwipeCard) {
-    // this.candidateService.getCandidates()
-    //   .subscribe(x => console.log("candidates: ", x));
-    // this.propositionService.getPropositions()
-    //   .subscribe(x => console.log("propositions: ", x));
-
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
       this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl});

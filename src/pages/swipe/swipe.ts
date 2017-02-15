@@ -44,19 +44,15 @@ export class SwipePage {
               private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService) {
     // From services
     this.candidateService.candidacyIds.subscribe(x => this.candidacyIds = <Array<string>>x);
-        console.log(this.candidacyIds);
     this.tagService.tagIds.subscribe(x => this.tagIds = <Array<string>>x);
-        console.log(this.tagIds);
     this.propositionService.toSwipePropositions.subscribe(x => this.toSwipePropositions = <Array<Proposition>>x);
-        console.log(this.toSwipePropositions);
     this.propositionService.swipedPropositions.subscribe(x => this.swipedPropositions = <Array<Proposition>>x);
-        console.log(this.swipedPropositions);
     this.propositionService.answers.subscribe(x => this.answers = <Array<Answer>>x);
 
     // Initialisation of the propositions to swipe
     this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds)
       .subscribe(arr => this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: arr}));
-      
+
     // Initialisation of the stack
     this.stackConfig = {
       throwOutConfidence: (offset, element) => {
@@ -67,17 +63,11 @@ export class SwipePage {
     };
   }
 
-  ngAfterViewInit() {
-    this.candidateService.getCandidates();
-    this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds)
-      .subscribe(data => this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: data}));
-  }
-
   // TODO: Resolve the color bug when dragging but not coming back to white
   // Change the color when dragging a card
   static onItemMove(element, x, y, r) {
-    var color = '';
-    var abs = Math.abs(x);
+    let color = '';
+    let abs = Math.abs(x);
     let min = Math.floor(Math.min(16*16 - abs, 16*16));
     let hexCode = SwipePage.decimalToHex(min, 2);
     color = (x < 0)?
@@ -111,7 +101,7 @@ export class SwipePage {
   // TODO: Change the colors
   // http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
   static decimalToHex(d, padding) {
-    var hex = Number(d).toString(16);
+    let hex = Number(d).toString(16);
     padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
     while (hex.length < padding) {
       hex = "0" + hex;

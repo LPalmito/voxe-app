@@ -12,6 +12,8 @@ log.txt
 .vscode/
 npm-debug.log*
 
+.gitignore/
+.gradle/
 .idea/
 .sass-cache/
 .tmp/
@@ -19,6 +21,8 @@ npm-debug.log*
 coverage/
 dist/
 node_modules/
+bower_components/
+resources/
 tmp/
 temp/
 hooks/
