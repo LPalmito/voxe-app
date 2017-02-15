@@ -44,14 +44,12 @@ export class SwipeCard extends Card {
 
 export class HomePage {
 
-  icon: string = "../assets/img/icone-economie-24.png";
-
 	cardsRows: Array<InfoCard|SwipeCard>[];
 	starCardsRows: Array<InfoCard|SwipeCard>[];
 
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService) {
-    
+
     //Initialise les cartes. OK
     this.main.cards.subscribe(cards => {
       if(cards != undefined) {
