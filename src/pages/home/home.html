@@ -22,7 +22,7 @@
 
   <!-- Segment between 'all' cards and 'favorite' ones -->
   <div padding>
-    <ion-segment [(ngModel)]="cardslists">
+    <ion-segment [(ngModel)]="selectedSegment">
       <ion-segment-button value="all">
         Toutes
       </ion-segment-button>
@@ -32,10 +32,10 @@
     </ion-segment>
   </div>
 
-  <div [ngSwitch]="cardslists">
+  <div [ngSwitch]="selectedSegment">
 
   <!-- Default : show 'all' cards -->
-    <ion-grid *ngSwitchDefault>
+    <ion-grid *ngSwitchCase = "'all'">
 
       <!-- Rows of 2 cards each -->
       <ion-row *ngFor="let row of cardsRows">
