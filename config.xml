@@ -4,8 +4,8 @@
   <description>An awesome app for Voxe</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
   <content src="index.html"/>
-  <access origin="*"/>
-  <allow-navigation href="http://compare.voxe.org/*" />
+  <access origin="http://compare.voxe.org" />
+  <allow-navigation href="http://compare.voxe.org/*/*" />
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>
