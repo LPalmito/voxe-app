@@ -14,7 +14,7 @@
   <ion-card class="title-theme">
     <ion-card-header>
       <img id="theme" src="{{getIcon(tags[0], 0)}}"/>
-      {{tags[0].name}}
+      <h2>{{tags[0].name}}</h2>
     </ion-card-header>
     <hr>
     <!--Pictures and names of candidates-->
@@ -30,7 +30,7 @@
         </ion-row>
         <ion-row>
           <ion-col width-50 class="candidate-name" *ngFor="let c of candidates">
-            {{c.firstName}} {{c.lastName}}
+            <h2>{{c.firstName}} {{c.lastName}}</h2>
           </ion-col>
         </ion-row>
 
@@ -56,22 +56,21 @@
     </ion-card-content>
   </ion-card>
 
-  <!--TODO: Find a way to retrieve the candidate photo here => add the url in the displayAnswers object?-->
   <!--Propositions summary-->
   <div *ngFor="let answer of answers" text-wrap>
     <ion-item *ngIf="answer.approved == true">
       <ion-avatar item-left>
-        <img src="{{displayAnswers[answer.proposition.candidacy.id].photo}}">
+        <img src="{{displayAnswers[answer.proposition.candidacy.id].photo.sizes.small.url}}">
       </ion-avatar>
-      <h2>{{answer.proposition.candidacy.id}} – <ion-icon name="checkmark" class="vote-yes"></ion-icon></h2>
-      <p>{{answer.proposition}}</p>
+      <h2>{{displayAnswers[answer.proposition.candidacy.id].name}} – <ion-icon name="checkmark" class="vote-yes"></ion-icon></h2>
+      <p>{{answer.proposition.text}}</p>
     </ion-item>
     <ion-item *ngIf="answer.approved == false">
       <ion-avatar item-left>
-        <img src="{{displayAnswers[answer.proposition.candidacy.id].photo}}">
+        <img src="{{displayAnswers[answer.proposition.candidacy.id].photo.sizes.small.url}}">
       </ion-avatar>
-      <h2>{{answer.proposition.candidacy.id}} – <ion-icon name="close" class="vote-no"></ion-icon></h2>
-      <p>{{answer.proposition}}</p>
+      <h2>{{displayAnswers[answer.proposition.candidacy.id].name}} – <ion-icon name="close" class="vote-no"></ion-icon></h2>
+      <p>{{answer.proposition.text}}</p>
     </ion-item>
   </div>
 

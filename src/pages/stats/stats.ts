@@ -44,16 +44,16 @@ export class StatsPage {
         let photo = this.candidacies
           .filter(x => x.id == answer.proposition.candidacy.id)
           .map(x => x.candidates[0].photo)[0];
-        this.displayAnswers[answer.proposition.candidacy.id] = {yes: [], no: [], photo: photo};
+        this.displayAnswers[answer.proposition.candidacy.id] = {yes: [], no: [], photo: photo, name: ""};
       }
       answer.approved?
         this.displayAnswers[answer.proposition.candidacy.id].yes.push(answer.proposition):
         this.displayAnswers[answer.proposition.candidacy.id].no.push(answer.proposition);
+      let name = this.candidacies
+        .filter(x => x.id == answer.proposition.candidacy.id)
+        .map(x => x.candidates[0].firstName + " " + x.candidates[0].lastName)[0];
+      this.displayAnswers[answer.proposition.candidacy.id].name = name;
     });
-
-    console.log("answers: ", this.answers);
-    console.log("displayAnswers: ", this.displayAnswers);
-
   }
 
   // Helper to get the url of a tag icon (for the size: 0 <-> 32, 1 <-> 64)
