@@ -12,8 +12,11 @@ import {
   SET_TO_SWIPE_PROPOSITIONS, POP_TO_SWIPE_PROPOSITIONS,
   PUSH_TO_SWIPE_PROPOSITIONS
 } from "../../reducers/to-swipe-propositions.reducer";
-import {PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS} from "../../reducers/swiped-propositions.reducer";
-import {PUSH_ANSWER, POP_ANSWER} from "../../reducers/answers.reducer";
+import {
+  PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS,
+  CLEAR_SWIPED_PROPOSITIONS
+} from "../../reducers/swiped-propositions.reducer";
+import {PUSH_ANSWER, POP_ANSWER, CLEAR_ANSWERS} from "../../reducers/answers.reducer";
 import {TagService} from "../../services/tags.service";
 
 // TODO: Change the structure to accept the "ask" attribute
@@ -51,6 +54,10 @@ export class SwipePage {
     this.propositionService.toSwipePropositions.subscribe(x => this.toSwipePropositions = <Array<Proposition>>x);
     this.propositionService.swipedPropositions.subscribe(x => this.swipedPropositions = <Array<Proposition>>x);
     this.propositionService.answers.subscribe(x => this.answers = <Array<Answer>>x);
+
+    // Clear swiped propositions and answers
+    this.store.dispatch({type: CLEAR_SWIPED_PROPOSITIONS, payload: null});
+    this.store.dispatch({type: CLEAR_ANSWERS, payload: null});
 
     // Initialisation of the propositions to swipe
     this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds)
