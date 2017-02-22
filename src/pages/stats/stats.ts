@@ -21,12 +21,15 @@ export class StatsPage {
 
   constructor(public store: Store<AppStore>, public main: MainService, public nav: NavController,
               private candidateService: CandidateService, private tagService: TagService) {
+
     // Get answers
     this.main.answers.subscribe(x => this.answers = <Array<Answer>>x);
+
     // Get tags
     this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
-      this.tagService.getTagById(tagId).map(tag => this.tags.push(tag));
+      this.tagService.getTagById(tagId).subscribe(tag => this.tags.push(tag));
     }));
+
     // Get candidates
     this.candidateService.candidacyIds.subscribe(candidacyIds => candidacyIds.forEach(candidacyId => {
       this.candidateService.getCandidacyById(candidacyId).subscribe(candidacy => {
@@ -34,17 +37,22 @@ export class StatsPage {
         this.candidates.push(candidacy.candidates[0]);
       })
     }));
+
     // Create the displayAnswers object
     this.answers.forEach(answer => {
       if(this.displayAnswers != {} && this.displayAnswers[answer.proposition.candidacy.id] == null) {
         let photo = this.candidacies
           .filter(x => x.id == answer.proposition.candidacy.id)
           .map(x => x.candidates[0].photo)[0];
-        this.displayAnswers[answer.proposition.candidacy.id] = {yes: [], no: [], photo: photo};
+        this.displayAnswers[answer.proposition.candidacy.id] = {yes: [], no: [], photo: photo, name: ""};
       }
       answer.approved?
         this.displayAnswers[answer.proposition.candidacy.id].yes.push(answer.proposition):
         this.displayAnswers[answer.proposition.candidacy.id].no.push(answer.proposition);
+      let name = this.candidacies
+        .filter(x => x.id == answer.proposition.candidacy.id)
+        .map(x => x.candidates[0].firstName + " " + x.candidates[0].lastName)[0];
+      this.displayAnswers[answer.proposition.candidacy.id].name = name;
     });
   }
 
