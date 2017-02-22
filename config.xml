@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.testproject2602038" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
-  <name>testProject2</name>
-  <description>An awesome Ionic/Cordova app.</description>
+  <name>Voxe App</name>
+  <description>An awesome app for Voxe</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
   <content src="index.html"/>
   <access origin="*"/>
+  <allow-navigation href="http://compare.voxe.org/*" />
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>
