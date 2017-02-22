@@ -180,11 +180,14 @@ export class MainService {
     return rows;
   }
 
-  // SALE HARD CODAGE TEMPORAIRE
+  //TODO : Replace these by API calls
   francoisFillonId = "578f480ab0bba9398100000b";
   alainJuppeId = "57962957793b3f868d000012";
-  vincentPeillonId = "58511f947ab19e01d2000076";
-  benoitHamonId = "5851168e7ab19e6a87000043";
+  nicolasSarkozyId = "57bf24bfa8f4490ce3000034";
+  jeanFrancoisCopeId = "5797705bfeb813859e000010";
+  nathalieKMId = "5797842419596070a4000009";
+  //vincentPeillonId = "58511f947ab19e01d2000076";
+  //benoitHamonId = "5851168e7ab19e6a87000043";
   emploiId = "4ef479f9bc60fb000400009a";
   economieId = "4ef479f9bc60fb00040000aa";
   financeId = "4ef479f9bc60fb00040000be";
