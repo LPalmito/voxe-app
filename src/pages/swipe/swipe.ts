@@ -55,7 +55,7 @@ export class SwipePage {
     this.propositionService.swipedPropositions.subscribe(x => this.swipedPropositions = <Array<Proposition>>x);
     this.propositionService.answers.subscribe(x => this.answers = <Array<Answer>>x);
 
-    // Clear swiped propositions and answers
+    // Clear swiped propositions and answers lol
     this.store.dispatch({type: CLEAR_SWIPED_PROPOSITIONS, payload: null});
     this.store.dispatch({type: CLEAR_ANSWERS, payload: null});
 
