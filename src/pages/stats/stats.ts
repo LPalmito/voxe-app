@@ -17,7 +17,7 @@ export class StatsPage {
   candidacies: Candidacy[] = [];
   candidates: Candidate[] = [];
   answers: Answer[] = [];
-  displayAnswers = {}; // candidacyIds as keys, {yes: tagId[], no: tagId[], photo: string} as values
+  displayAnswers = {}; // candidacyIds as keys, {yes: Proposition[], no: Proposition[], photo: string, name: string} as values
 
   constructor(public store: Store<AppStore>, public main: MainService, public nav: NavController,
               private candidateService: CandidateService, private tagService: TagService) {
@@ -43,7 +43,7 @@ export class StatsPage {
       if(this.displayAnswers != {} && this.displayAnswers[answer.proposition.candidacy.id] == null) {
         let photo = this.candidacies
           .filter(x => x.id == answer.proposition.candidacy.id)
-          .map(x => x.candidates[0].photo)[0];
+          .map(x => x.candidates[0] != undefined ? x.candidates[0].photo : "https://i.ytimg.com/vi/sWy3s9Dhep0/hqdefault.jpg")[0];
         this.displayAnswers[answer.proposition.candidacy.id] = {yes: [], no: [], photo: photo, name: ""};
       }
       answer.approved?
@@ -63,7 +63,7 @@ export class StatsPage {
 
   // Helper to get the url of a candidate photo: candidate.photo[size] (for the size: 'small' <-> 50, 'medium' <-> 100, 'large' <-> 300)
   getPhoto(candidate: Candidate, size: string): string {
-    return candidate.photo.sizes[size].url;
+    return candidate != undefined ? candidate.photo.sizes[size].url : "http://videos-mdr.com/wp-content/uploads/2014/08/selfie-d-un-singe-fait-le-buzz-declenche-une-bataille-droits-auteur.jpg";
   }
 
   goHome() {

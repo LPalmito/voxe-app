@@ -64,7 +64,7 @@ export class PropositionService {
         let nb = 5;
         let resultArray: Proposition[] = [];
         for (let i=0 ; i<candidacyIds.length ; i++) {
-          let candidacyArray = this.randomDiffElement(arr.filter(x => x.candidacy.id == candidacyIds[i]),nb);
+          let candidacyArray = this.randomDiffElement(arr.filter(x => x.candidacy != undefined ? x.candidacy.id == candidacyIds[i] : false),nb);
           resultArray = resultArray.concat(candidacyArray);
         }
         return this.randomDiffElement(resultArray,candidacyIds.length*nb);
