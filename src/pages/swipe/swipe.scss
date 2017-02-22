@@ -22,6 +22,7 @@
     position: fixed;
     top: 0;
     margin: 80px auto 0;
+    z-index: 999;
   }
 
   #card-stack ion-card {
@@ -49,8 +50,8 @@
   }
 
   .buttons {
-    position: relative;
-    top: 440px;
+    position: fixed;
+    bottom: -6px;
     .unapproved {
       text-align: center;
       text-transform: uppercase;
