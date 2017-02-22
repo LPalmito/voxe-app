@@ -10,6 +10,9 @@
 
 <ion-content class="swipe" padding>
 
+<!--TODO: Add a loader when it will be available-->
+<!--https://forum.ionicframework.com/t/loader-spinner/42007/8-->
+
 <!--STACK OF CARDS-->
   <div swing-stack #myswing1 id="card-stack"
        [stackConfig]="stackConfig" (throwoutleft)="voteUp(false)" (throwoutright)="voteUp(true)">
@@ -29,18 +32,18 @@
 <!--BUTTONS-->
   <ion-row class="buttons">
     <!--UNAPPROVED-->
-    <ion-col class="unapproved width-36" (click)="voteUp(false)">
+    <ion-col class="unapproved width-37" (click)="voteUp(false)">
       <ion-icon name="close"></ion-icon>
       <p>Désapprouver</p>
     </ion-col>
     <!--CANCEL-->
-    <ion-col class="undo width-28" (click)="undo()" *ngIf="swipedPropositions.length > 0">
+    <ion-col class="undo width-26" (click)="undo()" *ngIf="swipedPropositions.length > 0">
       <ion-icon name="undo"></ion-icon>
       <p>Annuler</p>
     </ion-col>
-    <ion-col class="undo width-28" *ngIf="swipedPropositions.length == 0"></ion-col>
+    <ion-col class="undo width-26" *ngIf="swipedPropositions.length == 0"></ion-col>
     <!--APPROVED-->
-    <ion-col class="approved width-36" (click)="voteUp(true)">
+    <ion-col class="approved width-37" (click)="voteUp(true)">
       <ion-icon name="checkmark"></ion-icon>
       <p>Approuver</p>
     </ion-col>

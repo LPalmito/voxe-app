@@ -50,8 +50,8 @@
   }
 
   .buttons {
-    position: fixed;
-    bottom: -6px;
+    position: relative;
+    top: 460px;
     .unapproved {
       text-align: center;
       text-transform: uppercase;
@@ -67,17 +67,17 @@
       text-transform: uppercase;
       color: green;
     }
-    .width-36 {
+    .width-37 {
       -webkit-flex: 0 0 37%;
       -ms-flex: 0 0 37%;
       flex: 0 0 37%;
       max-width: 37%;
     }
-    .width-28 {
-      -webkit-flex: 0 0 29%;
-      -ms-flex: 0 0 29%;
-      flex: 0 0 29%;
-      max-width: 29%;
+    .width-26 {
+      -webkit-flex: 0 0 26%;
+      -ms-flex: 0 0 26%;
+      flex: 0 0 26%;
+      max-width: 26%;
     }
   }
 

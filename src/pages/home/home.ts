@@ -46,9 +46,13 @@ export class HomePage {
 
 	cardsRows: Array<InfoCard|SwipeCard>[];
 	starCardsRows: Array<InfoCard|SwipeCard>[];
+  selectedSegment: string;
 
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService) {
+
+	  // Initialize the selected segment
+	  this.selectedSegment = 'all';
 
     // Initialize the cards
     this.main.cards.subscribe(cards => {
