@@ -4,7 +4,7 @@ import {HomePage} from "../home/home";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {CandidateService} from "../../services/candidates.service";
-import {Tag, Candidate, Candidacy, MainService} from "../../services/main.service";
+import {Tag, Candidate, Candidacy, MainService, Photo} from "../../services/main.service";
 import {TagService} from "../../services/tags.service";
 import {NavController} from "ionic-angular";
 
@@ -17,7 +17,7 @@ export class StatsPage {
   candidacies: Candidacy[] = [];
   candidates: Candidate[] = [];
   answers: Answer[] = [];
-  displayAnswers = {}; // candidacyIds as keys, {yes: tagId[], no: tagId[], photo: string} as values
+  displayAnswers = {}; // candidacyIds as keys, {yes: Proposition[], no: Proposition[], photo: string, name: string} as values
 
   constructor(public store: Store<AppStore>, public main: MainService, public nav: NavController,
               private candidateService: CandidateService, private tagService: TagService) {
@@ -61,13 +61,7 @@ export class StatsPage {
     return tag.icon.prefix + tag.icon.sizes[size] + tag.icon.name;
   }
 
-  // Helper to get the url of a candidate photo: candidate.photo[size] (for the size: 'small' <-> 50, 'medium' <-> 100, 'large' <-> 300)
-  getPhoto(candidate: Candidate, size: string): string {
-    return candidate.photo.sizes[size].url;
-  }
-
   goHome() {
-    this.nav.push(HomePage);
-    // this.store.dispatch({type: GO_TO, payload: HomePage});
+    this.nav.setRoot(HomePage);
   }
 }
