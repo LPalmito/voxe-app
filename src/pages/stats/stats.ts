@@ -4,7 +4,7 @@ import {HomePage} from "../home/home";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {CandidateService} from "../../services/candidates.service";
-import {Tag, Candidate, Candidacy, MainService} from "../../services/main.service";
+import {Tag, Candidate, Candidacy, MainService, Photo} from "../../services/main.service";
 import {TagService} from "../../services/tags.service";
 import {NavController} from "ionic-angular";
 
@@ -43,7 +43,7 @@ export class StatsPage {
       if(this.displayAnswers != {} && this.displayAnswers[answer.proposition.candidacy.id] == null) {
         let photo = this.candidacies
           .filter(x => x.id == answer.proposition.candidacy.id)
-          .map(x => x.candidates[0] != undefined ? x.candidates[0].photo : "https://i.ytimg.com/vi/sWy3s9Dhep0/hqdefault.jpg")[0];
+          .map(x => x.candidates[0].photo)[0];
         this.displayAnswers[answer.proposition.candidacy.id] = {yes: [], no: [], photo: photo, name: ""};
       }
       answer.approved?
@@ -61,13 +61,7 @@ export class StatsPage {
     return tag.icon.prefix + tag.icon.sizes[size] + tag.icon.name;
   }
 
-  // Helper to get the url of a candidate photo: candidate.photo[size] (for the size: 'small' <-> 50, 'medium' <-> 100, 'large' <-> 300)
-  getPhoto(candidate: Candidate, size: string): string {
-    return candidate != undefined ? candidate.photo.sizes[size].url : "http://videos-mdr.com/wp-content/uploads/2014/08/selfie-d-un-singe-fait-le-buzz-declenche-une-bataille-droits-auteur.jpg";
-  }
-
   goHome() {
-    this.nav.push(HomePage);
-    // this.store.dispatch({type: GO_TO, payload: HomePage});
+    this.nav.setRoot(HomePage);
   }
 }

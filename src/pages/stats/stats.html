@@ -24,7 +24,7 @@
         <ion-row>
           <ion-col width-50 class="image-candidate" *ngFor="let c of candidates">
             <div>
-              <img class="candidate-stats" src="{{getPhoto(c, 'small')}}"/>
+              <img class="candidate-stats" src="{{c.photo.sizes.small.url}}"/>
             </div>
           </ion-col>
         </ion-row>

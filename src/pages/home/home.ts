@@ -65,13 +65,11 @@ export class HomePage {
     // Initialize the election
     this.main.getElectionViaVoxe().subscribe(election => {
       this.store.dispatch({type: SET_ELECTION, payload: election});
-      console.log('election: ', election);
     });
 
     // Initialize the propositions
     this.propositionService.getPropositionsForElection().subscribe(propositions => {
       this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
-      console.log("propositions: ", propositions);
     });
 
     // TODO: Delete it, only for test purposes
