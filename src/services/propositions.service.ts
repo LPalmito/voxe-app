@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http} from '@angular/http';
+import {Jsonp} from '@angular/http';
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
 import {MainService, Proposition} from "./main.service";
@@ -14,7 +14,7 @@ export class PropositionService {
   swipedPropositions: Observable<Array<Proposition>>;
   answers: Observable<Array<Answer>>;
 
-  constructor(private http: Http, private main: MainService, private store: Store<AppStore>) {
+  constructor(private jsonp: Jsonp, private main: MainService, private store: Store<AppStore>) {
     this.propositions = store.select('propositions');
     this.toSwipePropositions = store.select('toSwipePropositions');
     this.swipedPropositions = store.select('swipedPropositions');
@@ -66,9 +66,9 @@ export class PropositionService {
   // Unused at the moment
   // Get the propositions according to a search by candidacy ids in Voxe API
   getPropositionsForCandidaciesViaVoxe(candidacyIds: string[]): Observable<Array<Proposition>> {
-    let url = this.main.server+'propositions/search?candidacyIds=';
+    let url = this.main.server+'propositions/search'+this.main.callback+'&candidacyIds=';
     candidacyIds.forEach(x => url += x+",");
-    return this.http.get(url)
+    return this.jsonp.get(url)
       .map(data => data.json().response.propositions)
       .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
   }
@@ -78,12 +78,12 @@ export class PropositionService {
   getPropositionsForTagsViaVoxe(tagIds: string[], previousPropositions: Proposition[] = [], offset: number = 0): Observable<Array<Proposition>> {
 
     // Prepare the url
-    let url = this.main.server+'propositions/search?tagIds=';
+    let url = this.main.server+'propositions/search'+this.main.callback+'&tagIds=';
     tagIds.forEach(x => url += x+",");
     url = url.slice(0,-1)+'&offset='+offset.toString();
 
     // Do the request and filter the response
-    return this.http.get(url)
+    return this.jsonp.get(url)
       .map(data => data.json().response.propositions)
       .flatMap(propositions => {
         let currentPropositions = previousPropositions.concat(propositions);
@@ -92,8 +92,6 @@ export class PropositionService {
           this.getPropositionsForTagsViaVoxe(tagIds, currentPropositions, offset+500);
       });
 
-  // For tests purpose:
-  // http://compare.voxe.org/api/v1/propositions/search?tagIds=4ef479fcbc60fb000400022c,4ef479fcbc60fb0004000222&offset=1&limit=3
   }
 
 }

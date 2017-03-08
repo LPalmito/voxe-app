@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http} from '@angular/http';
+import {Jsonp} from '@angular/http';
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
 import {Store} from "@ngrx/store";
@@ -102,6 +102,7 @@ export interface Proposition {
 
 @Injectable()
 export class MainService {
+  callback = "?callback=JSONP_CALLBACK";
   server = "http://compare.voxe.org/api/v1/";
   electionNameSpace = "primaire-de-la-droite-2016";
   //electionNameSpace = "primaire-de-la-gauche-(à-venir)";
@@ -111,7 +112,7 @@ export class MainService {
   infoUrl: Observable<Array<string>>;
   answers: Observable<Array<Answer>>;
 
-  constructor(private http: Http, private store: Store<AppStore>) {
+  constructor(private jsonp: Jsonp, private store: Store<AppStore>) {
     this.election = store.select('election');
     this.nav = store.select('nav');
     this.cards = store.select('cards');
@@ -120,7 +121,7 @@ export class MainService {
   }
 
   getElectionViaVoxe(): Observable<Election> {
-    return this.http.get(this.server+'elections/search')
+    return this.jsonp.get(this.server+'elections/search'+this.callback)
       .map(data => data.json().response.elections)
       .map(elections => elections.filter(election => {
         return election.namespace == this.electionNameSpace
@@ -128,7 +129,6 @@ export class MainService {
   }
 
   // Helper which returns true if the 2 arrays have a common element
-  // Pourquoi pas avec des indexOf() ?
   hasCommonElement(arr1: Array<any>, arr2: Array<any>): boolean {
     for(var i=0; i<arr1.length; i++) {
       for(var j=0; j<arr2.length; j++) {
