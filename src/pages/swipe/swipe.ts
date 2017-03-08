@@ -5,15 +5,18 @@ import {StatsPage} from "../stats/stats";
 import {ToastController, NavController, MenuController} from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
-import {Proposition} from "../../services/main.service";
+import {Tag, Proposition} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {
   SET_TO_SWIPE_PROPOSITIONS, POP_TO_SWIPE_PROPOSITIONS,
   PUSH_TO_SWIPE_PROPOSITIONS
 } from "../../reducers/to-swipe-propositions.reducer";
-import {PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS} from "../../reducers/swiped-propositions.reducer";
-import {PUSH_ANSWER, POP_ANSWER} from "../../reducers/answers.reducer";
+import {
+  PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS,
+  CLEAR_SWIPED_PROPOSITIONS
+} from "../../reducers/swiped-propositions.reducer";
+import {PUSH_ANSWER, POP_ANSWER, CLEAR_ANSWERS} from "../../reducers/answers.reducer";
 import {TagService} from "../../services/tags.service";
 
 // TODO: Change the structure to accept the "ask" attribute
@@ -38,6 +41,7 @@ export class SwipePage {
   answers: Answer[];
   candidacyIds: string[];
   tagIds: string[];
+  tags: Tag[] = [];
 
   constructor(public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController, public menu: MenuController,
               private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService) {
@@ -45,12 +49,21 @@ export class SwipePage {
     // Disable the swipe of the hamburger menu
     menu.swipeEnable(false);
 
+    // Get tags
+    this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
+      this.tagService.getTagById(tagId).subscribe(tag => this.tags.push(tag));
+    }));
+
     // From services
     this.candidateService.candidacyIds.subscribe(x => this.candidacyIds = <Array<string>>x);
     this.tagService.tagIds.subscribe(x => this.tagIds = <Array<string>>x);
     this.propositionService.toSwipePropositions.subscribe(x => this.toSwipePropositions = <Array<Proposition>>x);
     this.propositionService.swipedPropositions.subscribe(x => this.swipedPropositions = <Array<Proposition>>x);
     this.propositionService.answers.subscribe(x => this.answers = <Array<Answer>>x);
+
+    // Clear swiped propositions and answers
+    this.store.dispatch({type: CLEAR_SWIPED_PROPOSITIONS, payload: null});
+    this.store.dispatch({type: CLEAR_ANSWERS, payload: null});
 
     // Initialisation of the propositions to swipe
     this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds)
@@ -124,6 +137,11 @@ export class SwipePage {
   // Helper to get the las element of an array
   last(arr) {
     return arr[arr.length-1]
+  }
+
+  // Helper to get the url of a tag icon (for the size: 0 <-> 32, 1 <-> 64)
+  getIcon(tag: Tag, size: number): string {
+    return tag.icon.prefix + tag.icon.sizes[size] + tag.icon.name;
   }
 
 }
