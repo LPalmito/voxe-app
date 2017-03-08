@@ -60,7 +60,27 @@ export class PropositionService {
 
   getPropositionsForSwipe(candidacyIds: string[], tagIds: string[]): Observable<Array<Proposition>> {
     return this.getPropositionsForTags(tagIds)
-      .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
+      .map(arr => {
+        let nb = 5;
+        let resultArray: Proposition[] = [];
+        for (let i=0 ; i<candidacyIds.length ; i++) {
+          let candidacyArray = this.randomDiffElement(arr.filter(x => x.candidacy != undefined ? x.candidacy.id == candidacyIds[i] : false),nb);
+          resultArray = resultArray.concat(candidacyArray);
+        }
+        return this.randomDiffElement(resultArray,candidacyIds.length*nb);
+      });
+  }
+
+  //Helper : takes an array of propositions and returns an array of X random different elements
+  randomDiffElement(array: Proposition[], nb: number): Proposition[] {
+    let result: Proposition[] = [];
+    while (result.length < nb) {
+      let randomElement: Proposition = array[Math.floor(Math.random()*array.length)];
+      if (result.indexOf(randomElement) < 0) {
+        result.push(randomElement);
+      }
+    }
+    return result;
   }
 
   // Unused at the moment
