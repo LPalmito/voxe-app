@@ -2,10 +2,6 @@ import {Component, ViewChild} from "@angular/core";
 import {Platform, MenuController, Nav} from "ionic-angular";
 import {StatusBar} from "ionic-native";
 import {HomePage} from "../pages/home/home";
-import {SwipePage} from "../pages/swipe/swipe";
-import {StatsPage} from "../pages/stats/stats";
-import {InfoPage} from "../pages/info/info";
-import {ArchivePage} from "../pages/archive/archive";
 
 @Component({
   templateUrl: 'app.html'
@@ -17,20 +13,8 @@ export class VoxeApp {
   rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
 
-  constructor(
-    public platform: Platform,
-    public menu: MenuController
-  ) {
+  constructor(public platform: Platform, public menu: MenuController) {
     this.initializeApp();
-
-    // set our app's pages
-    this.pages = [
-      { title: 'Accueil', component: HomePage },
-      { title: 'Swipe', component: SwipePage },
-      { title: 'Stats', component: StatsPage },
-      { title: 'Info', component: InfoPage },
-      { title: 'Archive', component: ArchivePage}
-    ];
   }
 
   initializeApp() {
@@ -41,10 +25,4 @@ export class VoxeApp {
     });
   }
 
-  openPage(page: {title: string, component: any}) {
-    // close the menu when clicking a link from the menu
-    this.menu.close();
-    // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
-  }
 }

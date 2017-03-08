@@ -121,10 +121,7 @@ export class MainService {
 
   getElectionViaVoxe(): Observable<Election> {
     return this.http.get(this.server+'elections/search')
-      .map(data => {
-        console.log(data.json().response.elections);
-        return data.json().response.elections;
-      })
+      .map(data => data.json().response.elections)
       .map(elections => elections.filter(election => {
         return election.namespace == this.electionNameSpace
       })[0]);
