@@ -40,12 +40,12 @@
             <ion-icon *ngFor="let proposition of displayAnswers[candidacies[0].id].yes" name="checkmark" class="vote-yes"></ion-icon>
           </ion-col>
           <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers[candidacies[0].id].yes" name="checkmark" class="vote-yes"></ion-icon>
+            <ion-icon *ngFor="let proposition of displayAnswers[candidacies[1].id].yes" name="checkmark" class="vote-yes"></ion-icon>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers[candidacies[1].id].no" name="close" class="vote-no"></ion-icon>
+            <ion-icon *ngFor="let proposition of displayAnswers[candidacies[0].id].no" name="close" class="vote-no"></ion-icon>
           </ion-col>
           <ion-col width-50 class="results-icons">
             <ion-icon *ngFor="let proposition of displayAnswers[candidacies[1].id].no" name="close" class="vote-no"></ion-icon>
