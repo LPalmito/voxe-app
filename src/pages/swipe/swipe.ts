@@ -2,7 +2,7 @@ import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
 import {StatsPage} from "../stats/stats";
-import {ToastController, NavController, MenuController} from 'ionic-angular';
+import {ToastController, NavController} from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
 import {Tag, Proposition} from "../../services/main.service";
@@ -43,11 +43,8 @@ export class SwipePage {
   tagIds: string[];
   tags: Tag[] = [];
 
-  constructor(public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController, public menu: MenuController,
+  constructor(public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController,
               private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService) {
-
-    // Disable the swipe of the hamburger menu
-    menu.swipeEnable(false);
 
     // Get tags
     this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
