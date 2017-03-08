@@ -5,7 +5,7 @@ import {StatsPage} from "../stats/stats";
 import {ToastController, NavController, MenuController} from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
-import {Proposition} from "../../services/main.service";
+import {Tag, Proposition} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {
@@ -41,12 +41,18 @@ export class SwipePage {
   answers: Answer[];
   candidacyIds: string[];
   tagIds: string[];
+  tags: Tag[] = [];
 
   constructor(public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController, public menu: MenuController,
               private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService) {
 
     // Disable the swipe of the hamburger menu
     menu.swipeEnable(false);
+
+    // Get tags
+    this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
+      this.tagService.getTagById(tagId).subscribe(tag => this.tags.push(tag));
+    }));
 
     // From services
     this.candidateService.candidacyIds.subscribe(x => this.candidacyIds = <Array<string>>x);
@@ -131,6 +137,11 @@ export class SwipePage {
   // Helper to get the las element of an array
   last(arr) {
     return arr[arr.length-1]
+  }
+
+  // Helper to get the url of a tag icon (for the size: 0 <-> 32, 1 <-> 64)
+  getIcon(tag: Tag, size: number): string {
+    return tag.icon.prefix + tag.icon.sizes[size] + tag.icon.name;
   }
 
 }
