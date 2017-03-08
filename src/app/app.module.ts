@@ -23,6 +23,7 @@ import {tagIds} from "../reducers/tag-ids.reducer";
 import {candidacyIds} from "../reducers/candidacy-ids.reducer";
 import {nav} from "../reducers/nav.reducer";
 import {propositions} from "../reducers/propositions.reducer";
+import {JsonpModule} from "@angular/http";
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {propositions} from "../reducers/propositions.reducer";
     SwingCardComponent
   ],
   imports: [
+    JsonpModule,
     IonicModule.forRoot(VoxeApp)
   ],
   bootstrap: [IonicApp],
