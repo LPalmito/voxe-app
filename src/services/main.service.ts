@@ -121,14 +121,16 @@ export class MainService {
 
   getElectionViaVoxe(): Observable<Election> {
     return this.http.get(this.server+'elections/search')
-      .map(data => data.json().response.elections)
+      .map(data => {
+        console.log(data.json().response.elections);
+        return data.json().response.elections;
+      })
       .map(elections => elections.filter(election => {
         return election.namespace == this.electionNameSpace
-    })[0]);
+      })[0]);
   }
 
   // Helper which returns true if the 2 arrays have a common element
-  // Pourquoi pas avec des indexOf() ?
   hasCommonElement(arr1: Array<any>, arr2: Array<any>): boolean {
     for(var i=0; i<arr1.length; i++) {
       for(var j=0; j<arr2.length; j++) {
