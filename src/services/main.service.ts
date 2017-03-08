@@ -180,7 +180,7 @@ export class MainService {
     return rows;
   }
 
-  //TODO : Replace these by API calls
+  //TODO : Replace these by presidential election Ids
   francoisFillonId = "578f480ab0bba9398100000b";
   alainJuppeId = "57962957793b3f868d000012";
   nicolasSarkozyId = "57bf24bfa8f4490ce3000034";
@@ -196,5 +196,11 @@ export class MainService {
   cultureId = "578504e585b1a8f7f6000094";
   numeriqueId = "4ef479f8bc60fb000400002c";
   justiceId = "4ef479f9bc60fb00040000cc";
+
+  // TODO to be used when generating random quizz
+  candidaciesArray = [this.francoisFillonId, this.alainJuppeId, this.nicolasSarkozyId,
+    this.jeanFrancoisCopeId, this.nathalieKMId]
+  tagsArray = [this.emploiId, this.economieId, this.financeId, this.europeId, this.educationId,
+    this.cultureId, this.numeriqueId, this.justiceId]
 
 }
