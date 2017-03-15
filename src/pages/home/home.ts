@@ -68,9 +68,9 @@ export class HomePage {
     });
 
     // Initialize the propositions
-    this.propositionService.getPropositionsForElection().subscribe(propositions => {
-      this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
-    });
+    // this.propositionService.getPropositionsForElection().subscribe(propositions => {
+    //   this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
+    // });
 
     // TODO: Delete it, only for test purposes
     let cards: Array<InfoCard|SwipeCard> = [

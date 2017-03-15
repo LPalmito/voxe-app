@@ -4,7 +4,7 @@ import {HomePage} from "../home/home";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {CandidateService} from "../../services/candidates.service";
-import {Tag, Candidate, Candidacy, MainService, Photo} from "../../services/main.service";
+import {Tag, Candidate, Candidacy, MainService} from "../../services/main.service";
 import {TagService} from "../../services/tags.service";
 import {NavController} from "ionic-angular";
 
