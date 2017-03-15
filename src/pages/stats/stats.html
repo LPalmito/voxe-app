@@ -1,7 +1,12 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
     <ion-title>Statistiques</ion-title>
-  </ion-navbar>
+    <ion-buttons end>
+      <button ion-button (click)="goHome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding class="independant-card">
@@ -72,6 +77,6 @@
   </div>
 
   <!--Go to home page button-->
-  <button (click)="goHome()" ion-button round class="again-button">Faire un autre test</button>
+  <button (click)="goHome()" ion-button round class="again-button">Retour à l'accueil</button>
 
 </ion-content>
