@@ -2,7 +2,7 @@ import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
 import {StatsPage} from "../stats/stats";
-import {ToastController, NavController} from 'ionic-angular';
+import {ToastController, NavController, LoadingController} from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
 import {Tag, Proposition} from "../../services/main.service";
@@ -43,7 +43,7 @@ export class SwipePage {
   tagIds: string[];
   tags: Tag[] = [];
 
-  constructor(public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController,
+  constructor(public loadingController: LoadingController, public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController,
               private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService) {
 
     // Get tags
@@ -62,9 +62,17 @@ export class SwipePage {
     this.store.dispatch({type: CLEAR_SWIPED_PROPOSITIONS, payload: null});
     this.store.dispatch({type: CLEAR_ANSWERS, payload: null});
 
+    let loader = this.loadingController.create({
+      content: "Nous générons ton quizz ..."
+    });
+    loader.present();
+
     // Initialisation of the propositions to swipe
     this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds)
-      .subscribe(arr => this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: arr}));
+      .subscribe(arr => {
+        this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: arr});
+        loader.dismissAll();
+      });
 
     // Initialisation of the stack
     this.stackConfig = {
