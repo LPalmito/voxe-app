@@ -199,8 +199,8 @@ export class MainService {
 
   // TODO to be used when generating random quizz
   candidaciesArray = [this.francoisFillonId, this.alainJuppeId, this.nicolasSarkozyId,
-    this.jeanFrancoisCopeId, this.nathalieKMId]
+    this.jeanFrancoisCopeId, this.nathalieKMId];
   tagsArray = [this.emploiId, this.economieId, this.financeId, this.europeId, this.educationId,
-    this.cultureId, this.numeriqueId, this.justiceId]
+    this.cultureId, this.numeriqueId, this.justiceId];
 
 }
