@@ -8,7 +8,7 @@ import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
-import {STAR_CARD, ARCHIVE_CARD, SET_CARDS} from "../../reducers/cards.reducer";
+import {STAR_CARD, ARCHIVE_CARD, SET_CARDS, ADD_CARD} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController} from "ionic-angular";
@@ -261,14 +261,28 @@ export class HomePage {
 
   getRandomCandidacies() {
     var candidaciesLength = this.main.candidaciesArray.length;
-    var randomNumber1 = Math.floor(Math.random() * candidaciesLength) + 1;
-    var randomNumber2 = Math.floor(Math.random() * candidaciesLength) + 1;
+    var randomNumber1 = Math.floor(Math.random() * (candidaciesLength-1)) + 1;
+    var randomNumber2 = Math.floor(Math.random() * (candidaciesLength-1)) + 1;
     return [this.main.candidaciesArray[randomNumber1], this.main.candidaciesArray[randomNumber2]]
   }
 
   getRandomTag() {
     var tagsLength = this.main.tagsArray.length;
-    var randomNumber = Math.floor(Math.random() * tagsLength) + 1;
+    var randomNumber = Math.floor(Math.random() * (tagsLength-1)) + 1;
     return [this.main.tagsArray[randomNumber]]
+  }
+
+  generateQuizz() {
+    console.log(this.getRandomCandidacies(), this.getRandomTag());
+    var newCard = {
+      title: "????????",
+      image: "assets/img/home-swipe-4.png",
+      tagIds: this.getRandomTag(),
+      isStar: false,
+      isArchive: false,
+      type: CardType.Swipe,
+      candidacyIds: this.getRandomCandidacies()
+    };
+    this.store.dispatch({type: ADD_CARD, payload: newCard});
   }
 }
