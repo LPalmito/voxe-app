@@ -166,7 +166,7 @@ export class MainService {
   }
 
   getCurrentCard(cards: Array<InfoCard|SwipeCard>) {
-    return cards.filter(card => card.isActive);
+    return cards.filter(card => card.isActive)[0];
   }
 
   // Takes an array of cards and returns an array of rows (a row is an array of 2 cards)
