@@ -31,7 +31,7 @@
     <!--UNAPPROVED-->
     <ion-col class="unapproved width-37" (click)="voteUp(false)">
       <ion-icon name="close"></ion-icon>
-      <p>Désapprouver</p>
+      <p>Pas d'accord</p>
     </ion-col>
     <!--CANCEL-->
     <ion-col class="undo width-26" (click)="undo()" *ngIf="swipedPropositions.length > 0">
@@ -42,7 +42,7 @@
     <!--APPROVED-->
     <ion-col class="approved width-37" (click)="voteUp(true)">
       <ion-icon name="checkmark"></ion-icon>
-      <p>Approuver</p>
+      <p>D'accord</p>
     </ion-col>
   </ion-row>
 

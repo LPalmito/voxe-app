@@ -6,6 +6,7 @@ export const DELETE_CARD = 'DELETE_CARD';
 export const ARCHIVE_CARD = 'ARCHIVE_CARD';
 export const RESTORE_CARD = 'RESTORE_CARD';
 export const STAR_CARD = 'STAR_CARD';
+export const ACTIVE_CARD = 'ACTIVE_CARD';
 
 export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
   switch (type) {
@@ -47,7 +48,18 @@ export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
           return card;
         }
       });
+    case ACTIVE_CARD:
+      return state.map(card => {
+        card.isActive = false;
+        if (card == payload) {
+          card.isActive = !card.isActive;
+          return card;
+        }
+        else {
+          return card;
+        }
+      });
     default:
       return state;
   }
-}
+};
