@@ -75,15 +75,6 @@ export class HomePage {
     // TODO: Delete it, only for test purposes
     let cards: Array<InfoCard|SwipeCard> = [
       {
-        title: "RANDOM",
-        image: "assets/img/home-swipe-4.png",
-        tagIds: [this.main.numeriqueId],
-        isStar: false,
-        isArchive: false,
-        type: CardType.Swipe,
-        candidacyIds: [this.main.alainJuppeId, this.main.francoisFillonId]
-      },
-      {
         title: "François Fillon + Alain Juppé + Numérique = ?",
         image: "assets/img/home-swipe-1.png",
         tagIds: [this.main.numeriqueId],
@@ -263,18 +254,20 @@ export class HomePage {
     var candidaciesLength = this.main.candidaciesArray.length;
     var randomNumber1 = Math.floor(Math.random() * (candidaciesLength-1)) + 1;
     var randomNumber2 = Math.floor(Math.random() * (candidaciesLength-1)) + 1;
-    return [this.main.candidaciesArray[randomNumber1], this.main.candidaciesArray[randomNumber2]]
+    while (randomNumber2 == randomNumber1) {
+      randomNumber2 = Math.floor(Math.random() * (candidaciesLength-1)) + 1;
+    }
+    return [this.main.candidaciesArray[randomNumber1], this.main.candidaciesArray[randomNumber2]];
   }
 
   getRandomTag() {
     var tagsLength = this.main.tagsArray.length;
     var randomNumber = Math.floor(Math.random() * (tagsLength-1)) + 1;
-    return [this.main.tagsArray[randomNumber]]
+    return [this.main.tagsArray[randomNumber]];
   }
 
   generateQuizz() {
-    console.log(this.getRandomCandidacies(), this.getRandomTag());
-    var newCard = {
+    var newCard: SwipeCard = {
       title: "????????",
       image: "assets/img/home-swipe-4.png",
       tagIds: this.getRandomTag(),
