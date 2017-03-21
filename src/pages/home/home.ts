@@ -283,11 +283,19 @@ export class HomePage {
     return array;
   }
 
+  getNextBackground() {
+	  let previousBackground = this.cardsRows[0][0].image;
+	  let previousNumber = parseInt(previousBackground.slice(-5,-4));
+	  console.log(previousNumber);
+	  let nextNumber = previousNumber==5 ? 1 : previousNumber+1;
+	  console.log(nextNumber);
+	  return "assets/img/home-swipe-"+nextNumber.toString()+".png";
+  }
 
   generateQuizz() {
     let newCard: SwipeCard = {
       title: "????????",
-      image: "assets/img/home-swipe-4.png",
+      image: this.getNextBackground(),
       tagIds: this.getRandomIds(this.main.temp_tagIds,1),
       isStar: false,
       isArchive: false,
