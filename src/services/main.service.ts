@@ -167,6 +167,10 @@ export class MainService {
     return cards.filter(card => card.isArchive);
   }
 
+  getCurrentCard(cards: Array<InfoCard|SwipeCard>) {
+    return cards.filter(card => card.isActive)[0];
+  }
+
   // Takes an array of cards and returns an array of rows (a row is an array of 2 cards)
   putCardsInRows(cards: Array<InfoCard|SwipeCard>) {
     let rows: Array<InfoCard|SwipeCard>[] = [];

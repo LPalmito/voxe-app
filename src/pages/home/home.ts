@@ -8,7 +8,7 @@ import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
-import {STAR_CARD, ARCHIVE_CARD, SET_CARDS} from "../../reducers/cards.reducer";
+import {ACTIVE_CARD, STAR_CARD, ARCHIVE_CARD, SET_CARDS} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController} from "ionic-angular";
@@ -24,6 +24,7 @@ export class Card {
 	image: string;
 	isStar: boolean;
 	isArchive: boolean;
+  isActive: boolean;
 }
 
 export class InfoCard extends Card {
@@ -90,6 +91,7 @@ export class HomePage {
         tagIds: [this.main.numeriqueId],
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Swipe,
         candidacyIds: [this.main.alainJuppeId, this.main.francoisFillonId]
       },
@@ -97,6 +99,7 @@ export class HomePage {
         image: "assets/img/home-role-president.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-role-president.png"]
@@ -105,6 +108,7 @@ export class HomePage {
         image: "assets/img/home-carte-scolaire.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-carte-scolaire.png"]
@@ -115,6 +119,7 @@ export class HomePage {
         tagIds: [this.main.justiceId],
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Swipe,
         candidacyIds: [this.main.nicolasSarkozyId, this.main.alainJuppeId]
       },
@@ -122,6 +127,7 @@ export class HomePage {
         image: "assets/img/home-primaire-droite.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-primaire-droite.png","assets/img/info-primaire-droite-2.png"]
@@ -132,6 +138,7 @@ export class HomePage {
         tagIds: [this.main.educationId],
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Swipe,
         candidacyIds: [this.main.nathalieKMId, this.main.jeanFrancoisCopeId]
       },
@@ -139,6 +146,7 @@ export class HomePage {
         image: "assets/img/home-dette-publique.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-dette-publique.png","assets/img/info-dette-publique-2.png"]
@@ -147,6 +155,7 @@ export class HomePage {
         image: "assets/img/home-crise-migratoire.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-crise-migratoire.png","assets/img/info-crise-migratoire-2.png"]
@@ -155,6 +164,7 @@ export class HomePage {
         image: "assets/img/home-etat-d-urgence.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-etat-d-urgence.png"]
@@ -163,6 +173,7 @@ export class HomePage {
         image: "assets/img/home-prison.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-prison.png"]
@@ -171,6 +182,7 @@ export class HomePage {
         image: "assets/img/home-religion-ecole.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-religion-ecole.png","assets/img/info-religion-ecole-2.png","assets/img/info-religion-ecole-3.png"]
@@ -181,6 +193,7 @@ export class HomePage {
         tagIds: [this.main.europeId],
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Swipe,
         candidacyIds: [this.main.nicolasSarkozyId, this.main.francoisFillonId]
       },
@@ -188,6 +201,7 @@ export class HomePage {
         image: "assets/img/home-cumul-mandats.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-cumul-mandats.png","assets/img/info-cumul-mandats-2.png"]
@@ -196,6 +210,7 @@ export class HomePage {
         image: "assets/img/home-prelevement-source.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-prelevement-source.png","assets/img/info-prelevement-source-2.png"]
@@ -204,6 +219,7 @@ export class HomePage {
         image: "assets/img/home-fiscalite.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-fiscalite.png","assets/img/info-fiscalite-2.png"]
@@ -212,6 +228,7 @@ export class HomePage {
         image: "assets/img/home-fiche-s.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-fiche-s.png","assets/img/info-fiche-s-2.png"]
@@ -220,6 +237,7 @@ export class HomePage {
         image: "assets/img/home-primaire-ecologiste.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-primaire-ecologiste.png"]
@@ -228,6 +246,7 @@ export class HomePage {
         image: "assets/img/home-cigeo.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-cigeo.png","assets/img/info-cigeo-2.png"]
@@ -245,11 +264,13 @@ export class HomePage {
       let infoCard = <InfoCard> card;
       this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl});
       this.store.dispatch({type: SET_INFO_TYPE, payload: infoCard.isHTML});
+      this.store.dispatch({type: ACTIVE_CARD, payload: card});
       this.nav.push(InfoPage);
       // this.store.dispatch({type: GO_TO, payload: InfoPage});
     }
     else if (card.type == CardType.Swipe) {
       let swipeCard = <SwipeCard> card;
+      this.store.dispatch({type: ACTIVE_CARD, payload: card});
       this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
       this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
       this.nav.push(SwipePage);
