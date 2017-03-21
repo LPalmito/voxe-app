@@ -14,6 +14,7 @@ import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController} from "ionic-angular";
 import {PropositionService} from "../../services/propositions.service";
+import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
 
 export enum CardType {
   Info,
@@ -28,6 +29,7 @@ export class Card {
 
 export class InfoCard extends Card {
 	infoUrl: string[];
+	isHTML: boolean;
 	type: CardType = CardType.Info;
 }
 
@@ -76,6 +78,14 @@ export class HomePage {
     // TODO: Delete it, only for test purposes
     let cards: Array<InfoCard|SwipeCard> = [
       {
+        image: "assets/img/home-melenchon.png",
+        isStar: false,
+        isArchive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/jean-luc-melenchon/"]
+      },
+      {
         title: "François Fillon + Alain Juppé + Numérique = ?",
         image: "assets/img/home-swipe-1.png",
         tagIds: [this.main.numeriqueId],
@@ -89,6 +99,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-role-president.png"]
       },
       {
@@ -96,6 +107,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-carte-scolaire.png"]
       },
       {
@@ -112,6 +124,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-primaire-droite.png","assets/img/info-primaire-droite-2.png"]
       },
       {
@@ -128,6 +141,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-dette-publique.png","assets/img/info-dette-publique-2.png"]
       },
       {
@@ -135,6 +149,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-crise-migratoire.png","assets/img/info-crise-migratoire-2.png"]
       },
       {
@@ -142,6 +157,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-etat-d-urgence.png"]
       },
       {
@@ -149,6 +165,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-prison.png"]
       },
       {
@@ -156,6 +173,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-religion-ecole.png","assets/img/info-religion-ecole-2.png","assets/img/info-religion-ecole-3.png"]
       },
       {
@@ -172,6 +190,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-cumul-mandats.png","assets/img/info-cumul-mandats-2.png"]
       },
       {
@@ -179,6 +198,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-prelevement-source.png","assets/img/info-prelevement-source-2.png"]
       },
       {
@@ -186,6 +206,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-fiscalite.png","assets/img/info-fiscalite-2.png"]
       },
       {
@@ -193,6 +214,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-fiche-s.png","assets/img/info-fiche-s-2.png"]
       },
       {
@@ -200,6 +222,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-primaire-ecologiste.png"]
       },
       {
@@ -207,6 +230,7 @@ export class HomePage {
         isStar: false,
         isArchive: false,
         type: CardType.Info,
+        isHTML: false,
         infoUrl: ["assets/img/info-cigeo.png","assets/img/info-cigeo-2.png"]
       }
     ];
@@ -221,6 +245,7 @@ export class HomePage {
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
       this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl});
+      this.store.dispatch({type: SET_INFO_TYPE, payload: infoCard.isHTML});
       this.nav.push(InfoPage);
       // this.store.dispatch({type: GO_TO, payload: InfoPage});
     }

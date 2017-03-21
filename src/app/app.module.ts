@@ -25,6 +25,7 @@ import {candidacyIds} from "../reducers/candidacy-ids.reducer";
 import {nav} from "../reducers/nav.reducer";
 import {propositions} from "../reducers/propositions.reducer";
 import {JsonpModule} from "@angular/http";
+import {isHTML} from "../reducers/info-type.reducer";
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import {JsonpModule} from "@angular/http";
       swipedPropositions,
       election,
       infoUrl,
+      isHTML,
       toSwipePropositions,
       tagIds,
       candidacyIds,

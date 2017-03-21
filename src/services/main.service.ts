@@ -110,6 +110,7 @@ export class MainService {
   nav: Observable<NavController>;
   cards: Observable<Array<InfoCard|SwipeCard>>;
   infoUrl: Observable<Array<string>>;
+  isHTML: Observable<boolean>;
   answers: Observable<Array<Answer>>;
 
   constructor(private jsonp: Jsonp, private store: Store<AppStore>) {
@@ -117,6 +118,7 @@ export class MainService {
     this.nav = store.select('nav');
     this.cards = store.select('cards');
     this.infoUrl = store.select('infoUrl');
+    this.isHTML = store.select('isHTML');
     this.answers = store.select('answers');
   }
 
