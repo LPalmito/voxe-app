@@ -81,6 +81,7 @@ export class HomePage {
         image: "assets/img/home-melenchon.png",
         isStar: false,
         isArchive: false,
+        isActive: false,
         type: CardType.Info,
         isHTML: true,
         infoUrl: ["http://www.voxe.org/jean-luc-melenchon/"]
