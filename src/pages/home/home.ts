@@ -2,7 +2,6 @@ import {Component} from "@angular/core";
 import {InfoPage} from "../info/info";
 import {SwipePage} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
-import {ScrapPage} from "../scrap/scrap";
 import {MainService} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
