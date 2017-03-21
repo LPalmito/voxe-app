@@ -201,10 +201,10 @@ export class MainService {
   numeriqueId = "4ef479f8bc60fb000400002c";
   justiceId = "4ef479f9bc60fb00040000cc";
 
-  // TODO to be used when generating random quizz
-  candidaciesArray = [this.francoisFillonId, this.alainJuppeId, this.nicolasSarkozyId,
+  // TODO - replace with presidential data - to be used when generating random quizz
+  temp_candidacyIds = [this.francoisFillonId, this.alainJuppeId, this.nicolasSarkozyId,
     this.jeanFrancoisCopeId, this.nathalieKMId];
-  tagsArray = [this.emploiId, this.economieId, this.financeId, this.europeId, this.educationId,
+  temp_tagIds = [this.emploiId, this.economieId, this.financeId, this.europeId, this.educationId,
     this.cultureId, this.numeriqueId, this.justiceId];
 
 }

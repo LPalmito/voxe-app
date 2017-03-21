@@ -271,31 +271,29 @@ export class HomePage {
     return card.type == CardType.Swipe;
   }
 
-  getRandomCandidacies() {
-    var candidaciesLength = this.main.candidaciesArray.length;
-    var randomNumber1 = Math.floor(Math.random() * (candidaciesLength-1)) + 1;
-    var randomNumber2 = Math.floor(Math.random() * (candidaciesLength-1)) + 1;
-    while (randomNumber2 == randomNumber1) {
-      randomNumber2 = Math.floor(Math.random() * (candidaciesLength-1)) + 1;
+  getRandomIds(ids: string[], nb: number) {
+    let array: string[] = [];
+    for (let i=0 ; i<nb ; i++) {
+      let randomNumber = Math.floor(Math.random()*ids.length);
+      while (array.indexOf(ids[randomNumber]) > -1) {
+        randomNumber = Math.floor(Math.random()*ids.length);
+      }
+      array = array.concat([ids[randomNumber]]);
     }
-    return [this.main.candidaciesArray[randomNumber1], this.main.candidaciesArray[randomNumber2]];
+    return array;
   }
 
-  getRandomTag() {
-    var tagsLength = this.main.tagsArray.length;
-    var randomNumber = Math.floor(Math.random() * (tagsLength-1)) + 1;
-    return [this.main.tagsArray[randomNumber]];
-  }
 
   generateQuizz() {
-    var newCard: SwipeCard = {
+    let newCard: SwipeCard = {
       title: "????????",
       image: "assets/img/home-swipe-4.png",
-      tagIds: this.getRandomTag(),
+      tagIds: this.getRandomIds(this.main.temp_tagIds,1),
       isStar: false,
       isArchive: false,
+      isActive: false,
       type: CardType.Swipe,
-      candidacyIds: this.getRandomCandidacies()
+      candidacyIds: this.getRandomIds(this.main.temp_candidacyIds,2)
     };
     this.store.dispatch({type: ADD_CARD, payload: newCard});
   }
