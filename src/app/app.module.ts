@@ -6,7 +6,6 @@ import {SwipePage} from "../pages/swipe/swipe";
 import {StatsPage} from "../pages/stats/stats";
 import {InfoPage} from "../pages/info/info";
 import {ArchivePage} from "../pages/archive/archive";
-import {ScrapPage} from "../pages/scrap/scrap";
 import {SwingStackComponent} from "angular2-swing";
 import {SwingCardComponent} from "angular2-swing";
 import {MainService} from "../services/main.service";
@@ -36,7 +35,6 @@ import {isHTML} from "../reducers/info-type.reducer";
     StatsPage,
     InfoPage,
     ArchivePage,
-    ScrapPage,
     SwingStackComponent,
     SwingCardComponent
   ],
@@ -52,7 +50,6 @@ import {isHTML} from "../reducers/info-type.reducer";
     ArchivePage,
     SwipePage,
     StatsPage,
-    ScrapPage
   ],
   providers: [
     provideStore({

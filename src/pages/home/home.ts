@@ -263,11 +263,6 @@ export class HomePage {
     // this.store.dispatch({type: GO_TO, payload: ArchivePage});
 	}
 
-	// TODO: Remove. For tests purpose only.
-	goToScrapPage() {
-	  this.nav.push(ScrapPage);
-  }
-
 	starCard(card: Card) {
     this.store.dispatch({type: STAR_CARD, payload: card});
 	}
