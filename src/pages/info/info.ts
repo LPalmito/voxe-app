@@ -25,12 +25,4 @@ export class InfoPage {
       }
     });
   }
-
-  isImg() {
-    return !this.isHTML;
-  }
-
-  isHtml() {
-    return this.isHTML;
-  }
 }
