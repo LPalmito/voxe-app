@@ -22,7 +22,7 @@
     "@angular/platform-browser": "2.3.1",
     "@angular/platform-browser-dynamic": "2.3.1",
     "@angular/platform-server": "2.3.1",
-    "@ionic/storage": "^1.0.3",
+    "@ionic/storage": "^2.0.1",
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.1",
     "angular2-swing": "^0.10.0",
@@ -37,7 +37,7 @@
     "@ionic/app-scripts": "^0.0.47",
     "typescript": "^2.0.3"
   },
-  "description": "Voxe app",
+  "description": "Voxe.org",
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",

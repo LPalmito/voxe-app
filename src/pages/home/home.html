@@ -3,10 +3,10 @@
   <ion-toolbar>
     <ion-title>Accueil</ion-title>
 
-    <!-- Button to access ArchivePage -->
+    <!-- Button to generate a Quizz -->
     <ion-buttons end>
-      <button ion-button (click)="goToArchivePage()">
-        <ion-icon name="archive"></ion-icon>
+      <button ion-button (click)="generateQuizz()">
+        <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -46,22 +46,6 @@
 
             <img src={{card.image}} (click)="openCard(card)"/>
 
-            <ion-item>
-              <ion-row>
-
-                <!-- Mark a card as favorite -->
-                <button ion-button clear icon-left small (click)="starCard(card)">
-                  <ion-icon *ngIf="card.isStar" name="star"></ion-icon>
-                  <ion-icon *ngIf="!card.isStar" name="star-outline"></ion-icon>
-                </button>
-
-                <!-- Mark a card as archive -->
-                <button ion-button clear icon-only small (click)="archiveCard(card)">
-                  <ion-icon name="archive"></ion-icon>
-                </button>
-              </ion-row>
-            </ion-item>
-
           </ion-card>
         </ion-col>
 
@@ -81,20 +65,6 @@
             </div>
 
             <img src={{card.image}} (click)="openCard(card)"/>
-
-            <ion-item>
-              <ion-row>
-
-                <button ion-button clear icon-left small (click)="starCard(card)">
-                  <ion-icon *ngIf="card.isStar" name="star"></ion-icon>
-                  <ion-icon *ngIf="!card.isStar" name="star-outline"></ion-icon>
-                </button>
-
-                <button ion-button clear icon-only small (click)="archiveCard(card)">
-                  <ion-icon name="trash"></ion-icon>
-                </button>
-              </ion-row>
-            </ion-item>
 
           </ion-card>
         </ion-col>

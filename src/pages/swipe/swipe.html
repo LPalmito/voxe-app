@@ -17,7 +17,6 @@
       <!--TITLE-->
       <ion-card-header>
         <p>{{swipedPropositions.length+1}}/{{toSwipePropositions.length+swipedPropositions.length}}</p>
-        <!--TODO: Use the tag and the image from the proposition object here-->
         <h2>{{tags[0].name}}</h2>
         <img src="{{getIcon(tags[0], 0)}}">
       </ion-card-header>
@@ -31,7 +30,7 @@
     <!--UNAPPROVED-->
     <ion-col class="unapproved width-37" (click)="voteUp(false)">
       <ion-icon name="close"></ion-icon>
-      <p>Désapprouver</p>
+      <p>Pas d'accord</p>
     </ion-col>
     <!--CANCEL-->
     <ion-col class="undo width-26" (click)="undo()" *ngIf="swipedPropositions.length > 0">
@@ -42,7 +41,7 @@
     <!--APPROVED-->
     <ion-col class="approved width-37" (click)="voteUp(true)">
       <ion-icon name="checkmark"></ion-icon>
-      <p>Approuver</p>
+      <p>D'accord</p>
     </ion-col>
   </ion-row>
 

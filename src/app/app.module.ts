@@ -24,6 +24,9 @@ import {candidacyIds} from "../reducers/candidacy-ids.reducer";
 import {nav} from "../reducers/nav.reducer";
 import {propositions} from "../reducers/propositions.reducer";
 import {JsonpModule} from "@angular/http";
+import {IonicStorageModule} from "@ionic/storage";
+import {isHTML} from "../reducers/info-type.reducer";
+import {InfoCardsService} from "../services/info-cards.service";
 
 
 @NgModule({
@@ -39,7 +42,11 @@ import {JsonpModule} from "@angular/http";
   ],
   imports: [
     JsonpModule,
-    IonicModule.forRoot(VoxeApp)
+    IonicModule.forRoot(VoxeApp),
+    IonicStorageModule.forRoot({
+      name: 'VoxeAppDB',
+      driverOrder: ['sqlite']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +55,7 @@ import {JsonpModule} from "@angular/http";
     InfoPage,
     ArchivePage,
     SwipePage,
-    StatsPage
+    StatsPage,
   ],
   providers: [
     provideStore({
@@ -58,6 +65,7 @@ import {JsonpModule} from "@angular/http";
       swipedPropositions,
       election,
       infoUrl,
+      isHTML,
       toSwipePropositions,
       tagIds,
       candidacyIds,
@@ -66,7 +74,8 @@ import {JsonpModule} from "@angular/http";
     MainService,
     CandidateService,
     PropositionService,
-    TagService
+    TagService,
+    InfoCardsService
   ]
 })
 
