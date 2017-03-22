@@ -3,6 +3,7 @@ import {InfoPage} from "../info/info";
 import {SwipePage} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
 import {MainService} from "../../services/main.service";
+import {CandidateService} from "../../services/candidates.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {Storage} from '@ionic/storage';
@@ -81,11 +82,24 @@ export class HomePage {
     });
 
     this.store.dispatch({type: SET_CARDS, payload: this.infoCardsService.allCards});
-
   }
 
-// Navigation methods
+  // Getters - NE MARCHE PAS POUR L'INSTANT, JE VAIS DORMIR
+  getPhotos(card: SwipeCard) {
+	  let length = card.candidacyIds.length;
+	  let array: string[] = [];
+	  for (let i=0 ; i<length ; i++) {
+	    let photoUrl: string = "";
+      this.candidateService.getCandidacyById(card.candidacyIds[i]).map(candidacy => {
+        photoUrl = candidacy.candidates[0].photo.sizes.small.url;
+      });
+      array.concat([photoUrl]);
+    }
+    return array;
+  }
 
+
+  // Navigation methods
 	openCard(card: InfoCard|SwipeCard) {
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
@@ -110,6 +124,7 @@ export class HomePage {
     // this.store.dispatch({type: GO_TO, payload: ArchivePage});
 	}
 
+	// Cards modification methods
 	starCard(card: Card) {
     this.store.dispatch({type: STAR_CARD, payload: card});
 	}
