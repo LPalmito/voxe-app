@@ -52,13 +52,6 @@ export class HomePage {
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService, storage: Storage) {
 
-	  storage.ready().then(() => {
-	    storage.set('name','Max');
-	    storage.get('name').then((val) => {
-	      console.log('Bonjour ',val);
-      })
-    });
-
 	  // Initialize the selected segment
 	  this.selectedSegment = 'all';
 
