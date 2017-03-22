@@ -18,7 +18,7 @@
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.3.1.tgz#0c57f848e41432bac3201c29b645dd4dd099d2f9"
 
-"@angular/core@2.3.1", "@angular/core@^2.0.0":
+"@angular/core@2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.3.1.tgz#be6e91fdfdd7498506604263e051797cf67a47be"
 
@@ -82,15 +82,13 @@
     ws "1.1.1"
     xml2js "^0.4.17"
 
-"@ionic/storage@^1.0.3":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@ionic/storage/-/storage-1.1.7.tgz#332b39dbffbb25f9d3505e215cde17ab6ea3ad62"
+"@ionic/storage@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@ionic/storage/-/storage-2.0.1.tgz#bb1a8c276007d008d7acdda426b56065b0fd3c0b"
   dependencies:
-    "@angular/core" "^2.0.0"
     "@types/localforage" "0.0.30"
-    localforage "^1.4.2"
-    localforage-cordovasqlitedriver "^1.5.0"
-    rxjs "5.0.0-beta.12"
+    localforage "~1.4.2"
+    localforage-cordovasqlitedriver "~1.5.0"
 
 "@ngrx/core@^1.2.0":
   version "1.2.0"
@@ -1560,14 +1558,14 @@ loader-utils@^0.2.16:
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-localforage-cordovasqlitedriver@^1.5.0:
+localforage-cordovasqlitedriver@~1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/localforage-cordovasqlitedriver/-/localforage-cordovasqlitedriver-1.5.0.tgz#f934789e6ad9a39bac05fdd1168812f438535762"
   dependencies:
     "@types/localforage" "0.0.30"
     localforage ">=1.4.0"
 
-localforage@>=1.4.0, localforage@^1.4.2:
+localforage@>=1.4.0, localforage@~1.4.2:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.4.3.tgz#a212543c39c7c76424edd12bf474c489aaca494c"
   dependencies:
@@ -2370,12 +2368,6 @@ rollup@0.36.4:
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.36.4.tgz#a224494c5386c1d73d38f7bb86f69f5eb011a3d2"
   dependencies:
     source-map-support "^0.4.0"
-
-rxjs@5.0.0-beta.12:
-  version "5.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.0.0-beta.12.tgz#cdfde2d8c4639d20ae7794bff8fddf32da7ad337"
-  dependencies:
-    symbol-observable "^1.0.1"
 
 rxjs@5.0.0-rc.4, rxjs@^5.0.0-beta.6:
   version "5.0.0-rc.4"

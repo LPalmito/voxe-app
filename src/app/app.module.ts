@@ -24,6 +24,7 @@ import {candidacyIds} from "../reducers/candidacy-ids.reducer";
 import {nav} from "../reducers/nav.reducer";
 import {propositions} from "../reducers/propositions.reducer";
 import {JsonpModule} from "@angular/http";
+import {IonicStorageModule} from "@ionic/storage";
 
 
 @NgModule({
@@ -39,7 +40,11 @@ import {JsonpModule} from "@angular/http";
   ],
   imports: [
     JsonpModule,
-    IonicModule.forRoot(VoxeApp)
+    IonicModule.forRoot(VoxeApp),
+    IonicStorageModule.forRoot({
+      name: 'VoxeAppDB',
+      driverOrder: ['sqlite']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

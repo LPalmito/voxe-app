@@ -5,6 +5,7 @@ import {ArchivePage} from "../archive/archive";
 import {MainService} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
+import {Storage} from '@ionic/storage';
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
@@ -49,7 +50,14 @@ export class HomePage {
   selectedSegment: string;
 
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
-              private propositionService: PropositionService) {
+              private propositionService: PropositionService, storage: Storage) {
+
+	  storage.ready().then(() => {
+	    storage.set('name','Max');
+	    storage.get('name').then((val) => {
+	      console.log('Bonjour ',val);
+      })
+    });
 
 	  // Initialize the selected segment
 	  this.selectedSegment = 'all';
