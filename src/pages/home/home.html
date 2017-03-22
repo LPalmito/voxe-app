@@ -39,6 +39,9 @@
           <ion-card>
             <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
               {{card.title}}
+              <div *ngFor="let photo of getPhotos(card)">
+                <img src={{photo}}/>
+              </div>
             </div>
 
             <img src={{card.image}} (click)="openCard(card)"/>

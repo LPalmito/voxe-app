@@ -3,6 +3,7 @@ import {InfoPage} from "../info/info";
 import {SwipePage} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
 import {MainService} from "../../services/main.service";
+import {CandidateService} from "../../services/candidates.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
@@ -48,7 +49,7 @@ export class HomePage {
 	starCardsRows: Array<InfoCard|SwipeCard>[];
   selectedSegment: string;
 
-	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
+	constructor(private main: MainService, private candidateService: CandidateService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService) {
 
 	  // Initialize the selected segment
@@ -71,6 +72,7 @@ export class HomePage {
     this.propositionService.getPropositionsForElection().subscribe(propositions => {
       this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
     });
+
 
     // TODO: Delete it, only for test purposes
     let cards: Array<InfoCard|SwipeCard> = [
@@ -214,8 +216,22 @@ export class HomePage {
 
   }
 
-// Navigation methods
+  // Getters - NE MARCHE PAS POUR L'INSTANT, JE VAIS DORMIR
+  getPhotos(card: SwipeCard) {
+	  let length = card.candidacyIds.length;
+	  let array: string[] = [];
+	  for (let i=0 ; i<length ; i++) {
+	    let photoUrl: string = "";
+      this.candidateService.getCandidacyById(card.candidacyIds[i]).map(candidacy => {
+        photoUrl = candidacy.candidates[0].photo.sizes.small.url;
+      });
+      array.concat([photoUrl]);
+    }
+    return array;
+  }
 
+
+  // Navigation methods
 	openCard(card: InfoCard|SwipeCard) {
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
@@ -237,6 +253,7 @@ export class HomePage {
     // this.store.dispatch({type: GO_TO, payload: ArchivePage});
 	}
 
+	// Cards modification methods
 	starCard(card: Card) {
     this.store.dispatch({type: STAR_CARD, payload: card});
 	}
