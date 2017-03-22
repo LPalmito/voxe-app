@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {Platform, MenuController, Nav} from "ionic-angular";
+import {Platform, Nav} from "ionic-angular";
 import {StatusBar} from "ionic-native";
 import {HomePage} from "../pages/home/home";
 
@@ -13,7 +13,7 @@ export class VoxeApp {
   rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public menu: MenuController) {
+  constructor(public platform: Platform) {
     this.initializeApp();
   }
 

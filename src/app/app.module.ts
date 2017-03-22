@@ -25,6 +25,7 @@ import {nav} from "../reducers/nav.reducer";
 import {propositions} from "../reducers/propositions.reducer";
 import {JsonpModule} from "@angular/http";
 import {IonicStorageModule} from "@ionic/storage";
+import {isHTML} from "../reducers/info-type.reducer";
 
 
 @NgModule({
@@ -53,7 +54,7 @@ import {IonicStorageModule} from "@ionic/storage";
     InfoPage,
     ArchivePage,
     SwipePage,
-    StatsPage
+    StatsPage,
   ],
   providers: [
     provideStore({
@@ -63,6 +64,7 @@ import {IonicStorageModule} from "@ionic/storage";
       swipedPropositions,
       election,
       infoUrl,
+      isHTML,
       toSwipePropositions,
       tagIds,
       candidacyIds,
