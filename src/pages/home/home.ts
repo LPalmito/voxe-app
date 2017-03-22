@@ -8,7 +8,7 @@ import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
-import {ACTIVE_CARD, STAR_CARD, ARCHIVE_CARD, SET_CARDS} from "../../reducers/cards.reducer";
+import {ACTIVE_CARD, STAR_CARD, ARCHIVE_CARD, SET_CARDS, ADD_CARD} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController} from "ionic-angular";
@@ -271,4 +271,38 @@ export class HomePage {
     return card.type == CardType.Swipe;
   }
 
+  getRandomIds(ids: string[], nb: number) {
+    let array: string[] = [];
+    for (let i=0 ; i<nb ; i++) {
+      let randomNumber = Math.floor(Math.random()*ids.length);
+      while (array.indexOf(ids[randomNumber]) > -1) {
+        randomNumber = Math.floor(Math.random()*ids.length);
+      }
+      array = array.concat([ids[randomNumber]]);
+    }
+    return array;
+  }
+
+  getNextBackground() {
+	  let previousBackground = this.cardsRows[0][0].image;
+	  let previousNumber = parseInt(previousBackground.slice(-5,-4));
+	  console.log(previousNumber);
+	  let nextNumber = previousNumber==5 ? 1 : previousNumber+1;
+	  console.log(nextNumber);
+	  return "assets/img/home-swipe-"+nextNumber.toString()+".png";
+  }
+
+  generateQuizz() {
+    let newCard: SwipeCard = {
+      title: "????????",
+      image: this.getNextBackground(),
+      tagIds: this.getRandomIds(this.main.temp_tagIds,1),
+      isStar: false,
+      isArchive: false,
+      isActive: false,
+      type: CardType.Swipe,
+      candidacyIds: this.getRandomIds(this.main.temp_candidacyIds,2)
+    };
+    this.store.dispatch({type: ADD_CARD, payload: newCard});
+  }
 }

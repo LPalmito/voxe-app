@@ -13,8 +13,7 @@ export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
     case SET_CARDS:
       return payload;
     case ADD_CARD:
-      state.unshift(payload);
-      return state;
+      return [payload].concat(state);
     case DELETE_CARD:
       state.splice(state.indexOf(payload),1);
       return state;
