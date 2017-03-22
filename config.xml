@@ -2,7 +2,7 @@
 <widget id="com.ionicframework.testproject2602038" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
   <name>Voxe.org</name>
   <description>An awesome app for Voxe</description>
-  <author email="yannick.morel1@gmail.com" href="http://www.voxe.org">Yannick, Augustin & Manon for the VoxeTeam</author>
+  <author email="yannick.morel1@gmail.com" href="http://www.voxe.org">Yannick, Augustin and Manon for the VoxeTeam</author>
   <content src="index.html"/>
 
   <access origin="http://compare.voxe.org" />
@@ -39,24 +39,24 @@
   </feature>
 
   <platform name="browser">
-    <preference name="SplashScreen" value="/src/assets/img/voxe-splash-screen.png" />
-    <preference name="SplashScreenDelay" value="3000"/>
-  </platform>
-  <platform name="android">
-    <splash src="/src/assets/img/voxe-splash-screen.png"/>
-  </platform>
-  <platform name="ios">
-    <splash src="/src/assets/img/voxe-splash-screen.png"/>
-  </platform>
-  <platform name="windows">
-    <splash src="/src/assets/img/voxe-splash-screen.png" target="SplashScreenPhone"/>
-  </platform>
-  <platform name="blackberry10">
-    <rim:splash src="/src/assets/img/voxe-splash-screen.png"/>
-  </platform>
-  <preference name="SplashScreenDelay" value="3000"/>
-  <!--
+    <preference name="SplashScreen" value="/assets/img/voxe-splash-screen.png" />
+    <preference name="SplashScreenDelay" value="2000"/>
     <preference name="FadeSplashScreen" value="true"/>
     <preference name="FadeSplashScreenDuration" value="500"/>
--->
+  </platform>
+  <platform name="android">
+    <splash src="/assets/img/voxe-splash-screen.png"/>
+  </platform>
+  <platform name="ios">
+    <splash src="/assets/img/voxe-splash-screen.png"/>
+  </platform>
+  <platform name="windows">
+    <splash src="/assets/img/voxe-splash-screen.png" target="SplashScreenPhone"/>
+  </platform>
+  <platform name="blackberry10">
+    <rim:splash src="/assets/img/voxe-splash-screen.png"/>
+  </platform>
+  <preference name="SplashScreenDelay" value="2000"/>
+  <preference name="FadeSplashScreen" value="true"/>
+  <preference name="FadeSplashScreenDuration" value="500"/>
 </widget>
