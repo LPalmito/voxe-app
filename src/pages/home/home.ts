@@ -54,7 +54,7 @@ export class HomePage {
   selectedSegment: string;
 
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
-              private propositionService: PropositionService, private info: InfoCardsService
+              private propositionService: PropositionService, private infoCardsService: InfoCardsService
               // When the time will come to use storage it is just here (but it's causing errors in browser):
               // private storage: Storage
   ) {
@@ -80,7 +80,7 @@ export class HomePage {
       this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
     });
 
-    this.store.dispatch({type: SET_CARDS, payload: this.info.allCards});
+    this.store.dispatch({type: SET_CARDS, payload: this.infoCardsService.allCards});
 
   }
 
