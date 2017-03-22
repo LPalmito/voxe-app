@@ -110,6 +110,7 @@ export class MainService {
   nav: Observable<NavController>;
   cards: Observable<Array<InfoCard|SwipeCard>>;
   infoUrl: Observable<Array<string>>;
+  isHTML: Observable<boolean>;
   answers: Observable<Array<Answer>>;
 
   constructor(private jsonp: Jsonp, private store: Store<AppStore>) {
@@ -117,6 +118,7 @@ export class MainService {
     this.nav = store.select('nav');
     this.cards = store.select('cards');
     this.infoUrl = store.select('infoUrl');
+    this.isHTML = store.select('isHTML');
     this.answers = store.select('answers');
   }
 
@@ -201,10 +203,10 @@ export class MainService {
   numeriqueId = "4ef479f8bc60fb000400002c";
   justiceId = "4ef479f9bc60fb00040000cc";
 
-  // TODO to be used when generating random quizz
-  candidaciesArray = [this.francoisFillonId, this.alainJuppeId, this.nicolasSarkozyId,
-    this.jeanFrancoisCopeId, this.nathalieKMId]
-  tagsArray = [this.emploiId, this.economieId, this.financeId, this.europeId, this.educationId,
-    this.cultureId, this.numeriqueId, this.justiceId]
+  // TODO - replace with presidential data - to be used when generating random quizz
+  temp_candidacyIds = [this.francoisFillonId, this.alainJuppeId, this.nicolasSarkozyId,
+    this.jeanFrancoisCopeId, this.nathalieKMId];
+  temp_tagIds = [this.emploiId, this.economieId, this.financeId, this.europeId, this.educationId,
+    this.cultureId, this.numeriqueId, this.justiceId];
 
 }
