@@ -37,7 +37,7 @@
     "@ionic/app-scripts": "^0.0.47",
     "typescript": "^2.0.3"
   },
-  "description": "Voxe app",
+  "description": "Voxe.org",
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",
