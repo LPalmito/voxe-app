@@ -13,6 +13,8 @@ import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController} from "ionic-angular";
 import {PropositionService} from "../../services/propositions.service";
+import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
+import {InfoCards} from "../../services/info-cards.service";
 
 export enum CardType {
   Info,
@@ -28,6 +30,7 @@ export class Card {
 
 export class InfoCard extends Card {
 	infoUrl: string[];
+	isHTML: boolean;
 	type: CardType = CardType.Info;
 }
 
@@ -40,7 +43,8 @@ export class SwipeCard extends Card {
 
 
 @Component({
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [InfoCards]
 })
 
 export class HomePage {
@@ -49,8 +53,8 @@ export class HomePage {
 	starCardsRows: Array<InfoCard|SwipeCard>[];
   selectedSegment: string;
 
-	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
-              private propositionService: PropositionService) {
+	constructor(private main: MainService, private info: InfoCards, public store: Store<AppStore>,
+              public nav: NavController, private propositionService: PropositionService) {
 
 	  // Initialize the selected segment
 	  this.selectedSegment = 'all';
@@ -73,163 +77,7 @@ export class HomePage {
       this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
     });
 
-    // TODO: Delete it, only for test purposes
-    let cards: Array<InfoCard|SwipeCard> = [
-      {
-        title: "François Fillon + Alain Juppé + Numérique = ?",
-        image: "assets/img/home-swipe-1.png",
-        tagIds: [this.main.numeriqueId],
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Swipe,
-        candidacyIds: [this.main.alainJuppeId, this.main.francoisFillonId]
-      },
-      {
-        image: "assets/img/home-role-president.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-role-president.png"]
-      },
-      {
-        image: "assets/img/home-carte-scolaire.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-carte-scolaire.png"]
-      },
-      {
-        title: "Nicolas Sarkozy + Alain Juppé + Justice = ?",
-        image: "assets/img/home-swipe-3.png",
-        tagIds: [this.main.justiceId],
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Swipe,
-        candidacyIds: [this.main.nicolasSarkozyId, this.main.alainJuppeId]
-      },
-      {
-        image: "assets/img/home-primaire-droite.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-primaire-droite.png","assets/img/info-primaire-droite-2.png"]
-      },
-      {
-        title: "NKM + Jean-François Copé + Education = ?",
-        image: "assets/img/home-swipe-2.png",
-        tagIds: [this.main.educationId],
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Swipe,
-        candidacyIds: [this.main.nathalieKMId, this.main.jeanFrancoisCopeId]
-      },
-      {
-        image: "assets/img/home-dette-publique.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-dette-publique.png","assets/img/info-dette-publique-2.png"]
-      },
-      {
-        image: "assets/img/home-crise-migratoire.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-crise-migratoire.png","assets/img/info-crise-migratoire-2.png"]
-      },
-      {
-        image: "assets/img/home-etat-d-urgence.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-etat-d-urgence.png"]
-      },
-      {
-        image: "assets/img/home-prison.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-prison.png"]
-      },
-      {
-        image: "assets/img/home-religion-ecole.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-religion-ecole.png","assets/img/info-religion-ecole-2.png","assets/img/info-religion-ecole-3.png"]
-      },
-      {
-        title: "Nicolas Sarkozy + François Fillon + Europe = ?",
-        image: "assets/img/home-swipe-4.png",
-        tagIds: [this.main.europeId],
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Swipe,
-        candidacyIds: [this.main.nicolasSarkozyId, this.main.francoisFillonId]
-      },
-      {
-        image: "assets/img/home-cumul-mandats.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-cumul-mandats.png","assets/img/info-cumul-mandats-2.png"]
-      },
-      {
-        image: "assets/img/home-prelevement-source.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-prelevement-source.png","assets/img/info-prelevement-source-2.png"]
-      },
-      {
-        image: "assets/img/home-fiscalite.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-fiscalite.png","assets/img/info-fiscalite-2.png"]
-      },
-      {
-        image: "assets/img/home-fiche-s.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-fiche-s.png","assets/img/info-fiche-s-2.png"]
-      },
-      {
-        image: "assets/img/home-primaire-ecologiste.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-primaire-ecologiste.png"]
-      },
-      {
-        image: "assets/img/home-cigeo.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        infoUrl: ["assets/img/info-cigeo.png","assets/img/info-cigeo-2.png"]
-      }
-    ];
-
-    this.store.dispatch({type: SET_CARDS, payload: cards});
+    this.store.dispatch({type: SET_CARDS, payload: this.info.allCards});
 
   }
 
@@ -238,8 +86,9 @@ export class HomePage {
 	openCard(card: InfoCard|SwipeCard) {
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
+      this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl});
+      this.store.dispatch({type: SET_INFO_TYPE, payload: infoCard.isHTML});
       this.store.dispatch({type: ACTIVE_CARD, payload: card});
-      this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl})
       this.nav.push(InfoPage);
       // this.store.dispatch({type: GO_TO, payload: InfoPage});
     }
