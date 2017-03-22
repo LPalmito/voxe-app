@@ -30,33 +30,38 @@
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
   </platform>
+  <preference name="loadUrlTimeoutValue" value="700000" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="android-minSdkVersion" value="16"/>
   <preference name="BackupWebStorage" value="none"/>
+  <preference name="SplashScreenDelay" value="0"/>
+  <preference name="FadeSplashScreen" value="false"/>
+  <preference name="FadeSplashScreenDuration" value="0"/>
+  <preference name="SplashScreenBackgroundColor" value="0xFFFFFFFF"/>
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
-
-  <platform name="browser">
-    <preference name="SplashScreen" value="/assets/img/voxe-splash-screen.png" />
-    <preference name="SplashScreenDelay" value="2000"/>
-    <preference name="FadeSplashScreen" value="true"/>
-    <preference name="FadeSplashScreenDuration" value="500"/>
-  </platform>
-  <platform name="android">
-    <splash src="/assets/img/voxe-splash-screen.png"/>
-  </platform>
-  <platform name="ios">
-    <splash src="/assets/img/voxe-splash-screen.png"/>
-  </platform>
-  <platform name="windows">
-    <splash src="/assets/img/voxe-splash-screen.png" target="SplashScreenPhone"/>
-  </platform>
-  <platform name="blackberry10">
-    <rim:splash src="/assets/img/voxe-splash-screen.png"/>
-  </platform>
+  <!--The splashscreen make the app crash, not a priority for the moment...-->
+  <!--<platform name="browser">-->
+    <!--<preference name="SplashScreen" value="/assets/img/voxe-splash-screen.png" />-->
+    <!--<preference name="SplashScreenDelay" value="2000"/>-->
+    <!--<preference name="FadeSplashScreen" value="true"/>-->
+    <!--<preference name="FadeSplashScreenDuration" value="500"/>-->
+  <!--</platform>-->
+  <!--<platform name="android">-->
+    <!--<splash src="src/assets/img/voxe-splash-screen.png"/>-->
+  <!--</platform>-->
+  <!--<platform name="ios">-->
+    <!--<splash src="src/assets/img/voxe-splash-screen.png"/>-->
+  <!--</platform>-->
+  <!--<platform name="windows">-->
+    <!--<splash src="src/assets/img/voxe-splash-screen.png" target="SplashScreenPhone"/>-->
+  <!--</platform>-->
+  <!--<platform name="blackberry10">-->
+    <!--<rim:splash src="src/assets/img/voxe-splash-screen.png"/>-->
+  <!--</platform>-->
   <preference name="SplashScreenDelay" value="2000"/>
   <preference name="FadeSplashScreen" value="true"/>
   <preference name="FadeSplashScreenDuration" value="500"/>
