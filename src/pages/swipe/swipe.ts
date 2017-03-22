@@ -85,7 +85,7 @@ export class SwipePage {
   }
 
   // TODO: Resolve the color bug when dragging but not coming back to white
-  // Change the color when dragging a card
+  // TODO: Change the color when dragging a card
   static onItemMove(element, x, y, r) {
     let color = '';
     let abs = Math.abs(x);
