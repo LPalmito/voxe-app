@@ -87,6 +87,123 @@ export class HomePage {
         infoUrl: ["http://www.voxe.org/jean-luc-melenchon/"]
       },
       {
+        image: "assets/img/home-arthaud.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/nathalie-arthaud/"]
+      },
+      {
+        image: "assets/img/home-asselineau.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/francois-asselineau/"]
+      },
+      {
+        image: "assets/img/home-cheminade.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/jacques-cheminade/"]
+      },
+      {
+        image: "assets/img/home-dupont-aignan.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/nicolas-dupont-aignan/"]
+      },
+      {
+        image: "assets/img/home-fillon.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/francois-fillon/"]
+      },
+      {
+        image: "assets/img/home-front-national.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/front-national/"]
+      },
+      {
+        image: "assets/img/home-hamon.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/benoit-hamon/"]
+      },
+      {
+        image: "assets/img/home-lassalle.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/jean-lassalle/"]
+      },
+      {
+        image: "assets/img/home-le-pen.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/marine-le-pen/"]
+      },
+      {
+        image: "assets/img/home-legalisation-cannabis.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/cannabis-legalisation-france/"]
+      },
+      {
+        image: "assets/img/home-macron.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/emmanuel-macron/"]
+      },
+      {
+        image: "assets/img/home-poutou.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/philippe-poutou/"]
+      },
+      {
+        image: "assets/img/home-regroupement-familial.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/article-regroupement-familial/"]
+      },
+      {
         title: "François Fillon + Alain Juppé + Numérique = ?",
         image: "assets/img/home-swipe-1.png",
         tagIds: [this.main.numeriqueId],
@@ -123,6 +240,78 @@ export class HomePage {
         isActive: false,
         type: CardType.Swipe,
         candidacyIds: [this.main.nicolasSarkozyId, this.main.alainJuppeId]
+      },
+      {
+        image: "assets/img/home-35-heures.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/35-heures/"]
+      },
+      {
+        image: "assets/img/home-assemblee-constituante.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/assemblee-constituante/"]
+      },
+      {
+        image: "assets/img/home-inegalites-revenu.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/inegalites-de-revenus/"]
+      },
+      {
+        image: "assets/img/home-cheminade.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/jacques-cheminade/"]
+      },
+      {
+        image: "assets/img/home-listes-electorales.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/inscription-listes-electorales//"]
+      },
+      {
+        image: "assets/img/home-parti-communiste.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/particommunistefrancais/"]
+      },
+      {
+        image: "assets/img/home-primaire-gauche.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/primaire-gauche/"]
+      },
+      {
+        image: "assets/img/home-revenu-universel.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/revenu-minimum-universel/"]
       },
       {
         image: "assets/img/home-primaire-droite.png",
