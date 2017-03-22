@@ -26,6 +26,7 @@ import {propositions} from "../reducers/propositions.reducer";
 import {JsonpModule} from "@angular/http";
 import {IonicStorageModule} from "@ionic/storage";
 import {isHTML} from "../reducers/info-type.reducer";
+import {InfoCardsService} from "../services/info-cards.service";
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import {isHTML} from "../reducers/info-type.reducer";
     MainService,
     CandidateService,
     PropositionService,
-    TagService
+    TagService,
+    InfoCardsService
   ]
 })
 

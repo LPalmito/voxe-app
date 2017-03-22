@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 
 @Injectable()
-export class InfoCards {
+export class InfoCardsService {
 
   cards: Observable<Array<InfoCard|SwipeCard>>;
   infoUrl: Observable<Array<string>>;

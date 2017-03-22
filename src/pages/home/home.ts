@@ -15,7 +15,7 @@ import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController} from "ionic-angular";
 import {PropositionService} from "../../services/propositions.service";
 import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
-import {InfoCards} from "../../services/info-cards.service";
+import {InfoCardsService} from "../../services/info-cards.service";
 
 export enum CardType {
   Info,
@@ -45,7 +45,6 @@ export class SwipeCard extends Card {
 
 @Component({
   templateUrl: 'home.html',
-  providers: [InfoCards]
 })
 
 export class HomePage {
@@ -55,7 +54,10 @@ export class HomePage {
   selectedSegment: string;
 
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
-              private propositionService: PropositionService, storage: Storage) {
+              private propositionService: PropositionService, private info: InfoCardsService
+              // When the time will come to use storage it is just here (but it's causing errors in browser):
+              // private storage: Storage
+  ) {
 
 	  // Initialize the selected segment
 	  this.selectedSegment = 'all';
