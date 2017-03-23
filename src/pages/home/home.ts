@@ -17,6 +17,7 @@ import {PropositionService} from "../../services/propositions.service";
 import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
 import {InfoCardsService} from "../../services/info-cards.service";
 import {FavoritesPage} from "../favorites/favorites";
+import {TagService} from "../../services/tags.service";
 
 export enum CardType {
   Info,
@@ -57,17 +58,18 @@ export class HomePage {
   selectedSegment: string;
 
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
-              private propositionService: PropositionService, private infoCardsService: InfoCardsService
+              private propositionService: PropositionService, private infoCardsService: InfoCardsService,
+              private tagService: TagService
               // When the time will come to use storage it is just here (but it's causing errors in browser):
               // private storage: Storage
   ) {
 
-	  // Initialize the selected segment
-	  this.selectedSegment = 'all';
+    // Initialize the selected segment
+    this.selectedSegment = 'all';
 
     // Initialize the cards
     this.main.cards.subscribe(cards => {
-      if(cards != undefined) {
+      if (cards != undefined) {
         this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
         this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(cards));
         this.swipeCardsRows = this.main.putCardsInRows(this.main.getSwipeCards(this.main.getNoArchive(cards)));
@@ -86,7 +88,13 @@ export class HomePage {
     });
 
     this.store.dispatch({type: SET_CARDS, payload: this.infoCardsService.allCards});
+  }
 
+  // Getters
+  getTagName(tagId: string) {
+    let tagName = "";
+    this.tagService.getTagById(tagId).subscribe(tag => tagName = tag.name);
+    return tagName;
   }
 
 // Navigation methods
@@ -154,10 +162,11 @@ export class HomePage {
   }
 
   generateQuizz() {
+    let generatedTagId = this.getRandomIds(this.main.temp_tagIds,1);
     let newCard: SwipeCard = {
-      title: "???",
+      title: this.getTagName(generatedTagId[0]),
       image: this.getNextBackground(),
-      tagIds: this.getRandomIds(this.main.temp_tagIds,1),
+      tagIds: generatedTagId,
       isStar: false,
       isArchive: false,
       isActive: false,
