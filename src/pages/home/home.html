@@ -3,10 +3,14 @@
   <ion-toolbar>
     <ion-title>Accueil</ion-title>
 
-    <!-- Button to generate a Quizz -->
     <ion-buttons end>
+      <!-- Button to generate a Quizz -->
       <button ion-button (click)="generateQuizz()">
-        <ion-icon name="add"></ion-icon>
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+      <!-- Button to go to the Favorites -->
+      <button ion-button (click)="goToFavoritesPage()">
+        <ion-icon name="star-half"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>

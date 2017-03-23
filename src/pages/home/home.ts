@@ -16,6 +16,7 @@ import {NavController} from "ionic-angular";
 import {PropositionService} from "../../services/propositions.service";
 import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
 import {InfoCardsService} from "../../services/info-cards.service";
+import {FavoritesPage} from "../favorites/favorites";
 
 export enum CardType {
   Info,
@@ -114,6 +115,11 @@ export class HomePage {
     // this.store.dispatch({type: GO_TO, payload: ArchivePage});
 	}
 
+	goToFavoritesPage() {
+	  this.nav.setRoot(FavoritesPage);
+  }
+
+	// Action methods
 	starCard(card: Card) {
     this.store.dispatch({type: STAR_CARD, payload: card});
 	}
@@ -127,6 +133,7 @@ export class HomePage {
     return card.type == CardType.Swipe;
   }
 
+  // Generate quizz helpers
   getRandomIds(ids: string[], nb: number) {
     let array: string[] = [];
     for (let i=0 ; i<nb ; i++) {

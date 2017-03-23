@@ -27,6 +27,7 @@ import {JsonpModule} from "@angular/http";
 import {IonicStorageModule} from "@ionic/storage";
 import {isHTML} from "../reducers/info-type.reducer";
 import {InfoCardsService} from "../services/info-cards.service";
+import {FavoritesPage} from "../pages/favorites/favorites";
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {InfoCardsService} from "../services/info-cards.service";
     StatsPage,
     InfoPage,
     ArchivePage,
+    FavoritesPage,
     SwingStackComponent,
     SwingCardComponent
   ],
@@ -54,6 +56,7 @@ import {InfoCardsService} from "../services/info-cards.service";
     HomePage,
     InfoPage,
     ArchivePage,
+    FavoritesPage,
     SwipePage,
     StatsPage,
   ],
