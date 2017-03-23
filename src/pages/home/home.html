@@ -4,13 +4,8 @@
     <ion-title>Accueil</ion-title>
 
     <ion-buttons end>
-      <!-- Button to generate a Quizz -->
-      <button ion-button (click)="generateQuizz()">
-        <ion-icon name="add-circle"></ion-icon>
-      </button>
-      <!-- Button to go to the Favorites -->
       <button ion-button (click)="goToFavoritesPage()">
-        <ion-icon name="star-half"></ion-icon>
+        <ion-icon name="star"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -95,4 +90,8 @@
 
 
   </div>
+  <!-- Fab to generate a Quizz -->
+  <ion-fab right bottom>
+    <button ion-fab (click)="generateQuizz()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 </ion-content>
