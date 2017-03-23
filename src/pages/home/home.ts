@@ -80,7 +80,10 @@ export class HomePage {
       this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
     });
 
-    this.store.dispatch({type: SET_CARDS, payload: this.infoCardsService.allCards});
+    // Initialize the cards
+    this.infoCardsService.getInfoCardsViaVoxe().subscribe(infoCards => {
+      this.store.dispatch({type: SET_CARDS, payload: infoCards});
+    });
 
   }
 

@@ -4,6 +4,7 @@ import {MainService} from "./main.service";
 import {AppStore} from "../store";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
+import {Jsonp, Http} from "@angular/http";
 
 @Injectable()
 export class InfoCardsService {
@@ -11,13 +12,20 @@ export class InfoCardsService {
   cards: Observable<Array<InfoCard|SwipeCard>>;
   infoUrl: Observable<Array<string>>;
   isHTML: Observable<boolean>;
+  //callback = "?callback=JSONP_CALLBACK";
+  //testCardJsonp: InfoCard;
 
-  constructor(private main: MainService, private store: Store<AppStore>) {
+  constructor(private main: MainService, private store: Store<AppStore>, private jsonp: Jsonp, private http: Http) {
     this.cards = store.select('cards');
     this.infoUrl = store.select('infoUrl');
     this.isHTML = store.select('isHTML');
+    // this.getInfoCardsViaVoxeJsonp().subscribe(infoCards => {
+    //   this.testCardJsonp = infoCards[0];
+    //   console.log('Jsonp',this.testCardJsonp);
+    // });
   }
-    allCards: Array <InfoCard|SwipeCard> = [
+
+  allCards: Array <InfoCard|SwipeCard> = [
       {
         image: "assets/img/home-melenchon.png",
         isStar: false,
@@ -383,4 +391,62 @@ export class InfoCardsService {
         infoUrl: ["assets/img/info-cigeo.png", "assets/img/info-cigeo-2.png"]
       }
     ];
+
+  // getInfoCardsViaVoxeJsonp(): Observable<Array<InfoCard>> {
+  //   return this.jsonp.get("http://www.voxe.org/wp-json/wp/v2/pages/122"+this.callback)
+  //     .map(data => data.json().content.rendered)
+  //     .map(rendered => this.parseRawContent(rendered));
+  // }
+
+  getInfoCardsViaVoxe(): Observable<Array<InfoCard>> {
+    return this.http.get("http://www.voxe.org/wp-json/wp/v2/pages/122")
+      .map(data => data.json().content.rendered)
+      .map(rendered => this.parseRawContent(rendered));
   }
+
+  parseRawContent(raw: string): Array<InfoCard> {
+    let result: Array<InfoCard> = [];
+    let index0 = raw.indexOf("[tab title=&nbsp;&raquo;<strong>2 min 30 </strong>&nbsp;&raquo;");
+
+    if (index0 > -1) {
+      let parsedRaw0 = raw.slice(index0);
+      let index1 = parsedRaw0.indexOf("<a");
+      let indexEndTab = parsedRaw0.indexOf("[/tab]");
+
+      while (index1 > -1 && index1 < indexEndTab) {
+        let parsedRaw1 = parsedRaw0.slice(index1);
+        let index2 = parsedRaw1.indexOf("href=\"");
+        let parsedRaw2 = parsedRaw1.slice(index2 + 6);
+        let index3 = parsedRaw2.indexOf("\"");
+        let parsedRaw3 = parsedRaw2.slice(0,index3);
+        let index4 = parsedRaw1.indexOf("<img");
+        let index4bis = parsedRaw1.indexOf("</a>");
+
+        if (index4bis > index4) {
+          let parsedRaw4 = parsedRaw1.slice(index4);
+          let index5 = parsedRaw4.indexOf("src=\"");
+          let parsedRaw5 = parsedRaw4.slice(index5 + 5);
+          let index6 = parsedRaw5.indexOf("\"");
+          let parsedRaw6 = parsedRaw5.slice(0,index6);
+          parsedRaw0 = parsedRaw5;
+
+          result.push({
+            image: parsedRaw6,
+            isStar: false,
+            isArchive: false,
+            isActive: false,
+            infoUrl: [parsedRaw3],
+            isHTML: true,
+            type: CardType.Info
+          });
+        }
+        else {
+          parsedRaw0 = parsedRaw2;
+        }
+        index1 = parsedRaw0.indexOf("<a");
+        indexEndTab = parsedRaw0.indexOf("[/tab]");
+      }
+    }
+    return result;
+  }
+}
