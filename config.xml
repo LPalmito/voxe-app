@@ -43,26 +43,4 @@
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
-  <!--The splashscreen make the app crash, not a priority for the moment...-->
-  <!--<platform name="browser">-->
-    <!--<preference name="SplashScreen" value="/assets/img/voxe-splash-screen.png" />-->
-    <!--<preference name="SplashScreenDelay" value="2000"/>-->
-    <!--<preference name="FadeSplashScreen" value="true"/>-->
-    <!--<preference name="FadeSplashScreenDuration" value="500"/>-->
-  <!--</platform>-->
-  <!--<platform name="android">-->
-    <!--<splash src="src/assets/img/voxe-splash-screen.png"/>-->
-  <!--</platform>-->
-  <!--<platform name="ios">-->
-    <!--<splash src="src/assets/img/voxe-splash-screen.png"/>-->
-  <!--</platform>-->
-  <!--<platform name="windows">-->
-    <!--<splash src="src/assets/img/voxe-splash-screen.png" target="SplashScreenPhone"/>-->
-  <!--</platform>-->
-  <!--<platform name="blackberry10">-->
-    <!--<rim:splash src="src/assets/img/voxe-splash-screen.png"/>-->
-  <!--</platform>-->
-  <preference name="SplashScreenDelay" value="2000"/>
-  <preference name="FadeSplashScreen" value="true"/>
-  <preference name="FadeSplashScreenDuration" value="500"/>
 </widget>
