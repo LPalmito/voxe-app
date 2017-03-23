@@ -51,6 +51,8 @@ export class HomePage {
 
 	cardsRows: Array<InfoCard|SwipeCard>[];
 	starCardsRows: Array<InfoCard|SwipeCard>[];
+	swipeCardsRows: Array<InfoCard|SwipeCard>[];
+	infoCardsRows: Array<InfoCard|SwipeCard>[];
   selectedSegment: string;
 
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
@@ -67,6 +69,8 @@ export class HomePage {
       if(cards != undefined) {
         this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
         this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(cards));
+        this.swipeCardsRows = this.main.putCardsInRows(this.main.getSwipeCards(this.main.getNoArchive(cards)));
+        this.infoCardsRows = this.main.putCardsInRows(this.main.getInfoCards(this.main.getNoArchive(cards)));
       }
     });
 
@@ -136,12 +140,9 @@ export class HomePage {
   }
 
   getNextBackground() {
-	  let previousBackground = this.cardsRows[0][0].image;
-	  let nextNumber = 1;
-	  if(previousBackground.slice(0,22) == "assets/img/home-swipe-") {
-      let previousNumber = parseInt(previousBackground.slice(-5, -4));
-      nextNumber = previousNumber + 1 % 5;
-    }
+	  let previousBackground = this.swipeCardsRows[0][0].image;
+    let previousNumber = parseInt(previousBackground.slice(-5, -4));
+    let nextNumber = ((previousNumber + 1) % 5) +1;
 	  return "assets/img/home-swipe-"+nextNumber.toString()+".png";
   }
 
@@ -157,5 +158,6 @@ export class HomePage {
       candidacyIds: this.getRandomIds(this.main.temp_candidacyIds,2)
     };
     this.store.dispatch({type: ADD_CARD, payload: newCard});
+    this.selectedSegment = 'swipe';
   }
 }
