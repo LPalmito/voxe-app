@@ -68,16 +68,19 @@ export class PropositionService {
           let candidacyArray = this.randomDiffElement(arr.filter(x => x.candidacy != undefined ? x.candidacy.id == candidacyIds[i] : false),nb);
           resultArray = resultArray.concat(candidacyArray);
         }
-        return this.randomDiffElement(resultArray,candidacyIds.length*nb);
+        return this.randomDiffElement(resultArray,resultArray.length);
       });
   }
 
   //Helper : takes an array of propositions and returns an array of X random different elements
   randomDiffElement(array: Proposition[], nb: number): Proposition[] {
     let result: Proposition[] = [];
-    while (result.length < nb) {
-      let randomElement: Proposition = array[Math.floor(Math.random()*array.length)];
-      if (result.indexOf(randomElement) < 0) {
+    if (array.length) {
+      for (let i=0; i< nb; i++) {
+        let randomElement: Proposition = array[Math.floor(Math.random()*array.length)];
+        while (result.indexOf(randomElement) > -1) {
+          randomElement = array[Math.floor(Math.random()*array.length)];
+        }
         result.push(randomElement);
       }
     }
