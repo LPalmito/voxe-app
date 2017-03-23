@@ -137,16 +137,17 @@ export class HomePage {
 
   getNextBackground() {
 	  let previousBackground = this.cardsRows[0][0].image;
-	  let previousNumber = parseInt(previousBackground.slice(-5,-4));
-	  console.log(previousNumber);
-	  let nextNumber = previousNumber==5 ? 1 : previousNumber+1;
-	  console.log(nextNumber);
+	  let nextNumber = 1;
+	  if(previousBackground.slice(0,22) == "assets/img/home-swipe-") {
+      let previousNumber = parseInt(previousBackground.slice(-5, -4));
+      nextNumber = previousNumber + 1 % 5;
+    }
 	  return "assets/img/home-swipe-"+nextNumber.toString()+".png";
   }
 
   generateQuizz() {
     let newCard: SwipeCard = {
-      title: "????????",
+      title: "???",
       image: this.getNextBackground(),
       tagIds: this.getRandomIds(this.main.temp_tagIds,1),
       isStar: false,
