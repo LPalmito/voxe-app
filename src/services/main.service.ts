@@ -104,8 +104,7 @@ export interface Proposition {
 export class MainService {
   callback = "?callback=JSONP_CALLBACK";
   server = "http://compare.voxe.org/api/v1/";
-  electionNameSpace = "primaire-de-la-droite-2016";
-  //electionNameSpace = "primaire-de-la-gauche-(à-venir)";
+  electionNameSpace = "election-presidentielle-2017";
   election: Observable<Election>;
   nav: Observable<NavController>;
   cards: Observable<Array<InfoCard|SwipeCard>>;
@@ -187,26 +186,38 @@ export class MainService {
   }
 
   //TODO : Replace these by presidential election Ids
-  francoisFillonId = "578f480ab0bba9398100000b";
-  alainJuppeId = "57962957793b3f868d000012";
-  nicolasSarkozyId = "57bf24bfa8f4490ce3000034";
-  jeanFrancoisCopeId = "5797705bfeb813859e000010";
-  nathalieKMId = "5797842419596070a4000009";
-  //vincentPeillonId = "58511f947ab19e01d2000076";
-  //benoitHamonId = "5851168e7ab19e6a87000043";
-  emploiId = "4ef479f9bc60fb000400009a";
-  economieId = "4ef479f9bc60fb00040000aa";
-  financeId = "4ef479f9bc60fb00040000be";
-  europeId = "4ef479fcbc60fb0004000204";
-  educationId = "4ef479f9bc60fb0004000052";
-  cultureId = "578504e585b1a8f7f6000094";
-  numeriqueId = "4ef479f8bc60fb000400002c";
+  hamonId = "58b69f469f3f14a49f000022";
+  macronId = "58b46bf8b7286ef02e00009f";
+  asselineauId = "58c92078d3b212636d0000c8";
+  fillonId = "58c920ded3b2120d5d0000cd";
+  cheminadeId = "58c153f1b19d2f2cd5000084";
+  lassalleId = "58c12c21b19d2f7930000050";
+  melenchonId = "58b69cda9f3f14497500001e";
+  lepenId = "58b69f3e9f3f14039a000021";
+  arthaudId = "58c91f8ad3b21298910000be";
+  dupontAignanId = "58c91ff4d3b212f0fa0000c3";
+  poutouId = "58cec5c5d87ba3f5900002ba";
+
+  cultureId = "4ef479f8bc60fb000400002a";
+  institutionsId = "4ef479fbbc60fb000400015e";
+  environnementId = "4ef479fabc60fb00040000ec";
+  internationaleId = "5785055285b1a8303e000098";
+  societeId = "5141d25b6270dde92a0000c2";
+  santeId = "4ef479fcbc60fb00040001c8";
   justiceId = "4ef479f9bc60fb00040000cc";
+  europeId = "4ef479fcbc60fb0004000204";
+  economieId = "4ef479f9bc60fb00040000aa";
+  territoiresId = "4ef479fbbc60fb00040001b4";
+  immigrationId = "4ef479fabc60fb0004000138";
+  educationId = "4ef479f9bc60fb0004000052";
+  emploiId = "4ef479f9bc60fb000400009a";
 
   // TODO - replace with presidential data - to be used when generating random quizz
-  temp_candidacyIds = [this.francoisFillonId, this.alainJuppeId, this.nicolasSarkozyId,
-    this.jeanFrancoisCopeId, this.nathalieKMId];
-  temp_tagIds = [this.emploiId, this.economieId, this.financeId, this.europeId, this.educationId,
-    this.cultureId, this.numeriqueId, this.justiceId];
+  temp_candidacyIds = [this.hamonId, this.macronId, this.asselineauId,
+    this.fillonId, this.cheminadeId, this.lassalleId, this.melenchonId,
+    this.lepenId, this.arthaudId, this.dupontAignanId, this.poutouId];
+  temp_tagIds = [this.emploiId, this.economieId, this.institutionsId, this.europeId, this.educationId,
+    this.cultureId, this.environnementId, this.justiceId, this.internationaleId, this.societeId,
+    this.santeId, this.territoiresId, this.immigrationId];
 
 }
