@@ -137,13 +137,10 @@ export class HomePage {
 
   getNextBackground() {
 	  let previousBackground = this.cardsRows[0][0].image;
-	  console.log(previousBackground);
 	  let nextNumber = 1;
 	  if(previousBackground.slice(0,22) == "assets/img/home-swipe-") {
       let previousNumber = parseInt(previousBackground.slice(-5, -4));
-      console.log(previousNumber);
-      nextNumber = previousNumber>=1 && previousNumber<=4 ? previousNumber + 1 : nextNumber;
-      console.log(nextNumber);
+      nextNumber = previousNumber + 1 % 5;
     }
 	  return "assets/img/home-swipe-"+nextNumber.toString()+".png";
   }
