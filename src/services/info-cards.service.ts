@@ -183,7 +183,7 @@ export class InfoCardsService {
         infoUrl: ["assets/img/info-carte-scolaire.png"]
       },
       {
-        title: "Justice",
+        title: "Justice, Sécurité et Défense",
         image: "assets/img/home-swipe-3.png",
         tagIds: [this.main.justiceId],
         isStar: false,
