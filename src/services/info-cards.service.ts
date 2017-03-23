@@ -28,6 +28,16 @@ export class InfoCardsService {
         infoUrl: ["http://www.voxe.org/jean-luc-melenchon/"]
       },
       {
+        title: "Europe",
+        image: "assets/img/home-swipe-4.png",
+        tagIds: [this.main.europeId],
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Swipe,
+        candidacyIds: [this.main.nicolasSarkozyId, this.main.francoisFillonId]
+      },
+      {
         image: "assets/img/home-arthaud.png",
         isStar: false,
         isArchive: false,
@@ -145,7 +155,7 @@ export class InfoCardsService {
         infoUrl: ["http://www.voxe.org/article-regroupement-familial/"]
       },
       {
-        title: "François Fillon + Alain Juppé + Numérique = ?",
+        title: "Numérique",
         image: "assets/img/home-swipe-1.png",
         tagIds: [this.main.numeriqueId],
         isStar: false,
@@ -173,7 +183,7 @@ export class InfoCardsService {
         infoUrl: ["assets/img/info-carte-scolaire.png"]
       },
       {
-        title: "Nicolas Sarkozy + Alain Juppé + Justice = ?",
+        title: "Justice, Sécurité et Défense",
         image: "assets/img/home-swipe-3.png",
         tagIds: [this.main.justiceId],
         isStar: false,
@@ -264,7 +274,7 @@ export class InfoCardsService {
         infoUrl: ["assets/img/info-primaire-droite.png", "assets/img/info-primaire-droite-2.png"]
       },
       {
-        title: "NKM + Jean-François Copé + Education = ?",
+        title: "Éducation",
         image: "assets/img/home-swipe-2.png",
         tagIds: [this.main.educationId],
         isStar: false,
@@ -317,16 +327,6 @@ export class InfoCardsService {
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-religion-ecole.png", "assets/img/info-religion-ecole-2.png", "assets/img/info-religion-ecole-3.png"]
-      },
-      {
-        title: "Nicolas Sarkozy + François Fillon + Europe = ?",
-        image: "assets/img/home-swipe-4.png",
-        tagIds: [this.main.europeId],
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Swipe,
-        candidacyIds: [this.main.nicolasSarkozyId, this.main.francoisFillonId]
       },
       {
         image: "assets/img/home-cumul-mandats.png",
