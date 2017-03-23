@@ -72,7 +72,7 @@ export class PropositionService {
       });
   }
 
-  //Helper : takes an array of propositions and returns an array of X random different elements
+  //Helper : takes an array of propositions and returns an array of nb random different elements
   randomDiffElement(array: Proposition[], nb: number): Proposition[] {
     let result: Proposition[] = [];
     if (array.length) {

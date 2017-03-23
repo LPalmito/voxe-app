@@ -39,7 +39,9 @@ export class StatsPage {
       })
     }));
 
+    // TODO displayAnswers and answers objects need to be merged in a clearer object
     // Create the displayAnswers object
+    // First loop to create an element in displayAnswers for each candidate
     for (let i=0; i<2; i++) {
       let photo = this.candidacies
         .filter(x => x.id == this.candidacies[i].id)
@@ -49,11 +51,13 @@ export class StatsPage {
         .map(x => x.candidates[0].firstName + " " + x.candidates[0].lastName)[0];
       this.displayAnswers[this.candidacies[i].id] = {yes: [], no: [], photo: photo, name: name};
     }
+    // Add propositions to displayAnswers Object
     this.answers.forEach(answer => {
       answer.approved?
         this.displayAnswers[answer.proposition.candidacy.id].yes.push(answer.proposition):
         this.displayAnswers[answer.proposition.candidacy.id].no.push(answer.proposition);
     });
+    // If no proposition are found for a candidate, add a default Proposition, stating that we don't have proposition for this candidate
     for (let i=0; i<2; i++) {
       if (!this.displayAnswers[this.candidacies[i].id].yes.length && !this.displayAnswers[this.candidacies[i].id].no.length){
         let defaultProposition: Proposition = {
