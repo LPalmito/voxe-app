@@ -1,0 +1,38 @@
+<!-- HEADER -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Favoris</ion-title>
+
+    <ion-buttons end>
+      <!-- Button to go back to Home Page -->
+      <button ion-button (click)="goToHomePage()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- CONTENT -->
+<ion-content class="card-background-page">
+
+  <!-- Rows of 2 cards each -->
+  <ion-grid>
+
+    <ion-row *ngFor="let row of starCardsRows">
+      <ion-col width-50 *ngFor="let card of row">
+
+        <ion-card>
+          <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
+            {{card.title}}
+          </div>
+
+          <img src={{card.image}} (click)="openCard(card)"/>
+
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

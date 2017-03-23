@@ -3,10 +3,9 @@
   <ion-toolbar>
     <ion-title>Accueil</ion-title>
 
-    <!-- Button to generate a Quizz -->
     <ion-buttons end>
-      <button ion-button (click)="generateQuizz()">
-        <ion-icon name="add"></ion-icon>
+      <button ion-button (click)="goToFavoritesPage()">
+        <ion-icon name="star"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -15,14 +14,17 @@
 <!-- CONTENT -->
 <ion-content class="card-background-page">
 
-  <!-- Segment between 'all' cards and 'favorite' ones -->
+  <!-- Segment between 'all' cards, 'info' cards and 'swipe' cards -->
   <div padding>
     <ion-segment [(ngModel)]="selectedSegment">
       <ion-segment-button value="all">
         Toutes
       </ion-segment-button>
-      <ion-segment-button value="fav">
-        Favoris
+      <ion-segment-button value="info">
+        S'informer
+      </ion-segment-button>
+      <ion-segment-button value="swipe">
+        Comparer
       </ion-segment-button>
     </ion-segment>
   </div>
@@ -50,14 +52,30 @@
 
     </ion-grid>
 
-    <!-- Show only favorite cards -->
-    <ion-grid *ngSwitchCase = "'fav'">
+    <!-- Show only Info cards -->
+    <ion-grid *ngSwitchCase = "'info'">
 
-      <ion-row *ngFor="let row of starCardsRows">
+      <ion-row *ngFor="let row of infoCardsRows">
         <ion-col width-50 *ngFor="let card of row">
 
           <ion-card>
-            <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
+            <img src={{card.image}} (click)="openCard(card)"/>
+          </ion-card>
+        </ion-col>
+
+      </ion-row>
+
+
+    </ion-grid>
+
+
+    <!-- Show only 'swipe' cards -->
+    <ion-grid *ngSwitchCase = "'swipe'">
+      <ion-row *ngFor="let row of swipeCardsRows">
+        <ion-col width-50 *ngFor="let card of row">
+
+          <ion-card>
+            <div class="card-title" (click)="openCard(card)">
               {{card.title}}
             </div>
 
@@ -68,8 +86,12 @@
 
       </ion-row>
 
-
     </ion-grid>
 
+
   </div>
+  <!-- Fab to generate a Quizz -->
+  <ion-fab right bottom>
+    <button ion-fab (click)="generateQuizz()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 </ion-content>

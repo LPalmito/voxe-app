@@ -5,7 +5,7 @@ import 'rxjs/Rx';
 import {Store} from "@ngrx/store";
 import {AppStore} from "../store";
 import {NavController} from "ionic-angular";
-import {InfoCard, SwipeCard} from "../pages/home/home";
+import {InfoCard, SwipeCard, CardType} from "../pages/home/home";
 import {Answer} from "../pages/swipe/swipe";
 
 export interface DataElections {
@@ -153,6 +153,16 @@ export class MainService {
       return this.hasCommonElement(tIds, tagIds);
     });
   }
+
+  // Getters
+  getSwipeCards(cards: Array<InfoCard|SwipeCard>): SwipeCard[] {
+    return cards.filter(card => card.type == CardType.Swipe).map(card => <SwipeCard> card);
+  }
+
+  getInfoCards(cards: Array<InfoCard|SwipeCard>): InfoCard[] {
+    return cards.filter(card => card.type == CardType.Info).map(card => <InfoCard> card);
+  }
+
 
   getStars(cards: Array<InfoCard|SwipeCard>) {
     return cards.filter(card => card.isStar);
