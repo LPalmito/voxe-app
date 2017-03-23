@@ -4,9 +4,10 @@ import {HomePage} from "../home/home";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {CandidateService} from "../../services/candidates.service";
-import {Tag, Candidate, Candidacy, MainService} from "../../services/main.service";
+import {Tag, Candidate, Candidacy, MainService, Proposition} from "../../services/main.service";
 import {TagService} from "../../services/tags.service";
 import {NavController} from "ionic-angular";
+import {PUSH_ANSWER} from "../../reducers/answers.reducer";
 
 @Component({
   templateUrl: 'stats.html'
@@ -38,22 +39,45 @@ export class StatsPage {
       })
     }));
 
+    // TODO displayAnswers and answers objects need to be merged in a clearer object
     // Create the displayAnswers object
+    // First loop to create an element in displayAnswers for each candidate
+    for (let i=0; i<2; i++) {
+      let photo = this.candidacies
+        .filter(x => x.id == this.candidacies[i].id)
+        .map(x => x.candidates[0].photo)[0];
+      let name = this.candidacies
+        .filter(x => x.id == this.candidacies[i].id)
+        .map(x => x.candidates[0].firstName + " " + x.candidates[0].lastName)[0];
+      this.displayAnswers[this.candidacies[i].id] = {yes: [], no: [], photo: photo, name: name};
+    }
+    // Add propositions to displayAnswers Object
     this.answers.forEach(answer => {
-      if(this.displayAnswers != {} && this.displayAnswers[answer.proposition.candidacy.id] == null) {
-        let photo = this.candidacies
-          .filter(x => x.id == answer.proposition.candidacy.id)
-          .map(x => x.candidates[0].photo)[0];
-        this.displayAnswers[answer.proposition.candidacy.id] = {yes: [], no: [], photo: photo, name: ""};
-      }
       answer.approved?
         this.displayAnswers[answer.proposition.candidacy.id].yes.push(answer.proposition):
         this.displayAnswers[answer.proposition.candidacy.id].no.push(answer.proposition);
-      let name = this.candidacies
-        .filter(x => x.id == answer.proposition.candidacy.id)
-        .map(x => x.candidates[0].firstName + " " + x.candidates[0].lastName)[0];
-      this.displayAnswers[answer.proposition.candidacy.id].name = name;
     });
+    // If no proposition are found for a candidate, add a default Proposition, stating that we don't have proposition for this candidate
+    for (let i=0; i<2; i++) {
+      if (!this.displayAnswers[this.candidacies[i].id].yes.length && !this.displayAnswers[this.candidacies[i].id].no.length){
+        let defaultProposition: Proposition = {
+          id: "default",
+          text: "Nous n'avons pas de proposition pour ce candidat sur ce thème.",
+          favorite_users_count: 0,
+          against_users_count: 0,
+          support_users_count: 0,
+          tags: [{id: "default"}],
+          comments: {count: 0},
+          favorite_users: {count: 0, data: ["default"]},
+          against_users: {count: 0, data: ["default"]},
+          support_users: {count: 0, data: ["default"]},
+          candidacy: {id: this.candidacies[i].id},
+          embeds: ["default"]
+        };
+        this.displayAnswers[this.candidacies[i].id].yes.push(defaultProposition);
+        this.store.dispatch({type: PUSH_ANSWER, payload: {proposition: defaultProposition, approved: true}});
+      }
+    }
   }
 
   // Helper to get the url of a tag icon (for the size: 0 <-> 32, 1 <-> 64)
