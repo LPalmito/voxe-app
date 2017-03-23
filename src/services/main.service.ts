@@ -185,7 +185,7 @@ export class MainService {
     return rows;
   }
 
-  //TODO : Replace these by presidential election Ids
+  // Presidential election 2017
   hamonId = "58b69f469f3f14a49f000022";
   macronId = "58b46bf8b7286ef02e00009f";
   asselineauId = "58c92078d3b212636d0000c8";
@@ -212,7 +212,7 @@ export class MainService {
   educationId = "4ef479f9bc60fb0004000052";
   emploiId = "4ef479f9bc60fb000400009a";
 
-  // TODO - replace with presidential data - to be used when generating random quizz
+  // Used to generate random quizz
   temp_candidacyIds = [this.hamonId, this.macronId, this.asselineauId,
     this.fillonId, this.cheminadeId, this.lassalleId, this.melenchonId,
     this.lepenId, this.arthaudId, this.dupontAignanId, this.poutouId];
