@@ -57,7 +57,7 @@ export class HomePage {
 	infoCardsRows: Array<InfoCard|SwipeCard>[];
   selectedSegment: string;
 
-	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
+  constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService, private infoCardsService: InfoCardsService,
               private tagService: TagService, private databaseService: DatabaseService, private platform: Platform
   ) {
@@ -85,7 +85,10 @@ export class HomePage {
       this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
     });
 
-    this.store.dispatch({type: SET_CARDS, payload: this.infoCardsService.allCards});
+    // Initialize the cards
+    this.infoCardsService.getInfoCardsViaVoxe().subscribe(infoCards => {
+      this.store.dispatch({type: SET_CARDS, payload: infoCards});
+    });
   }
 
   // Initialize the database and the store when the view is loaded
@@ -98,8 +101,8 @@ export class HomePage {
 
   // Save the current state to the database
   ionViewDidLeave() {
-	  this.platform.ready().then(() => {
-  	  this.databaseService.storageToDatabase();
+    this.platform.ready().then(() => {
+      this.databaseService.storageToDatabase();
     });
   }
 
