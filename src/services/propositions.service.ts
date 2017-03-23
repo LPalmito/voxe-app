@@ -7,6 +7,7 @@ import {AppStore} from "../store";
 import {Store} from "@ngrx/store";
 import {Answer} from "../pages/swipe/swipe";
 
+
 @Injectable()
 export class PropositionService {
   propositions: Observable<Array<Proposition>>;
