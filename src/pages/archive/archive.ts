@@ -11,10 +11,10 @@ import {RESTORE_CARD} from "../../reducers/cards.reducer";
 
 export class ArchivePage {
 
-	cardsRows: Array<InfoCard|SwipeCard>[];
+	archiveCardsRows: Array<InfoCard|SwipeCard>[];
 
 	constructor(private main: MainService, public store: Store<AppStore>) {
-	  this.main.cards.subscribe(data => this.cardsRows = this.main.putCardsInRows(this.main.getArchives(data)));
+	  this.main.cards.subscribe(data => this.archiveCardsRows = this.main.putCardsInRows(this.main.getArchives(data)));
 	}
 
 	restoreCard(card: Card) {

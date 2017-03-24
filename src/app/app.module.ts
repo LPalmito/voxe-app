@@ -71,7 +71,7 @@ const storageSyncReducer = storageSync({
 });
 
 const appReducer = compose(storageSyncReducer, combineReducers)(reducers);
-
+import {FavoritesPage} from "../pages/favorites/favorites";
 
 @NgModule({
   declarations: [
@@ -81,6 +81,7 @@ const appReducer = compose(storageSyncReducer, combineReducers)(reducers);
     StatsPage,
     InfoPage,
     ArchivePage,
+    FavoritesPage,
     SwingStackComponent,
     SwingCardComponent
   ],
@@ -100,6 +101,7 @@ const appReducer = compose(storageSyncReducer, combineReducers)(reducers);
     HomePage,
     InfoPage,
     ArchivePage,
+    FavoritesPage,
     SwipePage,
     StatsPage,
   ],

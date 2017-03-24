@@ -19,13 +19,13 @@ export class InfoCardsService {
   }
     allCards: Array <InfoCard|SwipeCard> = [
       {
-        image: "assets/img/home-melenchon.png",
+        image: "assets/img/home-35-heures.png",
         isStar: false,
         isArchive: false,
         isActive: false,
         type: CardType.Info,
         isHTML: true,
-        infoUrl: ["http://www.voxe.org/jean-luc-melenchon/"]
+        infoUrl: ["http://www.voxe.org/35-heures/"]
       },
       {
         title: "Europe",
@@ -35,25 +35,73 @@ export class InfoCardsService {
         isArchive: false,
         isActive: false,
         type: CardType.Swipe,
-        candidacyIds: [this.main.nicolasSarkozyId, this.main.francoisFillonId]
+        candidacyIds: [this.main.macronId, this.main.poutouId]
       },
       {
-        image: "assets/img/home-arthaud.png",
+        title: "Numérique",
+        image: "assets/img/home-swipe-1.png",
+        tagIds: [this.main.cultureId],
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Swipe,
+        candidacyIds: [this.main.melenchonId, this.main.asselineauId]
+      },
+      {
+        image: "assets/img/home-role-president.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: false,
+        infoUrl: ["assets/img/info-role-president.png"]
+      },
+      {
+        image: "assets/img/home-revenu-universel.png",
         isStar: false,
         isArchive: false,
         isActive: false,
         type: CardType.Info,
         isHTML: true,
-        infoUrl: ["http://www.voxe.org/nathalie-arthaud/"]
+        infoUrl: ["http://www.voxe.org/revenu-minimum-universel/"]
       },
       {
-        image: "assets/img/home-asselineau.png",
+        title: "Justice, Sécurité et Défense",
+        image: "assets/img/home-swipe-3.png",
+        tagIds: [this.main.justiceId],
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Swipe,
+        candidacyIds: [this.main.lepenId, this.main.fillonId]
+      },
+      {
+        title: "Éducation",
+        image: "assets/img/home-swipe-2.png",
+        tagIds: [this.main.educationId],
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Swipe,
+        candidacyIds: [this.main.arthaudId, this.main.lassalleId]
+      },
+      {
+        image: "assets/img/home-fiscalite.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: false,
+        infoUrl: ["assets/img/info-fiscalite.png", "assets/img/info-fiscalite-2.png"]
+      },
+      {
+        image: "assets/img/home-melenchon.png",
         isStar: false,
         isArchive: false,
         isActive: false,
         type: CardType.Info,
         isHTML: true,
-        infoUrl: ["http://www.voxe.org/francois-asselineau/"]
+        infoUrl: ["http://www.voxe.org/jean-luc-melenchon/"]
       },
       {
         image: "assets/img/home-cheminade.png",
@@ -83,13 +131,22 @@ export class InfoCardsService {
         infoUrl: ["http://www.voxe.org/francois-fillon/"]
       },
       {
-        image: "assets/img/home-front-national.png",
+        image: "assets/img/home-asselineau.png",
         isStar: false,
         isArchive: false,
         isActive: false,
         type: CardType.Info,
         isHTML: true,
-        infoUrl: ["http://www.voxe.org/front-national/"]
+        infoUrl: ["http://www.voxe.org/francois-asselineau/"]
+      },
+      {
+        image: "assets/img/home-arthaud.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/nathalie-arthaud/"]
       },
       {
         image: "assets/img/home-hamon.png",
@@ -119,15 +176,6 @@ export class InfoCardsService {
         infoUrl: ["http://www.voxe.org/marine-le-pen/"]
       },
       {
-        image: "assets/img/home-legalisation-cannabis.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        isHTML: true,
-        infoUrl: ["http://www.voxe.org/cannabis-legalisation-france/"]
-      },
-      {
         image: "assets/img/home-macron.png",
         isStar: false,
         isArchive: false,
@@ -146,6 +194,15 @@ export class InfoCardsService {
         infoUrl: ["http://www.voxe.org/philippe-poutou/"]
       },
       {
+        image: "assets/img/home-legalisation-cannabis.png",
+        isStar: false,
+        isArchive: false,
+        isActive: false,
+        type: CardType.Info,
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/cannabis-legalisation-france/"]
+      },
+      {
         image: "assets/img/home-regroupement-familial.png",
         isStar: false,
         isArchive: false,
@@ -155,23 +212,13 @@ export class InfoCardsService {
         infoUrl: ["http://www.voxe.org/article-regroupement-familial/"]
       },
       {
-        title: "Numérique",
-        image: "assets/img/home-swipe-1.png",
-        tagIds: [this.main.numeriqueId],
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Swipe,
-        candidacyIds: [this.main.alainJuppeId, this.main.francoisFillonId]
-      },
-      {
-        image: "assets/img/home-role-president.png",
+        image: "assets/img/home-front-national.png",
         isStar: false,
         isArchive: false,
         isActive: false,
         type: CardType.Info,
-        isHTML: false,
-        infoUrl: ["assets/img/info-role-president.png"]
+        isHTML: true,
+        infoUrl: ["http://www.voxe.org/front-national/"]
       },
       {
         image: "assets/img/home-carte-scolaire.png",
@@ -181,25 +228,6 @@ export class InfoCardsService {
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-carte-scolaire.png"]
-      },
-      {
-        title: "Justice, Sécurité et Défense",
-        image: "assets/img/home-swipe-3.png",
-        tagIds: [this.main.justiceId],
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Swipe,
-        candidacyIds: [this.main.nicolasSarkozyId, this.main.alainJuppeId]
-      },
-      {
-        image: "assets/img/home-35-heures.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        isHTML: true,
-        infoUrl: ["http://www.voxe.org/35-heures/"]
       },
       {
         image: "assets/img/home-assemblee-constituante.png",
@@ -218,15 +246,6 @@ export class InfoCardsService {
         type: CardType.Info,
         isHTML: true,
         infoUrl: ["http://www.voxe.org/inegalites-de-revenus/"]
-      },
-      {
-        image: "assets/img/home-cheminade.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        isHTML: true,
-        infoUrl: ["http://www.voxe.org/jacques-cheminade/"]
       },
       {
         image: "assets/img/home-listes-electorales.png",
@@ -256,15 +275,6 @@ export class InfoCardsService {
         infoUrl: ["http://www.voxe.org/primaire-gauche/"]
       },
       {
-        image: "assets/img/home-revenu-universel.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        isHTML: true,
-        infoUrl: ["http://www.voxe.org/revenu-minimum-universel/"]
-      },
-      {
         image: "assets/img/home-primaire-droite.png",
         isStar: false,
         isArchive: false,
@@ -272,16 +282,6 @@ export class InfoCardsService {
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-primaire-droite.png", "assets/img/info-primaire-droite-2.png"]
-      },
-      {
-        title: "Éducation",
-        image: "assets/img/home-swipe-2.png",
-        tagIds: [this.main.educationId],
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Swipe,
-        candidacyIds: [this.main.nathalieKMId, this.main.jeanFrancoisCopeId]
       },
       {
         image: "assets/img/home-dette-publique.png",
@@ -345,15 +345,6 @@ export class InfoCardsService {
         type: CardType.Info,
         isHTML: false,
         infoUrl: ["assets/img/info-prelevement-source.png", "assets/img/info-prelevement-source-2.png"]
-      },
-      {
-        image: "assets/img/home-fiscalite.png",
-        isStar: false,
-        isArchive: false,
-        isActive: false,
-        type: CardType.Info,
-        isHTML: false,
-        infoUrl: ["assets/img/info-fiscalite.png", "assets/img/info-fiscalite-2.png"]
       },
       {
         image: "assets/img/home-fiche-s.png",
