@@ -28,16 +28,16 @@ export class InfoCardsService {
       while (indexStartA > -1) {
         raw = raw.slice(indexStartA);
         let indexStartHref = raw.indexOf("href=\"");
-        let indexEndHref = raw.slice(indexStartHref + 6).indexOf("\"");
-        let infoUrl = raw.substr(indexStartHref + 6, indexEndHref);
+        let indexEndHref = raw.slice(indexStartHref+6).indexOf("\"");
+        let infoUrl = raw.substr(indexStartHref+6,indexEndHref);
 
         let indexStartImg = raw.indexOf("<img");
         let indexEndA = raw.indexOf("</a>");
         if (indexEndA > indexStartImg) {
           raw = raw.slice(indexStartImg);
           let indexStartSrc = raw.indexOf("src=\"");
-          let indexEndSrc = raw.slice(indexStartSrc + 5).indexOf("\"");
-          let imgUrl = raw.substr(indexStartSrc + 5, indexEndSrc);
+          let indexEndSrc = raw.slice(indexStartSrc+5).indexOf("\"");
+          let imgUrl = raw.substr(indexStartSrc+5,indexEndSrc);
 
           result.push({
             image: imgUrl,

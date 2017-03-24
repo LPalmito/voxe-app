@@ -115,7 +115,7 @@ export class HomePage {
     return tagName;
   }
 
-// Navigation methods
+  // Navigation methods
 
 	openCard(card: InfoCard|SwipeCard) {
     if (card.type == CardType.Info) {
