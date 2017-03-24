@@ -7,6 +7,13 @@ import {AppStore} from "../store";
 import {NavController} from "ionic-angular";
 import {InfoCard, SwipeCard, CardType} from "../pages/home/home";
 import {Answer} from "../pages/swipe/swipe";
+import {SET_ANSWERS} from "../reducers/answers.reducer";
+import {SET_TO_SWIPE_PROPOSITIONS} from "../reducers/to-swipe-propositions.reducer";
+import {SET_CANDIDACY_IDS} from "../reducers/candidacy-ids.reducer";
+import {SET_TAG_IDS} from "../reducers/tag-ids.reducer";
+import {SET_CARDS} from "../reducers/cards.reducer";
+import {SET_PROPOSITIONS} from "../reducers/propositions.reducer";
+import {SET_ELECTION} from "../reducers/election.reducer";
 
 export interface DataElections {
   meta: {code: number},
@@ -119,6 +126,25 @@ export class MainService {
     this.infoUrl = store.select('infoUrl');
     this.isHTML = store.select('isHTML');
     this.answers = store.select('answers');
+  }
+
+  initStore(data: AppStore) {
+    if(data) {
+      if(data.election)
+        this.store.dispatch({type: SET_ELECTION, payload: data.election});
+      if(data.propositions)
+        this.store.dispatch({type: SET_PROPOSITIONS, payload: data.propositions});
+      if(data.cards)
+        this.store.dispatch({type: SET_CARDS, payload: data.cards});
+      if(data.tagIds)
+        this.store.dispatch({type: SET_TAG_IDS, payload: data.tagIds});
+      if(data.candidacyIds)
+        this.store.dispatch({type: SET_CANDIDACY_IDS, payload: data.candidacyIds});
+      if(data.toSwipePropositions)
+        this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: data.toSwipePropositions});
+      if(data.answers)
+        this.store.dispatch({type: SET_ANSWERS, payload: data.answers});
+    }
   }
 
   getElectionViaVoxe(): Observable<Election> {

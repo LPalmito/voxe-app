@@ -5,19 +5,19 @@ import {ArchivePage} from "../archive/archive";
 import {MainService} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
-import {Storage} from '@ionic/storage';
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
 import {ACTIVE_CARD, STAR_CARD, ARCHIVE_CARD, SET_CARDS, ADD_CARD} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
-import {NavController} from "ionic-angular";
+import {NavController, Platform} from "ionic-angular";
 import {PropositionService} from "../../services/propositions.service";
 import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
 import {InfoCardsService} from "../../services/info-cards.service";
 import {FavoritesPage} from "../favorites/favorites";
 import {TagService} from "../../services/tags.service";
+import {DatabaseService} from "../../services/database.service";
 
 export enum CardType {
   Info,
@@ -59,9 +59,7 @@ export class HomePage {
 
 	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService, private infoCardsService: InfoCardsService,
-              private tagService: TagService
-              // When the time will come to use storage it is just here (but it's causing errors in browser):
-              // private storage: Storage
+              private tagService: TagService, private databaseService: DatabaseService, private platform: Platform
   ) {
 
     // Initialize the selected segment
@@ -88,6 +86,21 @@ export class HomePage {
     });
 
     this.store.dispatch({type: SET_CARDS, payload: this.infoCardsService.allCards});
+  }
+
+  // Initialize the database and the store when the view is loaded
+  ionViewDidLoad() {
+    this.platform.ready().then(() => {
+      this.databaseService.initDB();
+      this.databaseService.databaseToStore();
+    });
+  }
+
+  // Save the current state to the database
+  ionViewDidLeave() {
+	  this.platform.ready().then(() => {
+  	  this.databaseService.storageToDatabase();
+    });
   }
 
   // Getters
