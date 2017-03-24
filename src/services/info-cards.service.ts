@@ -7,10 +7,13 @@ import {Http} from "@angular/http";
 @Injectable()
 export class InfoCardsService {
 
+  alreadyInStoreInfoCards: Array<InfoCard> = [];
+
   constructor(private main: MainService, private http: Http) {
+    this.main.cards.subscribe(cards => this.alreadyInStoreInfoCards = cards.filter(card => card.type == CardType.Info).map(card => <InfoCard> card));
   }
 
-  getInfoCardsViaVoxe(): Observable<Array<InfoCard>> {
+  getNewInfoCardsViaVoxe(): Observable<Array<InfoCard>> {
     return this.http.get("http://www.voxe.org/wp-json/wp/v2/pages/122")
       .map(data => data.json().content.rendered)
       .map(rendered => this.parseRawContent(rendered));
@@ -39,15 +42,17 @@ export class InfoCardsService {
           let indexEndSrc = raw.slice(indexStartSrc+5).indexOf("\"");
           let imgUrl = raw.substr(indexStartSrc+5,indexEndSrc);
 
-          result.push({
-            image: imgUrl,
-            isStar: false,
-            isArchive: false,
-            isActive: false,
-            infoUrl: [infoUrl],
-            isHTML: true,
-            type: CardType.Info
-          });
+          if (!this.alreadyInStoreInfoCards.filter(card => card.infoUrl[0] == infoUrl && card.image == imgUrl).length) {
+            result.push({
+              image: imgUrl,
+              isStar: false,
+              isArchive: false,
+              isActive: false,
+              infoUrl: [infoUrl],
+              isHTML: true,
+              type: CardType.Info
+            });
+          }
         }
         raw = raw.slice(indexEndA);
         indexStartA = raw.indexOf("<a");

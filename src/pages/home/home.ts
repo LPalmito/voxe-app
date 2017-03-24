@@ -8,7 +8,7 @@ import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
-import {ACTIVE_CARD, STAR_CARD, ARCHIVE_CARD, SET_CARDS, ADD_CARD} from "../../reducers/cards.reducer";
+import {ACTIVE_CARD, STAR_CARD, ARCHIVE_CARD, ADD_CARD, ADD_CARDS} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController, Platform} from "ionic-angular";
@@ -59,7 +59,8 @@ export class HomePage {
 
   constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService, private infoCardsService: InfoCardsService,
-              private tagService: TagService, private databaseService: DatabaseService, private platform: Platform
+              private tagService: TagService
+              //, private databaseService: DatabaseService, private platform: Platform
   ) {
 
     // Initialize the selected segment
@@ -86,27 +87,26 @@ export class HomePage {
     });
 
     // Initialize the cards
-    this.infoCardsService.getInfoCardsViaVoxe().subscribe(infoCards => {
-      let allCards: Array<InfoCard|SwipeCard> = infoCards;
-      allCards = this.infoCardsService.insertSwipeCards(allCards);
-      this.store.dispatch({type: SET_CARDS, payload: allCards});
+    this.infoCardsService.getNewInfoCardsViaVoxe().first().subscribe(newInfoCards => {
+      let newCards: Array<InfoCard|SwipeCard> = newInfoCards;
+      this.store.dispatch({type: ADD_CARDS, payload: newCards});
     });
   }
 
   // Initialize the database and the store when the view is loaded
-  ionViewDidLoad() {
-    this.platform.ready().then(() => {
-      this.databaseService.initDB();
-      this.databaseService.databaseToStore();
-    });
-  }
+  // ionViewDidLoad() {
+  //   this.platform.ready().then(() => {
+  //     this.databaseService.initDB();
+  //     this.databaseService.databaseToStore();
+  //   });
+  // }
 
   // Save the current state to the database
-  ionViewDidLeave() {
-    this.platform.ready().then(() => {
-      this.databaseService.storageToDatabase();
-    });
-  }
+  // ionViewDidLeave() {
+  //   this.platform.ready().then(() => {
+  //     this.databaseService.storageToDatabase();
+  //   });
+  // }
 
   // Getters
   getTagName(tagId: string) {
