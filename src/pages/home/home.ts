@@ -82,7 +82,9 @@ export class HomePage {
 
     // Initialize the cards
     this.infoCardsService.getInfoCardsViaVoxe().subscribe(infoCards => {
-      this.store.dispatch({type: SET_CARDS, payload: infoCards});
+      let allCards: Array<InfoCard|SwipeCard> = infoCards;
+      allCards = this.infoCardsService.insertSwipeCards(allCards);
+      this.store.dispatch({type: SET_CARDS, payload: allCards});
     });
 
   }
