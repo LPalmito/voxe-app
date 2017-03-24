@@ -7,6 +7,7 @@ export const ARCHIVE_CARD = 'ARCHIVE_CARD';
 export const RESTORE_CARD = 'RESTORE_CARD';
 export const STAR_CARD = 'STAR_CARD';
 export const ACTIVE_CARD = 'ACTIVE_CARD';
+export const MARK_CARD_DONE = 'MARK_CARD_DONE';
 
 export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
   switch (type) {
@@ -53,6 +54,17 @@ export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
         if (card == payload) {
           card.isActive = !card.isActive;
           return card;
+        }
+        else {
+          return card;
+        }
+      });
+    case MARK_CARD_DONE:
+      return state.map(card => {
+        if(card == payload) {
+          let swipeCard = <SwipeCard> card;
+          swipeCard.hasBeenDone = true;
+          return swipeCard;
         }
         else {
           return card;

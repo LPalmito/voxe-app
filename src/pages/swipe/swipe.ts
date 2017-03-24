@@ -5,19 +5,15 @@ import {StatsPage} from "../stats/stats";
 import {ToastController, NavController, LoadingController} from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
-import {Tag, Proposition} from "../../services/main.service";
+import {Tag, Proposition, MainService} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
-import {
-  SET_TO_SWIPE_PROPOSITIONS, POP_TO_SWIPE_PROPOSITIONS,
-  PUSH_TO_SWIPE_PROPOSITIONS
-} from "../../reducers/to-swipe-propositions.reducer";
-import {
-  PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS,
-  CLEAR_SWIPED_PROPOSITIONS
-} from "../../reducers/swiped-propositions.reducer";
+import {SET_TO_SWIPE_PROPOSITIONS, POP_TO_SWIPE_PROPOSITIONS, PUSH_TO_SWIPE_PROPOSITIONS} from "../../reducers/to-swipe-propositions.reducer";
+import {PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS, CLEAR_SWIPED_PROPOSITIONS} from "../../reducers/swiped-propositions.reducer";
 import {PUSH_ANSWER, POP_ANSWER, CLEAR_ANSWERS} from "../../reducers/answers.reducer";
 import {TagService} from "../../services/tags.service";
+import {MARK_CARD_DONE} from "../../reducers/cards.reducer";
+import {SwipeCard} from "../home/home";
 
 // TODO: Change the structure to accept the "ask" attribute
 export interface Answer {
@@ -42,9 +38,16 @@ export class SwipePage {
   candidacyIds: string[];
   tagIds: string[];
   tags: Tag[] = [];
+  activeCard: SwipeCard;
 
-  constructor(public loadingController: LoadingController, public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController,
+  constructor(private main: MainService, public loadingController: LoadingController, public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController,
               private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService) {
+
+    this.main.cards.subscribe(cards => {
+      if (cards != undefined) {
+        this.activeCard = <SwipeCard> this.main.getCurrentCard(cards);
+      }
+    });
 
     // Get tags
     this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
@@ -107,6 +110,7 @@ export class SwipePage {
     // Redirect to the StatsPage after the last card
     if (this.toSwipePropositions.length == 0) {
       this.nav.push(StatsPage);
+      this.store.dispatch({type: MARK_CARD_DONE, payload: this.activeCard});
       // this.store.dispatch({type: GO_TO, payload: StatsPage});
     }
   }

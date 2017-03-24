@@ -4,7 +4,7 @@ import {AppStore} from "../../store";
 import {MainService} from "../../services/main.service";
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {STAR_CARD} from "../../reducers/cards.reducer";
-import {Card, InfoCard, SwipeCard} from "../home/home";
+import {Card, InfoCard} from "../home/home";
 
 @Component({
   templateUrl: 'info.html'
@@ -13,7 +13,7 @@ import {Card, InfoCard, SwipeCard} from "../home/home";
 export class InfoPage {
   infoUrl: string[]|SafeResourceUrl;
   isHTML: boolean;
-  activeCard: InfoCard|SwipeCard;
+  activeCard: InfoCard;
 
   constructor(public store: Store<AppStore>, private main: MainService, public sanitizer: DomSanitizer) {
     this.main.isHTML.subscribe(data => {
@@ -29,7 +29,7 @@ export class InfoPage {
     });
     this.main.cards.subscribe(cards => {
       if(cards != undefined) {
-        this.activeCard = this.main.getCurrentCard(cards);
+        this.activeCard = <InfoCard> this.main.getCurrentCard(cards);
       }
     });
   }

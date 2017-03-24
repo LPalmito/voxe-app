@@ -42,6 +42,7 @@ export class SwipeCard extends Card {
   tagIds: string[];
   candidacyIds: string[];
 	type: CardType = CardType.Swipe;
+	hasBeenDone: boolean = false;
 }
 
 
@@ -113,17 +114,16 @@ export class HomePage {
 // Navigation methods
 
 	openCard(card: InfoCard|SwipeCard) {
+	  this.store.dispatch({type: ACTIVE_CARD, payload: card});
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
       this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl});
       this.store.dispatch({type: SET_INFO_TYPE, payload: infoCard.isHTML});
-      this.store.dispatch({type: ACTIVE_CARD, payload: card});
       this.nav.push(InfoPage);
       // this.store.dispatch({type: GO_TO, payload: InfoPage});
     }
     else if (card.type == CardType.Swipe) {
       let swipeCard = <SwipeCard> card;
-      this.store.dispatch({type: ACTIVE_CARD, payload: card});
       this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
       this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
       this.nav.push(SwipePage);
@@ -184,7 +184,8 @@ export class HomePage {
       isArchive: false,
       isActive: false,
       type: CardType.Swipe,
-      candidacyIds: this.getRandomIds(this.main.temp_candidacyIds,2)
+      candidacyIds: this.getRandomIds(this.main.temp_candidacyIds,2),
+      hasBeenDone: false
     };
     this.store.dispatch({type: ADD_CARD, payload: newCard});
     this.selectedSegment = 'swipe';
