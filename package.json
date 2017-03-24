@@ -32,11 +32,8 @@
     "ionic-native": "^2.2.3",
     "ionicons": "^3.0.0",
     "ngrx-store-ionic-storage": "^2.0.0",
-<<<<<<< HEAD
     "pouchdb": "^6.1.2",
     "pouchdb-adapter-cordova-sqlite": "^2.0.2",
-=======
->>>>>>> Used sync between storage and ngrx
     "reflect-metadata": "^0.1.9",
     "rxjs": "5.0.0-rc.4",
     "zone.js": "0.7.3"
