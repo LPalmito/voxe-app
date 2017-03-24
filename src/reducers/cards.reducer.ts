@@ -61,9 +61,10 @@ export const cards = (state: Array<InfoCard|SwipeCard>, {type,payload}) => {
       });
     case MARK_CARD_DONE:
       return state.map(card => {
-        if(card == payload) {
+        if(card == payload.card) {
           let swipeCard = <SwipeCard> card;
           swipeCard.hasBeenDone = true;
+          swipeCard.stats = payload.stats;
           return swipeCard;
         }
         else {

@@ -36,7 +36,8 @@ export class InfoCardsService {
         isActive: false,
         type: CardType.Swipe,
         candidacyIds: [this.main.macronId, this.main.poutouId],
-        hasBeenDone: false
+        hasBeenDone: false,
+        stats: {tags: [], candidacies: [], candidates: [], answers: [], displayAnswers: {}}
       },
       {
         title: "Numérique",
@@ -47,7 +48,8 @@ export class InfoCardsService {
         isActive: false,
         type: CardType.Swipe,
         candidacyIds: [this.main.melenchonId, this.main.asselineauId],
-        hasBeenDone: false
+        hasBeenDone: false,
+        stats: {tags: [], candidacies: [], candidates: [], answers: [], displayAnswers: {}}
       },
       {
         image: "assets/img/home-role-president.png",
@@ -76,7 +78,8 @@ export class InfoCardsService {
         isActive: false,
         type: CardType.Swipe,
         candidacyIds: [this.main.lepenId, this.main.fillonId],
-        hasBeenDone: false
+        hasBeenDone: false,
+        stats: {tags: [], candidacies: [], candidates: [], answers: [], displayAnswers: {}}
       },
       {
         title: "Éducation",
@@ -87,7 +90,8 @@ export class InfoCardsService {
         isActive: false,
         type: CardType.Swipe,
         candidacyIds: [this.main.arthaudId, this.main.lassalleId],
-        hasBeenDone: false
+        hasBeenDone: false,
+        stats: {tags: [], candidacies: [], candidates: [], answers: [], displayAnswers: {}}
       },
       {
         image: "assets/img/home-fiscalite.png",
