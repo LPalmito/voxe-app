@@ -27,10 +27,13 @@
     "@ngrx/effects": "^2.0.1",
     "@ngrx/store": "^2.2.1",
     "angular2-swing": "^0.10.0",
+    "cordova-plugin-sqlite-2": "git+https://github.com/nolanlawson/cordova-plugin-sqlite-2.git",
     "ionic-angular": "2.0.1-201702212251",
     "ionic-native": "^2.2.3",
     "ionicons": "^3.0.0",
     "ngrx-store-ionic-storage": "^2.0.0",
+    "pouchdb": "^6.1.2",
+    "pouchdb-adapter-cordova-sqlite": "^2.0.2",
     "reflect-metadata": "^0.1.9",
     "rxjs": "5.0.0-rc.4",
     "zone.js": "0.7.3"
