@@ -78,7 +78,7 @@ export class InfoCardsService {
     {
       title: "Solidarité, Santé et Logement",
       image: "assets/img/home-swipe-5.png",
-      tagIds: [this.main.cultureId],
+      tagIds: [this.main.santeId],
       isStar: false,
       isArchive: false,
       isActive: false,
