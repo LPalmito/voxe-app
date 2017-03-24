@@ -189,7 +189,6 @@ export class MainService {
     return cards.filter(card => card.type == CardType.Info).map(card => <InfoCard> card);
   }
 
-
   getStars(cards: Array<InfoCard|SwipeCard>) {
     return cards.filter(card => card.isStar);
   }

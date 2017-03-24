@@ -59,14 +59,13 @@ export class HomePage {
 
   constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService, private infoCardsService: InfoCardsService,
-              private tagService: TagService
-              //, private databaseService: DatabaseService, private platform: Platform
+              private tagService: TagService, private databaseService: DatabaseService, private platform: Platform
   ) {
 
     // Initialize the selected segment
     this.selectedSegment = 'all';
 
-    // Initialize the cards
+    // Initialize the rows of cards
     this.main.cards.subscribe(cards => {
       if (cards != undefined) {
         this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
@@ -88,25 +87,26 @@ export class HomePage {
 
     // Initialize the cards
     this.infoCardsService.getNewInfoCardsViaVoxe().first().subscribe(newInfoCards => {
-      let newCards: Array<InfoCard|SwipeCard> = newInfoCards;
+      let newCards: Array<InfoCard|SwipeCard>
+        = this.infoCardsService.areSwipeCardsEmpty ? this.infoCardsService.insertSwipeCards(newInfoCards) : newInfoCards;
       this.store.dispatch({type: ADD_CARDS, payload: newCards});
     });
   }
 
   // Initialize the database and the store when the view is loaded
-  // ionViewDidLoad() {
-  //   this.platform.ready().then(() => {
-  //     this.databaseService.initDB();
-  //     this.databaseService.databaseToStore();
-  //   });
-  // }
+  ionViewDidLoad() {
+    this.platform.ready().then(() => {
+      this.databaseService.initDB();
+      this.databaseService.databaseToStore();
+    });
+  }
 
   // Save the current state to the database
-  // ionViewDidLeave() {
-  //   this.platform.ready().then(() => {
-  //     this.databaseService.storageToDatabase();
-  //   });
-  // }
+  ionViewDidLeave() {
+    this.platform.ready().then(() => {
+      this.databaseService.storageToDatabase();
+    });
+  }
 
   // Getters
   getTagName(tagId: string) {

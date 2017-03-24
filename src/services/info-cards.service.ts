@@ -8,9 +8,13 @@ import {Http} from "@angular/http";
 export class InfoCardsService {
 
   alreadyInStoreInfoCards: Array<InfoCard> = [];
+  areSwipeCardsEmpty: boolean = true;
 
   constructor(private main: MainService, private http: Http) {
-    this.main.cards.subscribe(cards => this.alreadyInStoreInfoCards = cards.filter(card => card.type == CardType.Info).map(card => <InfoCard> card));
+    this.main.cards.subscribe(cards => {
+      this.alreadyInStoreInfoCards = this.main.getInfoCards(cards);
+      this.areSwipeCardsEmpty = !(this.main.getSwipeCards(cards).length > 0);
+    });
   }
 
   getNewInfoCardsViaVoxe(): Observable<Array<InfoCard>> {
