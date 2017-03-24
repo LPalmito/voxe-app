@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {Answer} from "../swipe/swipe";
-import {HomePage} from "../home/home";
+import {HomePage, Card, SwipeCard} from "../home/home";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {CandidateService} from "../../services/candidates.service";
@@ -8,12 +8,14 @@ import {Tag, Candidate, Candidacy, MainService, Proposition} from "../../service
 import {TagService} from "../../services/tags.service";
 import {NavController} from "ionic-angular";
 import {PUSH_ANSWER} from "../../reducers/answers.reducer";
+import {ARCHIVE_CARD, RESTORE_CARD} from "../../reducers/cards.reducer";
 
 @Component({
   templateUrl: 'stats.html'
 })
 
 export class StatsPage {
+  activeCard: SwipeCard;
   tags: Tag[] = [];
   candidacies: Candidacy[] = [];
   candidates: Candidate[] = [];
@@ -22,6 +24,12 @@ export class StatsPage {
 
   constructor(public store: Store<AppStore>, public main: MainService, public nav: NavController,
               private candidateService: CandidateService, private tagService: TagService) {
+
+    this.main.cards.subscribe(cards => {
+      if(cards != undefined) {
+        this.activeCard = <SwipeCard> this.main.getCurrentCard(cards);
+      }
+    });
 
     // Get answers
     this.main.answers.subscribe(x => this.answers = <Array<Answer>>x);
@@ -87,5 +95,14 @@ export class StatsPage {
 
   goHome() {
     this.nav.setRoot(HomePage);
+  }
+
+  archiveCard(card: Card) {
+    if (card.isArchive) {
+      this.store.dispatch({type: RESTORE_CARD, payload: card});
+    }
+    else {
+      this.store.dispatch({type: ARCHIVE_CARD, payload: card});
+    }
   }
 }

@@ -8,7 +8,7 @@ import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
-import {ACTIVE_CARD, STAR_CARD, ARCHIVE_CARD, SET_CARDS, ADD_CARD} from "../../reducers/cards.reducer";
+import {ACTIVE_CARD, SET_CARDS, ADD_CARD} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController, Platform} from "ionic-angular";
@@ -139,15 +139,6 @@ export class HomePage {
 	goToFavoritesPage() {
 	  this.nav.setRoot(FavoritesPage);
   }
-
-	// Action methods
-	starCard(card: Card) {
-    this.store.dispatch({type: STAR_CARD, payload: card});
-	}
-
-	archiveCard(card: Card) {
-    this.store.dispatch({type: ARCHIVE_CARD, payload: card});
-	}
 
 	// Helper to know if a card is a SwipeCard or not
 	isSwipeCard(card: SwipeCard|InfoCard) {
