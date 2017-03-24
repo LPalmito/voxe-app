@@ -26,13 +26,12 @@ import {JsonpModule} from "@angular/http";
 import {IonicStorageModule} from "@ionic/storage";
 import {isHTML} from "../reducers/info-type.reducer";
 import {InfoCardsService} from "../services/info-cards.service";
-import {FavoritesPage} from "../pages/favorites/favorites";
 import { compose } from '@ngrx/core/compose';
 import { StoreModule, combineReducers } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StorageSyncEffects, storageSync } from 'ngrx-store-ionic-storage';
 import {DatabaseService} from "../services/database.service";
-
+import {FavoritesPage} from "../pages/favorites/favorites";
 
 function onSyncError(err) {
   console.log(err);
