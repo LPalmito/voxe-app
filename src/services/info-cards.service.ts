@@ -47,15 +47,7 @@ export class InfoCardsService {
           let imgUrl = raw.substr(indexStartSrc+5,indexEndSrc);
 
           if (!this.alreadyInStoreInfoCards.filter(card => card.infoUrl[0] == infoUrl && card.image == imgUrl).length) {
-            result.push({
-              image: imgUrl,
-              isStar: false,
-              isArchive: false,
-              isActive: false,
-              infoUrl: [infoUrl],
-              isHTML: true,
-              type: CardType.Info
-            });
+            result.push(new InfoCard(imgUrl,[infoUrl]));
           }
         }
         raw = raw.slice(indexEndA);
@@ -75,56 +67,11 @@ export class InfoCardsService {
   }
 
   swipeCards: Array<SwipeCard> = [
-    {
-      title: "Solidarité, Santé et Logement",
-      image: "assets/img/home-swipe-5.png",
-      tagIds: [this.main.santeId],
-      isStar: false,
-      isArchive: false,
-      isActive: false,
-      type: CardType.Swipe,
-      candidacyIds: [this.main.hamonId, this.main.poutouId]
-    },
-    {
-      title: "Justice, Sécurité et Défense",
-      image: "assets/img/home-swipe-3.png",
-      tagIds: [this.main.justiceId],
-      isStar: false,
-      isArchive: false,
-      isActive: false,
-      type: CardType.Swipe,
-      candidacyIds: [this.main.dupontAignanId, this.main.lePenId]
-    },
-    {
-      title: "Emploi",
-      image: "assets/img/home-swipe-1.png",
-      tagIds: [this.main.emploiId],
-      isStar: false,
-      isArchive: false,
-      isActive: false,
-      type: CardType.Swipe,
-      candidacyIds: [this.main.arthaudId, this.main.melenchonId]
-    },
-    {
-      title: "Europe",
-      image: "assets/img/home-swipe-4.png",
-      tagIds: [this.main.europeId],
-      isStar: false,
-      isArchive: false,
-      isActive: false,
-      type: CardType.Swipe,
-      candidacyIds: [this.main.cheminadeId, this.main.macronId]
-    },
-    {
-      title: "Services publics et Territoires",
-      image: "assets/img/home-swipe-2.png",
-      tagIds: [this.main.territoiresId],
-      isStar: false,
-      isArchive: false,
-      isActive: false,
-      type: CardType.Swipe,
-      candidacyIds: [this.main.fillonId, this.main.asselineauId]
-    }
+    new SwipeCard("assets/img/home-swipe-5.png","Solidarité, Santé et Logement",[this.main.santeId],[this.main.hamonId, this.main.poutouId]),
+    new SwipeCard("assets/img/home-swipe-3.png","Justice, Sécurité et Défense",[this.main.justiceId],[this.main.dupontAignanId, this.main.lePenId]),
+    new SwipeCard("assets/img/home-swipe-1.png","Emploi",[this.main.emploiId],[this.main.arthaudId, this.main.melenchonId]),
+    new SwipeCard("assets/img/home-swipe-4.png","Europe",[this.main.europeId],[this.main.cheminadeId, this.main.macronId]),
+    new SwipeCard("assets/img/home-swipe-2.png","Services publics et Territoires",[this.main.territoiresId],[this.main.fillonId, this.main.asselineauId])
   ];
 }
 
