@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
 import {InfoPage} from "../info/info";
-import {SwipePage} from "../swipe/swipe";
+import {SwipePage, Answer} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
-import {MainService} from "../../services/main.service";
+import {MainService, Tag, Candidacy, Candidate} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
-import {ACTIVE_CARD, STAR_CARD, ARCHIVE_CARD, ADD_CARD, ADD_CARDS} from "../../reducers/cards.reducer";
+import {ACTIVE_CARD, ADD_CARD, ADD_CARDS} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController, Platform} from "ionic-angular";
@@ -18,6 +18,7 @@ import {InfoCardsService} from "../../services/info-cards.service";
 import {FavoritesPage} from "../favorites/favorites";
 import {TagService} from "../../services/tags.service";
 import {DatabaseService} from "../../services/database.service";
+import {StatsPage} from "../stats/stats";
 
 export enum CardType {
   Info,
@@ -56,6 +57,14 @@ export class SwipeCard extends Card {
   tagIds: string[];
   candidacyIds: string[];
 	type: CardType;
+	hasBeenDone: boolean;
+	stats: {
+	  tags: Tag[];
+    candidacies: Candidacy[];
+    candidates: Candidate[];
+    answers: Answer[];
+    displayAnswers: {};
+  };
 
 	constructor(imgUrl: string, title: string, tagIds: string[], candidacyIds: string[]) {
 	  super(imgUrl);
@@ -63,9 +72,10 @@ export class SwipeCard extends Card {
 	  this.tagIds = tagIds;
 	  this.candidacyIds = candidacyIds;
 	  this.type = CardType.Swipe;
+    this.hasBeenDone = false;
+    this.stats = {tags: [], candidacies: [], candidates: [], answers: [], displayAnswers: {}};
   }
 }
-
 
 @Component({
   templateUrl: 'home.html',
@@ -140,20 +150,24 @@ export class HomePage {
   // Navigation methods
 
 	openCard(card: InfoCard|SwipeCard) {
+	  this.store.dispatch({type: ACTIVE_CARD, payload: card});
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
       this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl});
       this.store.dispatch({type: SET_INFO_TYPE, payload: infoCard.isHTML});
-      this.store.dispatch({type: ACTIVE_CARD, payload: card});
       this.nav.push(InfoPage);
       // this.store.dispatch({type: GO_TO, payload: InfoPage});
     }
     else if (card.type == CardType.Swipe) {
       let swipeCard = <SwipeCard> card;
-      this.store.dispatch({type: ACTIVE_CARD, payload: card});
-      this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
-      this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
-      this.nav.push(SwipePage);
+      if(!swipeCard.hasBeenDone) {
+        this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
+        this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
+        this.nav.push(SwipePage);
+      }
+      else {
+        this.nav.push(StatsPage);
+      }
       // this.store.dispatch({type: GO_TO, payload: SwipePage});
     }
   }
@@ -166,15 +180,6 @@ export class HomePage {
 	goToFavoritesPage() {
 	  this.nav.setRoot(FavoritesPage);
   }
-
-	// Action methods
-	starCard(card: Card) {
-    this.store.dispatch({type: STAR_CARD, payload: card});
-	}
-
-	archiveCard(card: Card) {
-    this.store.dispatch({type: ARCHIVE_CARD, payload: card});
-	}
 
 	// Helper to know if a card is a SwipeCard or not
 	isSwipeCard(card: SwipeCard|InfoCard) {

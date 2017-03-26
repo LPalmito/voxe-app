@@ -7,6 +7,9 @@
       <button ion-button (click)="goToFavoritesPage()">
         <ion-icon name="star"></ion-icon>
       </button>
+      <button ion-button (click)="goToArchivePage()">
+        <ion-icon name="archive"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -41,6 +44,8 @@
           <ion-card>
             <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
               {{card.title}}
+              <ion-icon *ngIf="card.hasBeenDone" name="checkmark-circle"></ion-icon>
+              <ion-icon *ngIf="!card.hasBeenDone" name="help-circle"></ion-icon>
             </div>
 
             <img src={{card.image}} (click)="openCard(card)"/>
