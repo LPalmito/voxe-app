@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>S'informer</ion-title>
     <ion-buttons end>
-      <button ion-button clear icon-left small (click)="starCard(activeCard)">
+      <button ion-button clear icon-only small (click)="starCard(activeCard)">
         <ion-icon *ngIf="activeCard.isStar" name="star"></ion-icon>
         <ion-icon *ngIf="!activeCard.isStar" name="star-outline"></ion-icon>
       </button>
