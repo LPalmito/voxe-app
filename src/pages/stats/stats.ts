@@ -8,7 +8,7 @@ import {Tag, Candidate, Candidacy, MainService, Proposition} from "../../service
 import {TagService} from "../../services/tags.service";
 import {NavController} from "ionic-angular";
 import {PUSH_ANSWER} from "../../reducers/answers.reducer";
-import {ARCHIVE_CARD, RESTORE_CARD} from "../../reducers/cards.reducer";
+import {ARCHIVE_CARD} from "../../reducers/cards.reducer";
 
 @Component({
   templateUrl: 'stats.html'
@@ -98,11 +98,6 @@ export class StatsPage {
   }
 
   archiveCard(card: Card) {
-    if (card.isArchive) {
-      this.store.dispatch({type: RESTORE_CARD, payload: card});
-    }
-    else {
       this.store.dispatch({type: ARCHIVE_CARD, payload: card});
-    }
   }
 }
