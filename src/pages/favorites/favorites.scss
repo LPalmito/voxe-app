@@ -1,20 +1,16 @@
+ion-card {
+  position: relative;
+  text-align: center;
+}
 
-.card-background-page {
-
-  ion-card {
-    position: relative;
-    text-align: center;
-  }
-
-  .card-title {
-    position: absolute;
-    top: 25%;
-    left: 10%;
-    font-size: 100%;
-    font-weight: bold;
-    font-family: Montserrat, Open Sans, sans-serif;
-    width: 80%;
-    color: #fff;
-    text-shadow: none;
-  }
+.card-title {
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  font-size: 100%;
+  font-weight: bold;
+  font-family: Montserrat, Open Sans, sans-serif;
+  width: 80%;
+  color: #fff;
+  text-shadow: none;
 }
