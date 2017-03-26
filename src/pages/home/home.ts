@@ -8,7 +8,7 @@ import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
-import {ACTIVE_CARD, STAR_CARD, ARCHIVE_CARD, SET_CARDS, ADD_CARD} from "../../reducers/cards.reducer";
+import {ACTIVE_CARD, ADD_CARD, ADD_CARDS} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
 import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController, Platform} from "ionic-angular";
@@ -65,7 +65,7 @@ export class HomePage {
 	infoCardsRows: Array<InfoCard|SwipeCard>[];
   selectedSegment: string;
 
-	constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
+  constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService, private infoCardsService: InfoCardsService,
               private tagService: TagService, private databaseService: DatabaseService, private platform: Platform
   ) {
@@ -73,7 +73,7 @@ export class HomePage {
     // Initialize the selected segment
     this.selectedSegment = 'all';
 
-    // Initialize the cards
+    // Initialize the rows of cards
     this.main.cards.subscribe(cards => {
       if (cards != undefined) {
         this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
@@ -93,7 +93,12 @@ export class HomePage {
       this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
     });
 
-    this.store.dispatch({type: SET_CARDS, payload: this.infoCardsService.allCards});
+    // Initialize the cards
+    this.infoCardsService.getNewInfoCardsViaVoxe().first().subscribe(newInfoCards => {
+      let newCards: Array<InfoCard|SwipeCard>
+        = this.infoCardsService.areSwipeCardsEmpty ? this.infoCardsService.insertSwipeCards(newInfoCards) : newInfoCards;
+      this.store.dispatch({type: ADD_CARDS, payload: newCards});
+    });
   }
 
   // Initialize the database and the store when the view is loaded
@@ -106,8 +111,8 @@ export class HomePage {
 
   // Save the current state to the database
   ionViewDidLeave() {
-	  this.platform.ready().then(() => {
-  	  this.databaseService.storageToDatabase();
+    this.platform.ready().then(() => {
+      this.databaseService.storageToDatabase();
     });
   }
 
@@ -118,7 +123,7 @@ export class HomePage {
     return tagName;
   }
 
-// Navigation methods
+  // Navigation methods
 
 	openCard(card: InfoCard|SwipeCard) {
 	  this.store.dispatch({type: ACTIVE_CARD, payload: card});
@@ -151,15 +156,6 @@ export class HomePage {
 	goToFavoritesPage() {
 	  this.nav.setRoot(FavoritesPage);
   }
-
-	// Action methods
-	starCard(card: Card) {
-    this.store.dispatch({type: STAR_CARD, payload: card});
-	}
-
-	archiveCard(card: Card) {
-    this.store.dispatch({type: ARCHIVE_CARD, payload: card});
-	}
 
 	// Helper to know if a card is a SwipeCard or not
 	isSwipeCard(card: SwipeCard|InfoCard) {
