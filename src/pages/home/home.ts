@@ -29,19 +29,41 @@ export class Card {
 	isStar: boolean;
 	isArchive: boolean;
   isActive: boolean;
+
+  constructor(imgUrl: string) {
+    this.image = imgUrl;
+    this.isStar = false;
+    this.isArchive = false;
+    this.isActive = false;
+  }
 }
 
 export class InfoCard extends Card {
 	infoUrl: string[];
 	isHTML: boolean;
-	type: CardType = CardType.Info;
+	type: CardType;
+
+	constructor(imgUrl: string, infoUrl: string[]) {
+	  super(imgUrl);
+	  this.infoUrl = infoUrl;
+	  this.isHTML = true;
+	  this.type = CardType.Info;
+  }
 }
 
 export class SwipeCard extends Card {
 	title: string;
   tagIds: string[];
   candidacyIds: string[];
-	type: CardType = CardType.Swipe;
+	type: CardType;
+
+	constructor(imgUrl: string, title: string, tagIds: string[], candidacyIds: string[]) {
+	  super(imgUrl);
+	  this.title = title;
+	  this.tagIds = tagIds;
+	  this.candidacyIds = candidacyIds;
+	  this.type = CardType.Swipe;
+  }
 }
 
 
@@ -176,16 +198,12 @@ export class HomePage {
 
   generateQuizz() {
     let generatedTagId = this.getRandomIds(this.main.temp_tagIds,1);
-    let newCard: SwipeCard = {
-      title: this.getTagName(generatedTagId[0]),
-      image: this.getNextBackground(),
-      tagIds: generatedTagId,
-      isStar: false,
-      isArchive: false,
-      isActive: false,
-      type: CardType.Swipe,
-      candidacyIds: this.getRandomIds(this.main.temp_candidacyIds,2)
-    };
+    let newCard: SwipeCard = new SwipeCard(
+      this.getNextBackground(),
+      this.getTagName(generatedTagId[0]),
+      generatedTagId,
+      this.getRandomIds(this.main.temp_candidacyIds,2)
+    );
     this.store.dispatch({type: ADD_CARD, payload: newCard});
     this.selectedSegment = 'swipe';
   }
