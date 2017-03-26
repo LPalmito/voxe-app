@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
-import {InfoCard, SwipeCard, CardType} from "../pages/home/home";
+import {InfoCard, SwipeCard} from "../pages/home/home";
 import {MainService} from "./main.service";
+import {CandidateService} from "./candidates.service";
 import {Observable} from "rxjs";
 import {Http} from "@angular/http";
 
@@ -10,7 +11,7 @@ export class InfoCardsService {
   alreadyInStoreInfoCards: Array<InfoCard> = [];
   areSwipeCardsEmpty: boolean = true;
 
-  constructor(private main: MainService, private http: Http) {
+  constructor(private main: MainService, private http: Http, private candidateService: CandidateService) {
     this.main.cards.subscribe(cards => {
       this.alreadyInStoreInfoCards = this.main.getInfoCards(cards);
       this.areSwipeCardsEmpty = !(this.main.getSwipeCards(cards).length > 0);
@@ -58,6 +59,9 @@ export class InfoCardsService {
   }
 
   insertSwipeCards(cards: Array<InfoCard|SwipeCard>) {
+    this.candidateService.getCandidateById(this.main.hamonId).subscribe(candidate => this.swipeCards[0].stats.candidates[0] = candidate);
+    this.candidateService.getCandidateById(this.main.poutouId).subscribe(candidate => this.swipeCards[0].stats.candidates[1] = candidate);
+    this.swipeCards[0].hasBeenDone = true;
     cards.splice(1, 0, this.swipeCards[0]);
     cards.splice(2, 0, this.swipeCards[1]);
     cards.splice(4, 0, this.swipeCards[2]);
