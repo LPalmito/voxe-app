@@ -44,6 +44,8 @@
           <ion-card>
             <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
               {{card.title}}
+              <ion-icon *ngIf="card.hasBeenDone" name="checkmark-circle"></ion-icon>
+              <ion-icon *ngIf="!card.hasBeenDone" name="help-circle"></ion-icon>
             </div>
 
             <img src={{card.image}} (click)="openCard(card)"/>

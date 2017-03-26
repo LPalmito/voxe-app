@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {InfoPage} from "../info/info";
-import {SwipePage} from "../swipe/swipe";
+import {SwipePage, Answer} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
-import {MainService} from "../../services/main.service";
+import {MainService, Tag, Candidacy, Candidate} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
@@ -18,6 +18,7 @@ import {InfoCardsService} from "../../services/info-cards.service";
 import {FavoritesPage} from "../favorites/favorites";
 import {TagService} from "../../services/tags.service";
 import {DatabaseService} from "../../services/database.service";
+import {StatsPage} from "../stats/stats";
 
 export enum CardType {
   Info,
@@ -29,21 +30,52 @@ export class Card {
 	isStar: boolean;
 	isArchive: boolean;
   isActive: boolean;
+
+  constructor(imgUrl: string) {
+    this.image = imgUrl;
+    this.isStar = false;
+    this.isArchive = false;
+    this.isActive = false;
+  }
 }
 
 export class InfoCard extends Card {
 	infoUrl: string[];
 	isHTML: boolean;
-	type: CardType = CardType.Info;
+	type: CardType;
+
+	constructor(imgUrl: string, infoUrl: string[]) {
+	  super(imgUrl);
+	  this.infoUrl = infoUrl;
+	  this.isHTML = true;
+	  this.type = CardType.Info;
+  }
 }
 
 export class SwipeCard extends Card {
 	title: string;
   tagIds: string[];
   candidacyIds: string[];
-	type: CardType = CardType.Swipe;
-}
+	type: CardType;
+	hasBeenDone: boolean;
+	stats: {
+	  tags: Tag[];
+    candidacies: Candidacy[];
+    candidates: Candidate[];
+    answers: Answer[];
+    displayAnswers: {};
+  };
 
+	constructor(imgUrl: string, title: string, tagIds: string[], candidacyIds: string[]) {
+	  super(imgUrl);
+	  this.title = title;
+	  this.tagIds = tagIds;
+	  this.candidacyIds = candidacyIds;
+	  this.type = CardType.Swipe;
+    this.hasBeenDone = false;
+    this.stats = {tags: [], candidacies: [], candidates: [], answers: [], displayAnswers: {}};
+  }
+}
 
 @Component({
   templateUrl: 'home.html',
@@ -118,20 +150,24 @@ export class HomePage {
   // Navigation methods
 
 	openCard(card: InfoCard|SwipeCard) {
+	  this.store.dispatch({type: ACTIVE_CARD, payload: card});
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
       this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl});
       this.store.dispatch({type: SET_INFO_TYPE, payload: infoCard.isHTML});
-      this.store.dispatch({type: ACTIVE_CARD, payload: card});
       this.nav.push(InfoPage);
       // this.store.dispatch({type: GO_TO, payload: InfoPage});
     }
     else if (card.type == CardType.Swipe) {
       let swipeCard = <SwipeCard> card;
-      this.store.dispatch({type: ACTIVE_CARD, payload: card});
-      this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
-      this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
-      this.nav.push(SwipePage);
+      if(!swipeCard.hasBeenDone) {
+        this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
+        this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
+        this.nav.push(SwipePage);
+      }
+      else {
+        this.nav.push(StatsPage);
+      }
       // this.store.dispatch({type: GO_TO, payload: SwipePage});
     }
   }
@@ -172,16 +208,12 @@ export class HomePage {
 
   generateQuizz() {
     let generatedTagId = this.getRandomIds(this.main.temp_tagIds,1);
-    let newCard: SwipeCard = {
-      title: this.getTagName(generatedTagId[0]),
-      image: this.getNextBackground(),
-      tagIds: generatedTagId,
-      isStar: false,
-      isArchive: false,
-      isActive: false,
-      type: CardType.Swipe,
-      candidacyIds: this.getRandomIds(this.main.temp_candidacyIds,2)
-    };
+    let newCard: SwipeCard = new SwipeCard(
+      this.getNextBackground(),
+      this.getTagName(generatedTagId[0]),
+      generatedTagId,
+      this.getRandomIds(this.main.temp_candidacyIds,2)
+    );
     this.store.dispatch({type: ADD_CARD, payload: newCard});
     this.selectedSegment = 'swipe';
   }
