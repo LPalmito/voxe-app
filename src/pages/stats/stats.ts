@@ -110,3 +110,27 @@ export class StatsPage {
       this.store.dispatch({type: ARCHIVE_CARD, payload: card});
   }
 }
+
+
+//   // If no proposition are found for a candidate, add a default Proposition, stating that we don't have proposition for this candidate
+//   for (let i=0; i<2; i++) {
+//     if (!this.oldDisplayAnswers[this.candidacies[i].id].yes.length && !this.oldDisplayAnswers[this.candidacies[i].id].no.length){
+//       let defaultProposition: Proposition = {
+//         id: "default",
+//         text: "Nous n'avons pas de proposition pour ce candidat sur ce thème.",
+//         favorite_users_count: 0,
+//         against_users_count: 0,
+//         support_users_count: 0,
+//         tags: [{id: "default"}],
+//         comments: {count: 0},
+//         favorite_users: {count: 0, data: ["default"]},
+//         against_users: {count: 0, data: ["default"]},
+//         support_users: {count: 0, data: ["default"]},
+//         candidacy: {id: this.candidacies[i].id},
+//         embeds: ["default"]
+//       };
+//       this.oldDisplayAnswers[this.candidacies[i].id].yes.push(defaultProposition);
+//       this.store.dispatch({type: PUSH_ANSWER, payload: {proposition: defaultProposition, approved: true}});
+//     }
+//   }
+
