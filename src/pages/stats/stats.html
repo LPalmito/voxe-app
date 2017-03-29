@@ -15,18 +15,18 @@
   <!--TODO: Think about a template for several tags-->
   <ion-card class="title-theme">
     <ion-card-header>
-      <img id="theme" src="{{getIcon(tags[0], 0)}}"/>
+      <img id="theme" src="{{getIcon(tags[0],0)}}"/>
       <h2>{{tags[0].name}}</h2>
     </ion-card-header>
-    <hr>
     <!--Pictures and names of candidates-->
     <ion-card-content>
+      <hr>
       <ion-grid>
         <!--TODO: Think about to adapt the template for more than 2 candidates-->
         <ion-row>
-          <ion-col width-50 class="image-candidate" *ngFor="let c of candidacies">
+          <ion-col width-50 *ngFor="let c of candidacies">
             <div>
-              <img class="candidate-stats" src={{getPhoto(c.candidates[0],"small")}}/>
+              <img class="candidate-image" src="{{getPhoto(c.candidates[0],0)}}">
             </div>
           </ion-col>
         </ion-row>
@@ -42,7 +42,7 @@
             <ion-icon *ngFor="let answer of getAnswers(c,true)" name="checkmark" class="vote-yes"></ion-icon>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row id="results-row-2">
           <ion-col width-50 class="results-icons" *ngFor="let c of candidacies">
             <ion-icon *ngFor="let answer of getAnswers(c,false)" name="close" class="vote-no"></ion-icon>
           </ion-col>
@@ -54,9 +54,9 @@
 
   <!--Propositions summary-->
   <div *ngFor="let answer of answers" text-wrap>
-    <ion-item *ngIf="answer.approved == true">
+    <ion-item>
       <ion-avatar item-left>
-        <img src={{getPhoto(getCandidate(answer.proposition.candidacy.id),"small")}}>
+        <img src={{getPhoto(getCandidate(answer.proposition.candidacy.id),0)}}>
       </ion-avatar>
       <h2>{{getName(getCandidate(answer.proposition.candidacy.id))}} – <ion-icon *ngIf="answer.approved" name="checkmark" class="vote-yes"></ion-icon><ion-icon *ngIf="!answer.approved" name="close" class="vote-no"></ion-icon></h2>
       <p>{{answer.proposition.text}}</p>

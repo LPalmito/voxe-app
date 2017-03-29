@@ -136,7 +136,7 @@ export class SwipePage {
 
   // Helper to get the last element of an array
   last(arr) {
-    return arr[-1]
+    return arr[arr.length-1]
   }
 
   getIcon(tag: Tag, size: number): string {

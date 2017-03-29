@@ -48,7 +48,6 @@ export class StatsPage {
       // Get candidacies according to candidacyIds from the store
       this.candidateService.candidacyIds.subscribe(candidacyIds => candidacyIds.forEach(candidacyId => {
         this.candidacies.push(this.candidateService.getCandidacyById(candidacyId));
-        // this.candidates.push(this.candidateService.getCandidateById(candidacyId));
       }));
 
       this.store.dispatch({type: MARK_CARD_DONE, payload: {card: this.activeCard, stats: {
@@ -59,6 +58,7 @@ export class StatsPage {
     }
   }
 
+  // size : 0 <=> 32, 1 <=> 64
   getIcon(tag: Tag, size: number): string {
     return this.tagService.getIcon(tag,size);
   }
@@ -75,15 +75,16 @@ export class StatsPage {
     return candidate.firstName + " " + candidate.lastName;
   }
 
-  getPhoto(candidate: Candidate, size: string): string {
+  // size: 0 <=> small, 1 <=> medium, 2 <=> large
+  getPhoto(candidate: Candidate, size: number): string {
     let photo0 = candidate.photo.sizes;
     let photo1;
     switch(size) {
-      case "small":
+      case 0:
         photo1 = photo0.small;
-      case "medium":
+      case 1:
         photo1 = photo0.medium;
-      case "large":
+      case 2:
         photo1 = photo0.large;
       default:
         photo1 = photo0.small;
