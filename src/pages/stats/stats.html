@@ -5,6 +5,10 @@
       <button ion-button (click)="goHome()">
         <ion-icon name="home"></ion-icon>
       </button>
+      <button ion-button (click)="archiveCard(activeCard)">
+        <ion-icon *ngIf="!activeCard.isArchive" name="archive"></ion-icon>
+        <ion-icon *ngIf="activeCard.isArchive" name="undo"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

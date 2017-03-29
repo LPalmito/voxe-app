@@ -8,7 +8,8 @@ import {Tag, Candidate, Candidacy, MainService, Proposition} from "../../service
 import {TagService} from "../../services/tags.service";
 import {NavController} from "ionic-angular";
 import {PUSH_ANSWER} from "../../reducers/answers.reducer";
-import {MARK_CARD_DONE} from "../../reducers/cards.reducer";
+import {MARK_CARD_DONE, ARCHIVE_CARD, RESTORE_CARD} from "../../reducers/cards.reducer";
+
 
 @Component({
   templateUrl: 'stats.html'
@@ -94,6 +95,15 @@ export class StatsPage {
 
   goHome() {
     this.nav.setRoot(HomePage);
+  }
+
+  archiveCard(card: SwipeCard) {
+    if (card.isArchive) {
+      this.store.dispatch({type: RESTORE_CARD, payload: card});
+    }
+    else {
+      this.store.dispatch({type: ARCHIVE_CARD, payload: card});
+    }
   }
 }
 
