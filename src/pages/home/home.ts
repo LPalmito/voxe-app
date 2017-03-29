@@ -61,9 +61,7 @@ export class SwipeCard extends Card {
 	stats: {
 	  tags: Tag[];
     candidacies: Candidacy[];
-    candidates: Candidate[];
     answers: Answer[];
-    displayAnswers: {};
   };
 
 	constructor(imgUrl: string, title: string, tagIds: string[], candidacyIds: string[]) {
@@ -73,7 +71,7 @@ export class SwipeCard extends Card {
 	  this.candidacyIds = candidacyIds;
 	  this.type = CardType.Swipe;
     this.hasBeenDone = false;
-    this.stats = {tags: [], candidacies: [], candidates: [], answers: [], displayAnswers: {}};
+    this.stats = {tags: [], candidacies: [], answers: []};
   }
 }
 
