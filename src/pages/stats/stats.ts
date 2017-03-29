@@ -4,10 +4,9 @@ import {HomePage, SwipeCard} from "../home/home";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {CandidateService} from "../../services/candidates.service";
-import {Tag, Candidate, Candidacy, MainService, Proposition} from "../../services/main.service";
+import {Tag, Candidate, Candidacy, MainService} from "../../services/main.service";
 import {TagService} from "../../services/tags.service";
 import {NavController} from "ionic-angular";
-import {PUSH_ANSWER} from "../../reducers/answers.reducer";
 import {MARK_CARD_DONE, ARCHIVE_CARD} from "../../reducers/cards.reducer";
 
 @Component({
@@ -24,10 +23,9 @@ export class StatsPage {
               private candidateService: CandidateService, private tagService: TagService) {
 
     // Look for active card
-    this.main.cards.subscribe(cards => {
-      if (cards != undefined) {
-        this.activeCard = <SwipeCard> this.main.getCurrentCard(cards);
-      }
+    this.main.getCurrentCard().subscribe(card => {
+      this.activeCard = <SwipeCard> card;
+      console.log(this.activeCard);
     });
 
     if (this.activeCard.hasBeenDone) {
@@ -38,17 +36,23 @@ export class StatsPage {
 
     else {
       // Get answers from the store
-      this.main.answers.subscribe(x => {this.answers = <Array<Answer>> x});
+      this.main.answers.subscribe(x => this.answers = <Array<Answer>> x);
 
       // Get tags according to tagIds from the store
-      this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
-        this.tagService.getTagById(tagId).subscribe(tag => this.tags.push(tag));
-      }));
+      this.tagService.tagIds.subscribe(tagIds => {
+        this.tags = [];
+        tagIds.forEach(tagId => this.tagService.getTagById(tagId).first()
+          .subscribe(tag => this.tags.push(tag)));
+        console.log(this.tags);
+      });
 
       // Get candidacies according to candidacyIds from the store
-      this.candidateService.candidacyIds.subscribe(candidacyIds => candidacyIds.forEach(candidacyId => {
-        this.candidacies.push(this.candidateService.getCandidacyById(candidacyId));
-      }));
+      this.candidateService.candidacyIds.subscribe(candidacyIds => {
+        this.candidacies = [];
+        candidacyIds.forEach(candidacyId => this.candidateService.getCandidacyById(candidacyId).first()
+          .subscribe(candidacy => this.candidacies.push(candidacy)));
+        console.log(this.candidacies);
+      });
 
       this.store.dispatch({type: MARK_CARD_DONE, payload: {card: this.activeCard, stats: {
         tags: this.tags,
@@ -110,27 +114,3 @@ export class StatsPage {
       this.store.dispatch({type: ARCHIVE_CARD, payload: card});
   }
 }
-
-
-//   // If no proposition are found for a candidate, add a default Proposition, stating that we don't have proposition for this candidate
-//   for (let i=0; i<2; i++) {
-//     if (!this.oldDisplayAnswers[this.candidacies[i].id].yes.length && !this.oldDisplayAnswers[this.candidacies[i].id].no.length){
-//       let defaultProposition: Proposition = {
-//         id: "default",
-//         text: "Nous n'avons pas de proposition pour ce candidat sur ce thème.",
-//         favorite_users_count: 0,
-//         against_users_count: 0,
-//         support_users_count: 0,
-//         tags: [{id: "default"}],
-//         comments: {count: 0},
-//         favorite_users: {count: 0, data: ["default"]},
-//         against_users: {count: 0, data: ["default"]},
-//         support_users: {count: 0, data: ["default"]},
-//         candidacy: {id: this.candidacies[i].id},
-//         embeds: ["default"]
-//       };
-//       this.oldDisplayAnswers[this.candidacies[i].id].yes.push(defaultProposition);
-//       this.store.dispatch({type: PUSH_ANSWER, payload: {proposition: defaultProposition, approved: true}});
-//     }
-//   }
-

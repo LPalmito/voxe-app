@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {InfoPage} from "../info/info";
 import {SwipePage, Answer} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
-import {MainService, Tag, Candidacy, Candidate} from "../../services/main.service";
+import {MainService, Tag, Candidacy} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";

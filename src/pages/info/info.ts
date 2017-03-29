@@ -27,11 +27,7 @@ export class InfoPage {
         this.infoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(data[0]);
       }
     });
-    this.main.cards.subscribe(cards => {
-      if(cards != undefined) {
-        this.activeCard = <InfoCard> this.main.getCurrentCard(cards);
-      }
-    });
+    this.main.getCurrentCard().subscribe(card => this.activeCard = <InfoCard> card);
   }
 
   starCard(card: Card) {

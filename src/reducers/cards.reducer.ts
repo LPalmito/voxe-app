@@ -49,14 +49,8 @@ export const cards = (state: Array<InfoCard|SwipeCard> = [], {type,payload}) => 
       });
     case ACTIVE_CARD:
       return state.map(card => {
-        card.isActive = false;
-        if (card == payload) {
-          card.isActive = !card.isActive;
-          return card;
-        }
-        else {
-          return card;
-        }
+        card.isActive = card == payload ? true : false;
+        return card;
       });
     case MARK_CARD_DONE:
       return state.map(card => {

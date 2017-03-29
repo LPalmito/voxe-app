@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {InfoCard, SwipeCard, CardType} from "../pages/home/home";
+import {InfoCard, SwipeCard} from "../pages/home/home";
 import {MainService} from "./main.service";
 import {Observable} from "rxjs";
 import {Http} from "@angular/http";
