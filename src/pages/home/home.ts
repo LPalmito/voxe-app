@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {InfoPage} from "../info/info";
 import {SwipePage, Answer} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
-import {MainService, Tag, Candidacy, Candidate} from "../../services/main.service";
+import {MainService, Tag, Candidacy} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {SET_INFO_URL} from "../../reducers/info-url.reducer";
@@ -61,9 +61,7 @@ export class SwipeCard extends Card {
 	stats: {
 	  tags: Tag[];
     candidacies: Candidacy[];
-    candidates: Candidate[];
     answers: Answer[];
-    displayAnswers: {};
   };
 
 	constructor(imgUrl: string, title: string, tagIds: string[], candidacyIds: string[]) {
@@ -73,7 +71,7 @@ export class SwipeCard extends Card {
 	  this.candidacyIds = candidacyIds;
 	  this.type = CardType.Swipe;
     this.hasBeenDone = false;
-    this.stats = {tags: [], candidacies: [], candidates: [], answers: [], displayAnswers: {}};
+    this.stats = {tags: [], candidacies: [], answers: []};
   }
 }
 
