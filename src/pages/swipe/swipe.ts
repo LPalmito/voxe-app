@@ -47,11 +47,11 @@ export class SwipePage {
     }));
 
     // From services
-    this.candidateService.candidacyIds.subscribe(x => this.candidacyIds = <Array<string>>x);
-    this.tagService.tagIds.subscribe(x => this.tagIds = <Array<string>>x);
-    this.propositionService.toSwipePropositions.subscribe(x => this.toSwipePropositions = <Array<Proposition>>x);
-    this.propositionService.swipedPropositions.subscribe(x => this.swipedPropositions = <Array<Proposition>>x);
-    this.propositionService.answers.subscribe(x => this.answers = <Array<Answer>>x);
+    this.candidateService.candidacyIds.subscribe(x => this.candidacyIds = <Array<string> >x);
+    this.tagService.tagIds.subscribe(x => this.tagIds = <Array<string>> x);
+    this.propositionService.toSwipePropositions.subscribe(x => this.toSwipePropositions = <Array<Proposition>> x);
+    this.propositionService.swipedPropositions.subscribe(x => this.swipedPropositions = <Array<Proposition>> x);
+    this.propositionService.answers.subscribe(x => this.answers = <Array<Answer>> x);
 
     // Clear swiped propositions and answers
     this.store.dispatch({type: CLEAR_SWIPED_PROPOSITIONS, payload: null});
@@ -134,14 +134,13 @@ export class SwipePage {
     toast.present();
   }
 
-  // Helper to get the las element of an array
+  // Helper to get the last element of an array
   last(arr) {
-    return arr[arr.length-1]
+    return arr[-1]
   }
 
-  // Helper to get the url of a tag icon (for the size: 0 <-> 32, 1 <-> 64)
   getIcon(tag: Tag, size: number): string {
-    return tag.icon.prefix + tag.icon.sizes[size] + tag.icon.name;
+    return this.tagService.getIcon(tag,size);
   }
 
 }
