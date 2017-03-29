@@ -47,9 +47,7 @@ export class SwipeCard extends Card {
 	stats: {
 	  tags: Tag[];
     candidacies: Candidacy[];
-    candidates: Candidate[];
     answers: Answer[];
-    displayAnswers: {};
   };
 }
 
@@ -198,7 +196,7 @@ export class HomePage {
       type: CardType.Swipe,
       candidacyIds: this.getRandomIds(this.main.temp_candidacyIds,2),
       hasBeenDone: false,
-      stats: {tags: [], candidacies: [], candidates: [], answers: [], displayAnswers: {}}
+      stats: {tags: [], candidacies: [], answers: []}
     };
     this.store.dispatch({type: ADD_CARD, payload: newCard});
     this.selectedSegment = 'swipe';

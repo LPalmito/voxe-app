@@ -28,4 +28,9 @@ export class TagService {
       .map(arr => arr.filter(x => x.namespace == nameSpace)[0])
   }
 
+  // Helper to get the url of a tag icon (for the size: 0 <=> 32, 1 <=> 64)
+  getIcon(tag: Tag, size: number): string {
+    return tag.icon.prefix + tag.icon.sizes[size] + tag.icon.name;
+  }
+
 }
