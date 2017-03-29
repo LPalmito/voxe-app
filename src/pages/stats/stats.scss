@@ -16,7 +16,7 @@
   margin-top: -2%;
 }
 
-hr {
+#after-theme {
   margin-top: -2%;
 }
 
@@ -38,6 +38,20 @@ hr {
   font-family: Montserrat, Open Sans, sans-serif;
 }
 
+.results-icons {
+  text-align: center;
+}
+
+#results-row-2 {
+  margin-top: -5%;
+}
+
+.no-proposition {
+  margin-left: 5%;
+  font-style: italic;
+  color: #666;
+}
+
 .vote-yes {
   //display: block;
   //padding: 3px;
@@ -50,14 +64,6 @@ hr {
   //padding: 3px;
   color: #e13838;
   background-color: white;
-}
-
-#results-row-2 {
-  margin-top: -5%;
-}
-
-.results-icons {
-  text-align: center;
 }
 
 .again-button {

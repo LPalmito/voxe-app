@@ -14,8 +14,11 @@ export class TagService {
   }
 
   getTags(): Observable<Array<Tag>> {
-    return this.main.election
-      .map(election => election.tags)
+    return this.main.election.map(election => {
+      if(election != undefined) {
+        return election.tags;
+      }
+    });
   }
 
   getTagById(tagId: string): Observable<Tag> {

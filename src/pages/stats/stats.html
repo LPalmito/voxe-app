@@ -20,7 +20,7 @@
     </ion-card-header>
     <!--Pictures and names of candidates-->
     <ion-card-content>
-      <hr>
+      <hr id="after-theme">
       <ion-grid>
         <!--TODO: Think about to adapt the template for more than 2 candidates-->
         <ion-row>
@@ -32,7 +32,7 @@
         </ion-row>
         <ion-row>
           <ion-col width-50 class="candidate-name" *ngFor="let c of candidacies">
-            <h2>{{getName(c.candidates[0])}}</h2>
+            <h3>{{getName(c.candidates[0])}}</h3>
           </ion-col>
         </ion-row>
 
@@ -53,8 +53,9 @@
   </ion-card>
 
   <!--Display a message for each candidate with no proposition on this theme-->
-  <div *ngFor="let c of getCandidatesWithoutProposition()">
-    Nous n'avons pas de proposition pour ce candidat sur ce thème.
+  <div *ngFor="let candidateName of getCandidatesWithoutProposition()" class="no-proposition">
+    Nous n'avons pas de proposition pour {{candidateName}} sur ce thème.
+    <hr>
   </div>
 
   <!--Propositions summary-->
