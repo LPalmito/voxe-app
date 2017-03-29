@@ -38,7 +38,7 @@ export class StatsPage {
 
     else {
       // Get answers from the store
-      this.main.answers.subscribe(x => this.answers = <Array<Answer>> x);
+      this.main.answers.subscribe(x => {this.answers = <Array<Answer>> x});
 
       // Get tags according to tagIds from the store
       this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
@@ -65,6 +65,16 @@ export class StatsPage {
 
   getAnswers(candidacy: Candidacy, approved: boolean): Answer[] {
     return this.answers.filter(answer => answer.approved == approved && answer.proposition.candidacy.id == candidacy.id);
+  }
+
+  getCandidatesWithoutProposition(): string[] {
+    return this.candidacies
+      .filter(
+        candidacy => this.answers.map(answer => answer.proposition.candidacy.id).indexOf(candidacy.id) == -1
+      )
+      .map(
+        candidacy => this.getName(candidacy.candidates[0])
+      );
   }
 
   getCandidate(candidacyId: string) {

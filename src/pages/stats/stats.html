@@ -52,6 +52,11 @@
     </ion-card-content>
   </ion-card>
 
+  <!--Display a message for each candidate with no proposition on this theme-->
+  <div *ngFor="let c of getCandidatesWithoutProposition()">
+    Nous n'avons pas de proposition pour ce candidat sur ce thème.
+  </div>
+
   <!--Propositions summary-->
   <div *ngFor="let answer of answers" text-wrap>
     <ion-item>
