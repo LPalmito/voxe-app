@@ -10,7 +10,6 @@ import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
 import {ACTIVE_CARD, ADD_CARD, ADD_CARDS} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
-import {SET_PROPOSITIONS, ADD_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController, Platform} from "ionic-angular";
 import {PropositionService} from "../../services/propositions.service";
 import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
@@ -108,11 +107,6 @@ export class HomePage {
     this.main.getElectionViaHttp().subscribe(election => {
       this.store.dispatch({type: SET_ELECTION, payload: election});
     });
-
-    // Initialize the propositions
-    // this.propositionService.getPropositionsForElection().subscribe(propositions => {
-    //   this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
-    // });
 
     // Initialize the cards
     this.infoCardsService.getNewInfoCardsViaVoxe().first().subscribe(newInfoCards => {

@@ -8,6 +8,7 @@ import {SET_INFO_URL} from "../../reducers/info-url.reducer";
 import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
 import {ACTIVE_CARD} from "../../reducers/cards.reducer";
 import {InfoPage} from "../info/info";
+import {StatsPage} from "../stats/stats";
 import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
 import {SwipePage} from "../swipe/swipe";
@@ -29,20 +30,24 @@ export class FavoritesPage {
   }
 
   openCard(card: InfoCard|SwipeCard) {
+    this.store.dispatch({type: ACTIVE_CARD, payload: card});
     if (card.type == CardType.Info) {
       let infoCard = <InfoCard> card;
       this.store.dispatch({type: SET_INFO_URL, payload: infoCard.infoUrl});
       this.store.dispatch({type: SET_INFO_TYPE, payload: infoCard.isHTML});
-      this.store.dispatch({type: ACTIVE_CARD, payload: card});
       this.nav.push(InfoPage);
       // this.store.dispatch({type: GO_TO, payload: InfoPage});
     }
     else if (card.type == CardType.Swipe) {
       let swipeCard = <SwipeCard> card;
-      this.store.dispatch({type: ACTIVE_CARD, payload: card});
-      this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
-      this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
-      this.nav.push(SwipePage);
+      if(!swipeCard.hasBeenDone) {
+        this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
+        this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
+        this.nav.push(SwipePage);
+      }
+      else {
+        this.nav.push(StatsPage);
+      }
       // this.store.dispatch({type: GO_TO, payload: SwipePage});
     }
   }

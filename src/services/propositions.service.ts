@@ -28,7 +28,7 @@ export class PropositionService {
       .map(id => this.getPropositions(id,tagIds[0],nb)
         .map(arr => this.randomDiffElement(arr,nb))); // [Obs<Prop[]>,Obs<Prop[]>]
     return arrObs[0].combineLatest(arrObs[1], (arrProp0,arrProp1) => arrProp0.concat(arrProp1))
-      .map(arr => this.randomDiffElement(arr,arr.length));
+      .map(arr => this.randomDiffElement(arr,arr.length))
   }
 
   getPropositions(candidacyId: string, tagId: string, nb: number): Observable<Array<Proposition>> {
@@ -43,7 +43,7 @@ export class PropositionService {
             this.store.dispatch({type: ADD_PROPOSITIONS, payload: voxe});
             return arr.concat(voxe);
           })
-      )
+      ).first();
   }
 
   getPropositionsViaVoxe(candidacyId: string,
@@ -61,7 +61,7 @@ export class PropositionService {
         let currentPropositions = previousPropositions.concat(propositions);
         return propositions.length < 500 ?
           currentPropositions :
-          this.getPropositionsViaVoxe(candidacyId, tagId, currentPropositions, offset + 500);
+          this.getPropositionsViaVoxe(candidacyId, tagId, currentPropositions, offset+500);
       });
   }
 
@@ -82,11 +82,4 @@ export class PropositionService {
     }
     return result;
   }
-
-  // getPropositionsForElection(): Observable<Array<Proposition>> {
-  //   return this.main.election.map(election => election == undefined ? [] : election.tags)
-  //     .map(tags => tags.map(tag => tag.id))
-  //     .flatMap(tagIds => tagIds.length == 0 ? Observable.from([]) : this.getPropositionsForTags(tagIds));
-  // }
-
 }

@@ -15,11 +15,27 @@
         <ion-col width-50 *ngFor="let card of row">
 
           <ion-card>
-            <div class="card-title">
-              {{card.title}}
+            <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
+              <div *ngIf="!card.hasBeenDone">
+                <ion-icon name="help-circle" id="question"></ion-icon>
+              </div>
+              <div class="card-h1">
+                {{card.title}}
+               </div>
+              <div *ngIf="card.hasBeenDone" class="compare-done">
+                <ion-row>
+                  <ion-col width-50 *ngFor="let c of card.stats.candidacies">
+                    <img class="candidate-photo" src={{c.candidates[0].photo.sizes.small.url}}>
+                  </ion-col>
+                </ion-row>
+              </div>
+              <div *ngIf="!card.hasBeenDone" class="compare-not-done-yet">
+                Comparer !
+              </div>
             </div>
 
-            <img src={{card.image}}/>
+            <img src={{card.image}} (click)="openCard(card)"/>
+
 
             <ion-item>
               <ion-row>
