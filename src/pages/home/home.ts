@@ -10,7 +10,7 @@ import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
 import {ACTIVE_CARD, ADD_CARD, ADD_CARDS} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
-import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
+import {SET_PROPOSITIONS, ADD_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController, Platform} from "ionic-angular";
 import {PropositionService} from "../../services/propositions.service";
 import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
@@ -98,8 +98,14 @@ export class HomePage {
     // Initialize the rows of cards
     this.main.cards.subscribe(cards => {
       if (cards != undefined) {
-        this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
         this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(cards));
+        // if (this.cardsRows != undefined) {
+        //   if (this.cardsRows[0] != undefined) {
+        //     if (this.cardsRows[0][1] != undefined) {
+        //       console.log(this.cardsRows[0][1]);
+        //     }
+        //   }
+        // }
         this.swipeCardsRows = this.main.putCardsInRows(this.main.getSwipeCards(this.main.getNoArchive(cards)));
         this.infoCardsRows = this.main.putCardsInRows(this.main.getInfoCards(this.main.getNoArchive(cards)));
       }
@@ -111,9 +117,9 @@ export class HomePage {
     });
 
     // Initialize the propositions
-    this.propositionService.getPropositionsForElection().subscribe(propositions => {
-      this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
-    });
+    // this.propositionService.getPropositionsForElection().subscribe(propositions => {
+    //   this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
+    // });
 
     // Initialize the cards
     this.infoCardsService.getNewInfoCardsViaVoxe().first().subscribe(newInfoCards => {
@@ -205,14 +211,23 @@ export class HomePage {
   }
 
   generateQuizz() {
-    let generatedTagId = this.getRandomIds(this.main.temp_tagIds,1);
+    let generatedTagIds = this.getRandomIds(this.main.temp_tagIds,1);
+    let generatedCandidacyIds = this.getRandomIds(this.main.temp_candidacyIds,2);
     let newCard: SwipeCard = new SwipeCard(
       this.getNextBackground(),
-      this.getTagName(generatedTagId[0]),
-      generatedTagId,
-      this.getRandomIds(this.main.temp_candidacyIds,2)
+      this.getTagName(generatedTagIds[0]),
+      generatedTagIds,
+      generatedCandidacyIds
     );
     this.store.dispatch({type: ADD_CARD, payload: newCard});
     this.selectedSegment = 'swipe';
+
+    // Charger les propositions correspondantes, et les ajouter au store si elles n'y sont pas déjà
+    this.propositionService.getPropositionsForSwipe(generatedCandidacyIds,generatedTagIds,5).first().subscribe(
+      propositions => {
+        this.store.dispatch({type: ADD_PROPOSITIONS, payload: propositions});
+        console.log(propositions);
+      }
+    );
   }
 }

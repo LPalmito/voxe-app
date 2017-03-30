@@ -161,29 +161,9 @@ export class MainService {
       .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0]);
   }
 
-  // Helper which returns true if the 2 arrays have a common element
-  hasCommonElement(arr1: Array<any>, arr2: Array<any>): boolean {
-    for(var i=0; i<arr1.length; i++) {
-      for(var j=0; j<arr2.length; j++) {
-        if(arr1[i] == arr2[j]) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   // Helper which transforms an array of observables in an observable of an array
   arrObs2ObsArr(arrObs: Array<Observable<any>>): Observable<Array<any>> {
     return Observable.from(arrObs).flatMap(x => x);
-  }
-
-  // Helper which returns an array of the propositions with one of the tags
-  filterPropositionsByTagIds(propositions: Proposition[], tagIds: string[]) {
-    return propositions.filter(proposition => {
-      let tIds = proposition.tags.map(tag => tag.id);
-      return this.hasCommonElement(tIds, tagIds);
-    });
   }
 
   // Getters
