@@ -63,7 +63,7 @@ export class SwipePage {
     loader.present();
 
     // Initialisation of the propositions to swipe
-    this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds)
+    this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds, 5)
       .subscribe(arr => {
         this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: arr});
         loader.dismissAll();

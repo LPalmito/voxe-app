@@ -10,7 +10,6 @@ import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
 import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
 import {ACTIVE_CARD, ADD_CARD, ADD_CARDS} from "../../reducers/cards.reducer";
 import {SET_ELECTION} from "../../reducers/election.reducer";
-import {SET_PROPOSITIONS} from "../../reducers/propositions.reducer";
 import {NavController, Platform} from "ionic-angular";
 import {PropositionService} from "../../services/propositions.service";
 import {SET_INFO_TYPE} from "../../reducers/info-type.reducer";
@@ -98,7 +97,6 @@ export class HomePage {
     // Initialize the rows of cards
     this.main.cards.subscribe(cards => {
       if (cards != undefined) {
-        this.starCardsRows = this.main.putCardsInRows(this.main.getStars(this.main.getNoArchive(cards)));
         this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(cards));
         this.swipeCardsRows = this.main.putCardsInRows(this.main.getSwipeCards(this.main.getNoArchive(cards)));
         this.infoCardsRows = this.main.putCardsInRows(this.main.getInfoCards(this.main.getNoArchive(cards)));
@@ -108,11 +106,6 @@ export class HomePage {
     // Initialize the election
     this.main.getElectionViaHttp().subscribe(election => {
       this.store.dispatch({type: SET_ELECTION, payload: election});
-    });
-
-    // Initialize the propositions
-    this.propositionService.getPropositionsForElection().subscribe(propositions => {
-      this.store.dispatch({type: SET_PROPOSITIONS, payload: propositions});
     });
 
     // Initialize the cards
@@ -205,14 +198,20 @@ export class HomePage {
   }
 
   generateQuizz() {
-    let generatedTagId = this.getRandomIds(this.main.temp_tagIds,1);
+    let generatedTagIds = this.getRandomIds(this.main.temp_tagIds,1);
+    let generatedCandidacyIds = this.getRandomIds(this.main.temp_candidacyIds,2);
     let newCard: SwipeCard = new SwipeCard(
       this.getNextBackground(),
-      this.getTagName(generatedTagId[0]),
-      generatedTagId,
-      this.getRandomIds(this.main.temp_candidacyIds,2)
+      this.getTagName(generatedTagIds[0]),
+      generatedTagIds,
+      generatedCandidacyIds
     );
     this.store.dispatch({type: ADD_CARD, payload: newCard});
     this.selectedSegment = 'swipe';
+
+    // Charger les propositions correspondantes, et les ajouter au store si elles n'y sont pas déjà
+    for (let id in generatedCandidacyIds) {
+      this.propositionService.getPropositions(id,generatedTagIds[0],5);
+    }
   }
 }

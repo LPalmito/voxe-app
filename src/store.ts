@@ -8,7 +8,7 @@ export interface AppStore {
   // nav: NavController;                     // For navigation purposes
 
   election: Election;                     // Chosen election
-  propositions: Proposition[];            // Elections's propositions
+  propositions: Proposition[];            // Elections's propositions -> propositions already gotten
 
   cards: Array<InfoCard|SwipeCard>;       // All cards (home + archive)
 

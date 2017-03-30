@@ -23,10 +23,7 @@ export class StatsPage {
               private candidateService: CandidateService, private tagService: TagService) {
 
     // Look for active card
-    this.main.getCurrentCard().subscribe(card => {
-      this.activeCard = <SwipeCard> card;
-      console.log(this.activeCard);
-    });
+    this.main.getCurrentCard().subscribe(card => this.activeCard = <SwipeCard> card);
 
     if (this.activeCard.hasBeenDone) {
       this.tags = this.activeCard.stats.tags;
@@ -43,7 +40,6 @@ export class StatsPage {
         this.tags = [];
         tagIds.forEach(tagId => this.tagService.getTagById(tagId).first()
           .subscribe(tag => this.tags.push(tag)));
-        console.log(this.tags);
       });
 
       // Get candidacies according to candidacyIds from the store
@@ -51,7 +47,6 @@ export class StatsPage {
         this.candidacies = [];
         candidacyIds.forEach(candidacyId => this.candidateService.getCandidacyById(candidacyId).first()
           .subscribe(candidacy => this.candidacies.push(candidacy)));
-        console.log(this.candidacies);
       });
 
       this.store.dispatch({type: MARK_CARD_DONE, payload: {card: this.activeCard, stats: {
@@ -73,12 +68,8 @@ export class StatsPage {
 
   getCandidatesWithoutProposition(): string[] {
     return this.candidacies
-      .filter(
-        candidacy => this.answers.map(answer => answer.proposition.candidacy.id).indexOf(candidacy.id) == -1
-      )
-      .map(
-        candidacy => this.getName(candidacy.candidates[0])
-      );
+      .filter(candidacy => this.answers.map(answer => answer.proposition.candidacy.id).indexOf(candidacy.id) == -1)
+      .map(candidacy => this.getName(candidacy.candidates[0]));
   }
 
   getCandidate(candidacyId: string) {
