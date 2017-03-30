@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Jsonp} from '@angular/http';
+import {Jsonp, Http} from '@angular/http';
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
 import {Store} from "@ngrx/store";
@@ -119,7 +119,7 @@ export class MainService {
   isHTML: Observable<boolean>;
   answers: Observable<Array<Answer>>;
 
-  constructor(private jsonp: Jsonp, private store: Store<AppStore>) {
+  constructor(private jsonp: Jsonp, public http: Http, private store: Store<AppStore>) {
     this.election = store.select('election');
     this.nav = store.select('nav');
     this.cards = store.select('cards');
@@ -153,6 +153,12 @@ export class MainService {
       .map(elections => elections.filter(election => {
         return election.namespace == this.electionNameSpace
       })[0]);
+  }
+
+  getElectionViaHttp(): Observable<Election> {
+    return this.http.get(this.server+'elections/search')
+      .map(data => data.json().response.elections)
+      .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0]);
   }
 
   // Helper which returns true if the 2 arrays have a common element
