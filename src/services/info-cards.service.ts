@@ -59,8 +59,8 @@ export class InfoCardsService {
   }
 
   insertSwipeCards(cards: Array<InfoCard|SwipeCard>) {
-    this.candidateService.getCandidateById(this.main.hamonId).subscribe(candidate => this.swipeCards[0].stats.candidates[0] = candidate);
-    this.candidateService.getCandidateById(this.main.poutouId).subscribe(candidate => this.swipeCards[0].stats.candidates[1] = candidate);
+    this.candidateService.getCandidacyById(this.main.hamonId).subscribe(candidacy => this.swipeCards[0].stats.candidacies[0] = candidacy);
+    this.candidateService.getCandidacyById(this.main.poutouId).subscribe(candidacy => this.swipeCards[0].stats.candidacies[1] = candidacy);
     this.swipeCards[0].hasBeenDone = true;
     cards.splice(1, 0, this.swipeCards[0]);
     cards.splice(2, 0, this.swipeCards[1]);

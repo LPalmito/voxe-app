@@ -106,7 +106,7 @@ export class HomePage {
     });
 
     // Initialize the election
-    this.main.getElectionViaVoxe().subscribe(election => {
+    this.main.getElectionViaHttp().subscribe(election => {
       this.store.dispatch({type: SET_ELECTION, payload: election});
     });
 

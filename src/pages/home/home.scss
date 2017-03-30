@@ -5,17 +5,24 @@ ion-card {
 
 .card-title {
   position: absolute;
-  top: 33%;
+  top: 25%;
   left: 15%;
   font-size: 0.55em;
   line-height: 1.5em;
-  font-weight: 750;
+  font-weight: 700;
   font-family: Montserrat, Open Sans, sans-serif;
   width: 70%;
   color: #A349A4;
   text-shadow: none;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+#question {
+  color: black;
+  margin-top: -100%;
+  margin-bottom: 5%;
+  font-size: 4em;
 }
 
 .card-h1 {
