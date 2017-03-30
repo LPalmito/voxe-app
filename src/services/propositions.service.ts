@@ -24,7 +24,9 @@ export class PropositionService {
   }
 
   getPropositionsForSwipe(candidacyIds: string[], tagIds: string[], nb: number): Observable<Array<Proposition>> {
-    let arrObs = candidacyIds.map(id => this.getPropositions(id,tagIds[0],nb)) // [Obs<Prop[]>,Obs<Prop[]>]
+    let arrObs = candidacyIds
+      .map(id => this.getPropositions(id,tagIds[0],nb)
+        .map(arr => this.randomDiffElement(arr,nb))); // [Obs<Prop[]>,Obs<Prop[]>]
     return arrObs[0].combineLatest(arrObs[1], (arrProp0,arrProp1) => arrProp0.concat(arrProp1))
       .map(arr => this.randomDiffElement(arr,arr.length));
   }
@@ -37,12 +39,11 @@ export class PropositionService {
         Observable.from([arr]):
         this.getPropositionsViaVoxe(candidacyId, tagId, [], 0)
           .map(voxe => voxe.filter(proposition => arr.map(p => p.id).indexOf(proposition.id) == -1))
-          .map(voxe => arr.concat(voxe))
+          .map(voxe => {
+            this.store.dispatch({type: ADD_PROPOSITIONS, payload: voxe});
+            return arr.concat(voxe);
+          })
       )
-      .map(arr => {
-        console.log(arr);
-        return this.randomDiffElement(arr,nb);
-      });
   }
 
   getPropositionsViaVoxe(candidacyId: string,
@@ -51,31 +52,23 @@ export class PropositionService {
                          offset: number = 0): Observable<Array<Proposition>> {
 
     // Prepare the url
-    let url = this.main.server + 'propositions/search' + this.main.callback + '&tagIds=' + tagId + '&candidacyIds=' + candidacyId;
+    let url = this.main.server+'propositions/search'+this.main.callback+'&tagIds='+tagId+'&candidacyIds='+candidacyId;
 
     // Do the request and filter the response
     return this.jsonp.get(url)
       .map(data => data.json().response.propositions)
       .map(propositions => {
         let currentPropositions = previousPropositions.concat(propositions);
-        console.log(currentPropositions);
         return propositions.length < 500 ?
           currentPropositions :
           this.getPropositionsViaVoxe(candidacyId, tagId, currentPropositions, offset + 500);
       });
   }
 
-
-// getPropositionsForElection(): Observable<Array<Proposition>> {
-  //   return this.main.election.map(election => election == undefined ? [] : election.tags)
-  //     .map(tags => tags.map(tag => tag.id))
-  //     .flatMap(tagIds => tagIds.length == 0 ? Observable.from([]) : this.getPropositionsForTags(tagIds));
-  // }
-
   //Helper : takes an array of propositions and returns an array of 'nb' random different elements
   randomDiffElement(array: Proposition[], nb: number): Proposition[] {
     let result: Proposition[] = [];
-    if (array.length) {
+    if (array.length >= nb) {
       for (let i = 0; i < nb; i++) {
         let randomElement: Proposition = array[Math.floor(Math.random() * array.length)];
         while (result.indexOf(randomElement) > -1) {
@@ -84,6 +77,16 @@ export class PropositionService {
         result.push(randomElement);
       }
     }
+    else {
+      return this.randomDiffElement(array, array.length);
+    }
     return result;
   }
+
+  // getPropositionsForElection(): Observable<Array<Proposition>> {
+  //   return this.main.election.map(election => election == undefined ? [] : election.tags)
+  //     .map(tags => tags.map(tag => tag.id))
+  //     .flatMap(tagIds => tagIds.length == 0 ? Observable.from([]) : this.getPropositionsForTags(tagIds));
+  // }
+
 }

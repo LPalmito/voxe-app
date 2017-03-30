@@ -99,13 +99,6 @@ export class HomePage {
     this.main.cards.subscribe(cards => {
       if (cards != undefined) {
         this.cardsRows = this.main.putCardsInRows(this.main.getNoArchive(cards));
-        // if (this.cardsRows != undefined) {
-        //   if (this.cardsRows[0] != undefined) {
-        //     if (this.cardsRows[0][1] != undefined) {
-        //       console.log(this.cardsRows[0][1]);
-        //     }
-        //   }
-        // }
         this.swipeCardsRows = this.main.putCardsInRows(this.main.getSwipeCards(this.main.getNoArchive(cards)));
         this.infoCardsRows = this.main.putCardsInRows(this.main.getInfoCards(this.main.getNoArchive(cards)));
       }
@@ -223,11 +216,8 @@ export class HomePage {
     this.selectedSegment = 'swipe';
 
     // Charger les propositions correspondantes, et les ajouter au store si elles n'y sont pas déjà
-    this.propositionService.getPropositionsForSwipe(generatedCandidacyIds,generatedTagIds,5).first().subscribe(
-      propositions => {
-        this.store.dispatch({type: ADD_PROPOSITIONS, payload: propositions});
-        console.log(propositions);
-      }
-    );
+    for (let id in generatedCandidacyIds) {
+      this.propositionService.getPropositions(id,generatedTagIds[0],5);
+    }
   }
 }
