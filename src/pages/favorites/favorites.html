@@ -21,7 +21,7 @@
       <ion-col width-50 *ngFor="let card of row">
 
         <ion-card>
-          <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
+          <div class="card-title-fav" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
             <div *ngIf="!card.hasBeenDone">
               <ion-icon name="help-circle" id="question"></ion-icon>
             </div>

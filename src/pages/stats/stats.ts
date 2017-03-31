@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {Answer} from "../swipe/swipe";
-import {HomePage, SwipeCard} from "../home/home";
+import {HomePage, SwipeCard, Card} from "../home/home";
+import {SwipePage} from "../swipe/swipe";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
 import {CandidateService} from "../../services/candidates.service";
@@ -8,6 +9,10 @@ import {Tag, Candidate, Candidacy, MainService} from "../../services/main.servic
 import {TagService} from "../../services/tags.service";
 import {NavController} from "ionic-angular";
 import {MARK_CARD_DONE, ARCHIVE_CARD} from "../../reducers/cards.reducer";
+import {SET_TAG_IDS} from "../../reducers/tag-ids.reducer";
+import {SET_CANDIDACY_IDS} from "../../reducers/candidacy-ids.reducer";
+import {STAR_CARD} from "../../reducers/cards.reducer";
+
 
 @Component({
   templateUrl: 'stats.html'
@@ -101,7 +106,19 @@ export class StatsPage {
     this.nav.setRoot(HomePage);
   }
 
-  archiveCard(card: SwipeCard) {
-      this.store.dispatch({type: ARCHIVE_CARD, payload: card});
+  archiveCard() {
+    this.store.dispatch({type: ARCHIVE_CARD, payload: this.activeCard});
+    this.nav.setRoot(HomePage);
   }
+
+  restartQuizz() {
+    this.store.dispatch({type: SET_TAG_IDS, payload: this.activeCard.tagIds});
+    this.store.dispatch({type: SET_CANDIDACY_IDS, payload: this.activeCard.candidacyIds});
+    this.nav.setRoot(SwipePage);
+  }
+
+  starCard(card: Card) {
+    this.store.dispatch({type: STAR_CARD, payload: card});
+  }
+
 }

@@ -3,9 +3,9 @@ ion-card {
   text-align: center;
 }
 
-.card-title {
+.card-title-archive {
   position: absolute;
-  top: 25%;
+  top: 20%!important;
   left: 15%;
   font-size: 0.55em;
   line-height: 1.5em;
@@ -18,11 +18,18 @@ ion-card {
   letter-spacing: 1px;
 }
 
-#question {
-  color: black;
+.restore {
   margin-top: -100%;
-  margin-bottom: 15%;
+  margin-bottom: 5%;
   font-size: 4em;
+}
+
+#restore-black {
+  color: black;
+}
+
+#restore-grey {
+  color: #666;
 }
 
 .card-h1 {

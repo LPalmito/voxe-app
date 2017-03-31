@@ -1,9 +1,15 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Statistiques</ion-title>
-    <ion-buttons end>
+    <ion-buttons start>
       <button ion-button (click)="goHome()">
         <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="starCard(activeCard)">
+        <ion-icon *ngIf="activeCard.isStar" name="star"></ion-icon>
+        <ion-icon *ngIf="!activeCard.isStar" name="star-outline"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -69,7 +75,28 @@
     </ion-item>
   </div>
 
+  <ion-grid>
+    <ion-row class="action-button">
+      <ion-col col-6>
+        <button (click)="restartQuizz()" ion-button icon-left outline small>
+          <ion-icon name="refresh"></ion-icon>
+          Recommencer
+        </button>  
+      </ion-col>
+      <ion-col col-6>
+        <button (click)="archiveCard()" ion-button icon-left outline small>
+          <ion-icon name="archive"></ion-icon>
+          Archiver
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
   <!--Go to home page button-->
-  <button (click)="goHome()" ion-button round class="again-button">Retour à l'accueil</button>
+  <button (click)="goHome()" ion-button round icon-left class="home-button">
+    <ion-icon name="home"></ion-icon>
+    Retourner à l'accueil
+  </button>
+
 
 </ion-content>
