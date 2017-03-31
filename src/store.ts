@@ -8,7 +8,7 @@ export interface AppStore {
   // nav: NavController;                     // For navigation purposes
 
   election: Election;                     // Chosen election
-  propositions: Proposition[];            // Elections's propositions -> propositions already gotten
+  propositions: Proposition[];            // Propositions already gotten
 
   cards: Array<InfoCard|SwipeCard>;       // All cards (home + archive)
 
@@ -21,5 +21,7 @@ export interface AppStore {
   toSwipePropositions: Proposition[];     // Propositions to swipe
   swipedPropositions: Proposition[];      // Already swiped propositions
   answers: Answer[];                      // Already swiped propositions' answers
+
+  isTutoDone: boolean;                     // set to true if the user already saw the tuto
 
 }

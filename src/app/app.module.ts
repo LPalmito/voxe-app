@@ -6,6 +6,7 @@ import {SwipePage} from "../pages/swipe/swipe";
 import {StatsPage} from "../pages/stats/stats";
 import {InfoPage} from "../pages/info/info";
 import {ArchivePage} from "../pages/archive/archive";
+import {TutoPage} from "../pages/tuto/tuto";
 import {SwingStackComponent} from "angular2-swing";
 import {SwingCardComponent} from "angular2-swing";
 import {MainService} from "../services/main.service";
@@ -22,6 +23,7 @@ import {tagIds} from "../reducers/tag-ids.reducer";
 import {candidacyIds} from "../reducers/candidacy-ids.reducer";
 import {nav} from "../reducers/nav.reducer";
 import {propositions} from "../reducers/propositions.reducer";
+import {isTutoDone} from "../reducers/is-tuto-done.reducer";
 import {JsonpModule} from "@angular/http";
 import {IonicStorageModule} from "@ionic/storage";
 import {isHTML} from "../reducers/info-type.reducer";
@@ -49,7 +51,8 @@ const reducers = {
   toSwipePropositions: toSwipePropositions,
   tagIds: tagIds,
   candidacyIds: candidacyIds,
-  propositions: propositions
+  propositions: propositions,
+  isTutoDone: isTutoDone
 };
 
 const storageSyncReducer = storageSync({
@@ -64,7 +67,8 @@ const storageSyncReducer = storageSync({
     'toSwipePropositions',
     'tagIds',
     'candidacyIds',
-    'propositions'
+    'propositions',
+    'isTutoDone'
   ],
   ignoreActions: [],
   hydratedStateKey: 'hydrated', // Add this key to the state
@@ -82,6 +86,7 @@ const appReducer = compose(storageSyncReducer, combineReducers)(reducers);
     InfoPage,
     ArchivePage,
     FavoritesPage,
+    TutoPage,
     SwingStackComponent,
     SwingCardComponent
   ],
@@ -104,6 +109,7 @@ const appReducer = compose(storageSyncReducer, combineReducers)(reducers);
     FavoritesPage,
     SwipePage,
     StatsPage,
+    TutoPage
   ],
   providers: [
     MainService,
