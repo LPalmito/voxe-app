@@ -7,9 +7,6 @@
 
 <ion-content class="swipe" padding>
 
-<!--TODO: Add a loader when it will be available-->
-<!--https://forum.ionicframework.com/t/loader-spinner/42007/8-->
-
 <!--STACK OF CARDS-->
   <div swing-stack #myswing1 id="card-stack"
        [stackConfig]="stackConfig" (throwoutleft)="voteUp(false)" (throwoutright)="voteUp(true)">
@@ -26,23 +23,48 @@
   </div>
 
 <!--BUTTONS-->
+  <ion-grid>
+    <ion-row class="vote-buttons">
+      <ion-col col-4>
+        <button (click)="voteUp(false)" id="unapprove" ion-button icon-left clear>
+          <ion-icon name="close"></ion-icon>
+          Pas d'accord
+        </button>
+      </ion-col>
+      <ion-col col-4>
+        <button (click)="voteUp(true)" id="approve" ion-button icon-left clear>
+          <ion-icon name="checkmark"></ion-icon>
+          D'accord
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="vote-buttons" id="undo">
+        <button (click)="undo()" ion-button icon-left clear id="undo-button">
+          <ion-icon name="undo"></ion-icon>
+          Annuler
+        </button>
+    </ion-row>
+  </ion-grid>
+
+<!-- <ion-grid>
   <ion-row class="buttons">
-    <!--UNAPPROVED-->
-    <ion-col class="unapproved width-37" (click)="voteUp(false)">
+    <ion-col col-4 class="unapproved" (click)="voteUp(false)">
       <ion-icon name="close"></ion-icon>
       <p>Pas d'accord</p>
     </ion-col>
-    <!--CANCEL-->
-    <ion-col class="undo width-26" (click)="undo()" *ngIf="swipedPropositions.length > 0">
+
+    <ion-col col-4 class="undo" (click)="undo()" *ngIf="swipedPropositions.length > 0">
       <ion-icon name="undo"></ion-icon>
       <p>Annuler</p>
     </ion-col>
-    <ion-col class="undo width-26" *ngIf="swipedPropositions.length == 0"></ion-col>
-    <!--APPROVED-->
-    <ion-col class="approved width-37" (click)="voteUp(true)">
+    <ion-col col-4 *ngIf="swipedPropositions.length == 0"></ion-col>
+
+    <ion-col col-4 class="approved" (click)="voteUp(true)">
       <ion-icon name="checkmark"></ion-icon>
       <p>D'accord</p>
     </ion-col>
   </ion-row>
+</ion-grid>
+ -->
 
 </ion-content>

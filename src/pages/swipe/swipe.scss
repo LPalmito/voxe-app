@@ -9,19 +9,21 @@
       top: 10px;
     }
     h2 {
-      margin-top: 34px;
+      margin-top: 24px;
     }
     img {
       margin-top: 12px;
+      display: inline;
+      height: 24px;
+      width: 24px;
     }
   }
 
   #card-stack {
     width: 90%;
-    height: 430px;
+    height: 65%;
     position: fixed;
-    top: 0;
-    margin: 80px auto 0;
+    margin: 0 auto 0 auto;
     z-index: 999;
   }
 
@@ -30,28 +32,61 @@
     position: absolute;
     text-align: center;
     top: 3%;
-    height: 90%;
+    height: 100%;
   }
 
-  ion-card {
-    img {
-      display: inline;
-      height: 24px;
-      width: 24px;
-    }
-  }
+  // ion-card {
+  //   img {
+  //     display: inline;
+  //     height: 24px;
+  //     width: 24px;
+  //   }
+  // }
 
   ion-card-content div {
     margin: 0;
     position: absolute;
-    top: 60%;
-    left: 20%;
-    transform: translate(-14%, -60%);
+    top: 35%;
+    left: 5%;
+    right: 5%;
+  }
+
+
+  .vote-buttons {
+    text-align: center;
+    left: 0;
+    right: 0;
+    position: fixed;
+    top: 82%;
+    display: block;
+  }
+
+  #undo {
+    position: fixed;
+    top: 90%;
+  }
+
+  #approve {
+    color: green;
+    text-transform: uppercase;
+  }
+
+  #unapprove{
+    color: red;
+    text-transform: uppercase;
+  }
+
+  #undo-button {
+    color: #666;
   }
 
   .buttons {
-    position: relative;
-    top: 460px;
+    position: fixed;
+    top: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
     .unapproved {
       text-align: center;
       text-transform: uppercase;
@@ -67,18 +102,18 @@
       text-transform: uppercase;
       color: green;
     }
-    .width-37 {
-      -webkit-flex: 0 0 37%;
-      -ms-flex: 0 0 37%;
-      flex: 0 0 37%;
-      max-width: 37%;
-    }
-    .width-26 {
-      -webkit-flex: 0 0 26%;
-      -ms-flex: 0 0 26%;
-      flex: 0 0 26%;
-      max-width: 26%;
-    }
+    // .width-37 {
+    //   -webkit-flex: 0 0 37%;
+    //   -ms-flex: 0 0 37%;
+    //   flex: 0 0 37%;
+    //   max-width: 37%;
+    // }
+    // .width-26 {
+    //   -webkit-flex: 0 0 26%;
+    //   -ms-flex: 0 0 26%;
+    //   flex: 0 0 26%;
+    //   max-width: 26%;
+    // }
   }
 
 }
