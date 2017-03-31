@@ -70,8 +70,8 @@ export class InfoCardsService {
   swipeCards: Array<SwipeCard> = [
     new SwipeCard("assets/img/home-swipe-5.png","Solidarité, Santé et Logement",[this.main.santeId],[this.main.hamonId, this.main.poutouId]),
     new SwipeCard("assets/img/home-swipe-3.png","Justice, Sécurité et Défense",[this.main.justiceId],[this.main.dupontAignanId, this.main.lePenId]),
-    new SwipeCard("assets/img/home-swipe-1.png","Emploi",[this.main.emploiId],[this.main.arthaudId, this.main.melenchonId]),
+    new SwipeCard("assets/img/home-swipe-2.png","Solidarité, Santé et Logement",[this.main.santeId],[this.main.fillonId, this.main.asselineauId]),
     new SwipeCard("assets/img/home-swipe-4.png","Europe",[this.main.europeId],[this.main.cheminadeId, this.main.macronId]),
-    new SwipeCard("assets/img/home-swipe-2.png","Services publics et Territoires",[this.main.territoiresId],[this.main.fillonId, this.main.asselineauId])
+    new SwipeCard("assets/img/home-swipe-1.png","Emploi",[this.main.emploiId],[this.main.arthaudId, this.main.melenchonId])
   ];
 }
