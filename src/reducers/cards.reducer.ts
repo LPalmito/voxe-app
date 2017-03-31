@@ -21,6 +21,7 @@ export const cards = (state: Array<InfoCard|SwipeCard> = [], {type,payload}) => 
       return state.map(card => {
         if (card == payload) {
           card.isArchive = true;
+          card.isActive = false;
           return card;
         }
         else {

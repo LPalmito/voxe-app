@@ -164,7 +164,7 @@ export class HomePage {
   }
 
 	goToArchivePage() {
-    this.nav.push(ArchivePage);
+    this.nav.setRoot(ArchivePage);
     // this.store.dispatch({type: GO_TO, payload: ArchivePage});
 	}
 
@@ -207,7 +207,7 @@ export class HomePage {
       generatedCandidacyIds
     );
     this.store.dispatch({type: ADD_CARD, payload: newCard});
-    this.selectedSegment = 'swipe';
+    this.selectedSegment = this.selectedSegment == 'info' ? 'swipe' : this.selectedSegment;
 
     // Charger les propositions correspondantes, et les ajouter au store si elles n'y sont pas déjà
     for (let id in generatedCandidacyIds) {

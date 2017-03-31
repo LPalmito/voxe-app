@@ -1,8 +1,14 @@
 <!-- HEADER -->
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
+    <ion-buttons start>
+      <!-- Button to go back to Home Page -->
+      <button ion-button (click)="goToHomePage()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Archives</ion-title>
-  </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
 <!-- CONTENT -->
@@ -15,36 +21,22 @@
         <ion-col width-50 *ngFor="let card of row">
 
           <ion-card>
-            <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
-              <div *ngIf="!card.hasBeenDone">
-                <ion-icon name="help-circle" id="question"></ion-icon>
-              </div>
+            <div class="card-title-archive" (click)="restoreCard(card)">
+              <ion-icon name="undo" class="restore" id="restore-black" *ngIf="card.isArchive"></ion-icon>
+              <ion-icon name="undo" class="restore" id="restore-grey" *ngIf="!card.isArchive"></ion-icon>
               <div class="card-h1">
                 {{card.title}}
                </div>
-              <div *ngIf="card.hasBeenDone" class="compare-done">
+              <div class="compare-done">
                 <ion-row>
                   <ion-col width-50 *ngFor="let c of card.stats.candidacies">
                     <img class="candidate-photo" src={{c.candidates[0].photo.sizes.small.url}}>
                   </ion-col>
                 </ion-row>
               </div>
-              <div *ngIf="!card.hasBeenDone" class="compare-not-done-yet">
-                Comparer !
-              </div>
             </div>
 
-            <img src={{card.image}} (click)="openCard(card)"/>
-
-
-            <ion-item>
-              <ion-row>
-                <!-- Remove the card from the 'archive' list -->
-                <button ion-button clear icon-only small (click)="restoreCard(card)">
-                  <ion-icon name="undo"></ion-icon>
-                </button>
-              </ion-row>
-            </ion-item>
+            <img src={{card.image}}/>
 
           </ion-card>
         </ion-col>
