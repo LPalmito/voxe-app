@@ -35,20 +35,12 @@
     height: 100%;
   }
 
-  // ion-card {
-  //   img {
-  //     display: inline;
-  //     height: 24px;
-  //     width: 24px;
-  //   }
-  // }
-
   ion-card-content div {
     margin: 0;
     position: absolute;
     top: 35%;
-    left: 5%;
-    right: 5%;
+    left: 10%;
+    right: 10%;
   }
 
 
@@ -78,42 +70,7 @@
 
   #undo-button {
     color: #666;
-  }
-
-  .buttons {
-    position: fixed;
-    top: 85%;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-
-    .unapproved {
-      text-align: center;
-      text-transform: uppercase;
-      color: red;
-    }
-    .undo {
-      text-align: center;
-      text-transform: uppercase;
-      color: gray;
-    }
-    .approved {
-      text-align: center;
-      text-transform: uppercase;
-      color: green;
-    }
-    // .width-37 {
-    //   -webkit-flex: 0 0 37%;
-    //   -ms-flex: 0 0 37%;
-    //   flex: 0 0 37%;
-    //   max-width: 37%;
-    // }
-    // .width-26 {
-    //   -webkit-flex: 0 0 26%;
-    //   -ms-flex: 0 0 26%;
-    //   flex: 0 0 26%;
-    //   max-width: 26%;
-    // }
+    text-transform: none;
   }
 
 }
