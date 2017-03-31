@@ -116,7 +116,7 @@ export class StatsPage {
     this.activeCard.stats = {tags: [], candidacies: [], answers: []};
     this.store.dispatch({type: SET_TAG_IDS, payload: this.activeCard.tagIds});
     this.store.dispatch({type: SET_CANDIDACY_IDS, payload: this.activeCard.candidacyIds});
-    this.nav.setRoot(SwipePage);
+    this.nav.push(SwipePage);
   }
 
   starCard(card: Card) {

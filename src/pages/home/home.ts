@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {InfoPage} from "../info/info";
 import {SwipePage, Answer} from "../swipe/swipe";
 import {ArchivePage} from "../archive/archive";
+import {TutoPage} from "../tuto/tuto";
 import {MainService, Tag, Candidacy} from "../../services/main.service";
 import {AppStore} from "../../store";
 import {Store} from "@ngrx/store";
@@ -84,14 +85,16 @@ export class HomePage {
 	swipeCardsRows: Array<InfoCard|SwipeCard>[];
 	infoCardsRows: Array<InfoCard|SwipeCard>[];
   selectedSegment: string;
+  isTutoDone: boolean;
 
   constructor(private main: MainService, public store: Store<AppStore>, public nav: NavController,
               private propositionService: PropositionService, private infoCardsService: InfoCardsService,
               private tagService: TagService, private databaseService: DatabaseService, private platform: Platform
   ) {
 
-    // Initialize the selected segment
+    // Various initializations
     this.selectedSegment = 'all';
+    this.main.isTutoDone.subscribe(isTutoDone => this.isTutoDone = isTutoDone);
 
     // Initialize the rows of cards
     this.main.cards.subscribe(cards => {
@@ -145,7 +148,12 @@ export class HomePage {
     }
     else if (card.type == CardType.Swipe) {
       let swipeCard = <SwipeCard> card;
-      if(!swipeCard.hasBeenDone) {
+       if (this.isTutoDone != true) {
+        this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
+        this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
+        this.nav.push(TutoPage);
+      }
+      else if(!swipeCard.hasBeenDone) {
         this.store.dispatch({type: SET_TAG_IDS, payload: swipeCard.tagIds});
         this.store.dispatch({type: SET_CANDIDACY_IDS, payload: swipeCard.candidacyIds});
         this.nav.push(SwipePage);

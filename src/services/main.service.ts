@@ -14,6 +14,7 @@ import {SET_TAG_IDS} from "../reducers/tag-ids.reducer";
 import {SET_CARDS} from "../reducers/cards.reducer";
 import {SET_PROPOSITIONS} from "../reducers/propositions.reducer";
 import {SET_ELECTION} from "../reducers/election.reducer";
+import {MARK_TUTO_DONE} from "../reducers/is-tuto-done.reducer";
 
 export interface DataElections {
   meta: {code: number},
@@ -118,6 +119,7 @@ export class MainService {
   infoUrl: Observable<Array<string>>;
   isHTML: Observable<boolean>;
   answers: Observable<Array<Answer>>;
+  isTutoDone: Observable<boolean>;
 
   all_candidacyIds: string[] = [];
   all_tagIds: string[] = [];
@@ -129,6 +131,7 @@ export class MainService {
     this.infoUrl = store.select('infoUrl');
     this.isHTML = store.select('isHTML');
     this.answers = store.select('answers');
+    this.isTutoDone = store.select('isTutoDone');
 
     this.election.subscribe(election => {
       if (election != undefined) {
@@ -154,6 +157,8 @@ export class MainService {
         this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: data.toSwipePropositions});
       if(data.answers)
         this.store.dispatch({type: SET_ANSWERS, payload: data.answers});
+      if(data.isTutoDone)
+        this.store.dispatch({type: MARK_TUTO_DONE, payload: data.isTutoDone});
     }
   }
 
