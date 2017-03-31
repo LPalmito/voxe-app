@@ -104,7 +104,7 @@ export class HomePage {
     });
 
     // Initialize the election
-    this.main.getElectionViaHttp().subscribe(election => {
+    this.main.getElectionViaVoxe().subscribe(election => {
       this.store.dispatch({type: SET_ELECTION, payload: election});
     });
 
@@ -210,8 +210,6 @@ export class HomePage {
     this.selectedSegment = this.selectedSegment == 'info' ? 'swipe' : this.selectedSegment;
 
     // Charger les propositions correspondantes, et les ajouter au store si elles n'y sont pas déjà
-    for (let id in generatedCandidacyIds) {
-      this.propositionService.getPropositions(id,generatedTagIds[0],5);
-    }
+    this.propositionService.loadPropositionsForSwipe(generatedCandidacyIds, generatedTagIds, 10);
   }
 }
