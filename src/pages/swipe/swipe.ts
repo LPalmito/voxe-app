@@ -47,7 +47,7 @@ export class SwipePage {
     }));
 
     // From services
-    this.candidateService.candidacyIds.subscribe(x => this.candidacyIds = <Array<string> >x);
+    this.candidateService.candidacyIds.subscribe(x => this.candidacyIds = <Array<string>> x);
     this.tagService.tagIds.subscribe(x => this.tagIds = <Array<string>> x);
     this.propositionService.toSwipePropositions.subscribe(x => this.toSwipePropositions = <Array<Proposition>> x);
     this.propositionService.swipedPropositions.subscribe(x => this.swipedPropositions = <Array<Proposition>> x);

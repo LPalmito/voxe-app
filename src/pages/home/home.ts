@@ -103,11 +103,6 @@ export class HomePage {
       }
     });
 
-    // Initialize the election
-    this.main.getElectionViaVoxe().subscribe(election => {
-      this.store.dispatch({type: SET_ELECTION, payload: election});
-    });
-
     // Initialize the cards
     this.infoCardsService.getNewInfoCardsViaVoxe().first().subscribe(newInfoCards => {
       let newCards: Array<InfoCard|SwipeCard>
@@ -198,8 +193,8 @@ export class HomePage {
   }
 
   generateQuizz() {
-    let generatedTagIds = this.getRandomIds(this.main.temp_tagIds,1);
-    let generatedCandidacyIds = this.getRandomIds(this.main.temp_candidacyIds,2);
+    let generatedTagIds = this.getRandomIds(this.main.all_tagIds,1);
+    let generatedCandidacyIds = this.getRandomIds(this.main.all_candidacyIds,2);
     let newCard: SwipeCard = new SwipeCard(
       this.getNextBackground(),
       this.getTagName(generatedTagIds[0]),
