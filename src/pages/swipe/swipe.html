@@ -38,33 +38,12 @@
         </button>
       </ion-col>
     </ion-row>
-    <ion-row class="vote-buttons" id="undo">
+    <ion-row class="vote-buttons" id="undo" *ngIf="swipedPropositions.length>0">
         <button (click)="undo()" ion-button icon-left clear id="undo-button">
           <ion-icon name="undo"></ion-icon>
           Annuler
         </button>
     </ion-row>
   </ion-grid>
-
-<!-- <ion-grid>
-  <ion-row class="buttons">
-    <ion-col col-4 class="unapproved" (click)="voteUp(false)">
-      <ion-icon name="close"></ion-icon>
-      <p>Pas d'accord</p>
-    </ion-col>
-
-    <ion-col col-4 class="undo" (click)="undo()" *ngIf="swipedPropositions.length > 0">
-      <ion-icon name="undo"></ion-icon>
-      <p>Annuler</p>
-    </ion-col>
-    <ion-col col-4 *ngIf="swipedPropositions.length == 0"></ion-col>
-
-    <ion-col col-4 class="approved" (click)="voteUp(true)">
-      <ion-icon name="checkmark"></ion-icon>
-      <p>D'accord</p>
-    </ion-col>
-  </ion-row>
-</ion-grid>
- -->
 
 </ion-content>

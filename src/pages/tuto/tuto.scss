@@ -1,0 +1,60 @@
+.tuto {
+	background-color: #f53d3d;
+}
+
+h1 {
+	margin-top: 1rem;
+	font-size: 3.5rem;
+	color: white;
+	font-family: Montserrat, Open Sans, sans-serif;
+	font-variant: small-caps;
+}
+
+h2 {
+	padding-left: 10%;
+	padding-right: 10%;
+	font-size: 2rem;
+	font-family: Montserrat, Open Sans, sans-serif;
+	color: white;
+}
+
+#icon-swipe {
+	margin-top: 10%;
+	margin-bottom: 10%;
+	height: 10em;
+	width: 9em;
+}
+
+.new-quizz {
+	font-family: Montserrat, Open Sans, sans-serif;
+	margin-left: 5%;
+	margin-right: 10%;
+	position: fixed;
+	top: 15%;
+}
+
+.icons-like {
+    margin-bottom: 10%;
+    margin-top: 40%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#icon-like-red {
+	height: 8em;
+	width: 7em;
+	transform: rotate(180deg);
+}
+
+#icon-like-green {
+	height: 8em;
+	width: 7em;
+}
+
+.swipe-button {
+  background-color: #f53d3d;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

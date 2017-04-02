@@ -15,7 +15,7 @@ export class TutoPage {
 	}
 
 	goSwipe() {
-		this.store.dispatch({type: MARK_TUTO_DONE, payload: true});
+		// this.store.dispatch({type: MARK_TUTO_DONE, payload: true});
 		this.nav.push(SwipePage);
 	}
 }

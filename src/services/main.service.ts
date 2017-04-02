@@ -157,8 +157,8 @@ export class MainService {
         this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: data.toSwipePropositions});
       if(data.answers)
         this.store.dispatch({type: SET_ANSWERS, payload: data.answers});
-      if(data.isTutoDone)
-        this.store.dispatch({type: MARK_TUTO_DONE, payload: data.isTutoDone});
+      // if(data.isTutoDone)
+      //   this.store.dispatch({type: MARK_TUTO_DONE, payload: data.isTutoDone});
     }
   }
 
