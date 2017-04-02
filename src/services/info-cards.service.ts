@@ -19,7 +19,7 @@ export class InfoCardsService {
   }
 
   getNewInfoCardsViaVoxe(): Observable<Array<InfoCard>> {
-    return this.jsonp.get("http://www.voxe.org/wp-json/wp/v2/pages/122"+this.main.callback)
+    return this.jsonp.get("http://www.voxe.org/wp-json/wp/v2/pages/122?_jsonp=JSONP_CALLBACK")
       .map(data => data.json().content.rendered)
       .map(rendered => this.parseRawContent(rendered));
   }
