@@ -26,9 +26,29 @@ h2 {
 }
 
 .new-quizz {
-	margin-left: 10%;
+	font-family: Montserrat, Open Sans, sans-serif;
+	margin-left: 5%;
+	margin-right: 10%;
 	position: fixed;
-	top: 10%;
+	top: 15%;
+}
+
+.icons-like {
+    margin-bottom: 10%;
+    margin-top: 40%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#icon-like-red {
+	height: 8em;
+	width: 7em;
+	transform: rotate(180deg);
+}
+
+#icon-like-green {
+	height: 8em;
+	width: 7em;
 }
 
 .swipe-button {
