@@ -94,8 +94,7 @@ export class HomePage {
 
     // Various initializations
     this.selectedSegment = 'all';
-    this.isTutoDone = false;
-    // this.main.isTutoDone.subscribe(isTutoDone => this.isTutoDone = isTutoDone);
+    this.main.isTutoDone.subscribe(isTutoDone => this.isTutoDone = isTutoDone);
 
     // Initialize the rows of cards
     this.main.cards.subscribe(cards => {
