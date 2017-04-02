@@ -3,7 +3,7 @@ import {InfoCard, SwipeCard} from "../pages/home/home";
 import {MainService} from "./main.service";
 import {CandidateService} from "./candidates.service";
 import {Observable} from "rxjs";
-import {Http} from "@angular/http";
+import {Jsonp} from "@angular/http";
 
 @Injectable()
 export class InfoCardsService {
@@ -11,7 +11,7 @@ export class InfoCardsService {
   alreadyInStoreInfoCards: Array<InfoCard> = [];
   areSwipeCardsEmpty: boolean = true;
 
-  constructor(private main: MainService, private http: Http, private candidateService: CandidateService) {
+  constructor(private main: MainService, private jsonp: Jsonp, private candidateService: CandidateService) {
     this.main.cards.subscribe(cards => {
       this.alreadyInStoreInfoCards = this.main.getInfoCards(cards);
       this.areSwipeCardsEmpty = !(this.main.getSwipeCards(cards).length > 0);
@@ -19,7 +19,7 @@ export class InfoCardsService {
   }
 
   getNewInfoCardsViaVoxe(): Observable<Array<InfoCard>> {
-    return this.http.get("http://www.voxe.org/wp-json/wp/v2/pages/122")
+    return this.jsonp.get("http://www.voxe.org/wp-json/wp/v2/pages/122?_jsonp=JSONP_CALLBACK")
       .map(data => data.json().content.rendered)
       .map(rendered => this.parseRawContent(rendered));
   }
