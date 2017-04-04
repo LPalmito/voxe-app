@@ -52,3 +52,5 @@ Si jamais vous souhaitez avoir plus d'information sur ce projet, n'hésitez pas 
 Manon Léger - manon@latitudes.cc
 Augustin Courtier - augustin@latitudes.cc
 Yannick Morel - yannick@latitudes.cc
+
+## Objectifs de l'application
