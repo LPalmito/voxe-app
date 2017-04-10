@@ -1,19 +1,18 @@
 <!-- HEADER -->
 <ion-header>
   <ion-toolbar>
-    <ion-title>Favoris</ion-title>
-
-    <ion-buttons end>
+    <ion-buttons start>
       <!-- Button to go back to Home Page -->
       <button ion-button (click)="goToHomePage()">
         <ion-icon name="home"></ion-icon>
       </button>
     </ion-buttons>
+    <ion-title>Favoris</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <!-- CONTENT -->
-<ion-content class="card-background-page">
+<ion-content>
 
   <!-- Rows of 2 cards each -->
   <ion-grid>
@@ -23,7 +22,22 @@
 
         <ion-card>
           <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
-            {{card.title}}
+            <div *ngIf="!card.hasBeenDone">
+              <ion-icon name="help-circle" id="question"></ion-icon>
+            </div>
+            <div class="card-h1">
+              {{card.title}}
+             </div>
+            <div *ngIf="card.hasBeenDone" class="compare-done">
+              <ion-row>
+                <ion-col width-50 *ngFor="let c of card.stats.candidacies">
+                  <img class="candidate-photo" src={{c.candidates[0].photo.sizes.small.url}}>
+                </ion-col>
+              </ion-row>
+            </div>
+            <div *ngIf="!card.hasBeenDone" class="compare-not-done-yet">
+              Comparer !
+            </div>
           </div>
 
           <img src={{card.image}} (click)="openCard(card)"/>

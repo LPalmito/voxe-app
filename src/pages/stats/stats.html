@@ -15,42 +15,36 @@
   <!--TODO: Think about a template for several tags-->
   <ion-card class="title-theme">
     <ion-card-header>
-      <img id="theme" src="{{getIcon(tags[0], 0)}}"/>
+      <img id="theme" src="{{getIcon(tags[0],0)}}"/>
       <h2>{{tags[0].name}}</h2>
     </ion-card-header>
-    <hr>
     <!--Pictures and names of candidates-->
     <ion-card-content>
+      <hr id="after-theme">
       <ion-grid>
         <!--TODO: Think about to adapt the template for more than 2 candidates-->
         <ion-row>
-          <ion-col width-50 class="image-candidate" *ngFor="let c of candidates">
+          <ion-col width-50 *ngFor="let c of candidacies">
             <div>
-              <img class="candidate-stats" src="{{c.photo.sizes.small.url}}"/>
+              <img class="candidate-image" src="{{getPhoto(c.candidates[0],0)}}">
             </div>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col width-50 class="candidate-name" *ngFor="let c of candidates">
-            <h2>{{c.firstName}} {{c.lastName}}</h2>
+          <ion-col width-50 class="candidate-name" *ngFor="let c of candidacies">
+            <h3>{{getName(c.candidates[0])}}</h3>
           </ion-col>
         </ion-row>
 
         <!--Swipe results-->
         <ion-row>
-          <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers[candidacies[0].id].yes" name="checkmark" class="vote-yes"></ion-icon>
-          </ion-col>
-          <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers[candidacies[1].id].yes" name="checkmark" class="vote-yes"></ion-icon>
+          <ion-col width-50 class="results-icons" *ngFor="let c of candidacies">
+            <ion-icon *ngFor="let answer of getAnswers(c,true)" name="checkmark" class="vote-yes"></ion-icon>
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers[candidacies[0].id].no" name="close" class="vote-no"></ion-icon>
-          </ion-col>
-          <ion-col width-50 class="results-icons">
-            <ion-icon *ngFor="let proposition of displayAnswers[candidacies[1].id].no" name="close" class="vote-no"></ion-icon>
+        <ion-row id="results-row-2">
+          <ion-col width-50 class="results-icons" *ngFor="let c of candidacies">
+            <ion-icon *ngFor="let answer of getAnswers(c,false)" name="close" class="vote-no"></ion-icon>
           </ion-col>
         </ion-row>
 
@@ -58,20 +52,19 @@
     </ion-card-content>
   </ion-card>
 
+  <!--Display a message for each candidate with no proposition on this theme-->
+  <div *ngFor="let candidateName of getCandidatesWithoutProposition()" class="no-proposition">
+    Nous n'avons pas de proposition pour {{candidateName}} sur ce thème.
+    <hr>
+  </div>
+
   <!--Propositions summary-->
   <div *ngFor="let answer of answers" text-wrap>
-    <ion-item *ngIf="answer.approved == true">
+    <ion-item>
       <ion-avatar item-left>
-        <img src="{{displayAnswers[answer.proposition.candidacy.id].photo.sizes.small.url}}">
+        <img src={{getPhoto(getCandidate(answer.proposition.candidacy.id),0)}}>
       </ion-avatar>
-      <h2>{{displayAnswers[answer.proposition.candidacy.id].name}} – <ion-icon name="checkmark" class="vote-yes"></ion-icon></h2>
-      <p>{{answer.proposition.text}}</p>
-    </ion-item>
-    <ion-item *ngIf="answer.approved == false">
-      <ion-avatar item-left>
-        <img src="{{displayAnswers[answer.proposition.candidacy.id].photo.sizes.small.url}}">
-      </ion-avatar>
-      <h2>{{displayAnswers[answer.proposition.candidacy.id].name}} – <ion-icon name="close" class="vote-no"></ion-icon></h2>
+      <h2>{{getName(getCandidate(answer.proposition.candidacy.id))}} – <ion-icon *ngIf="answer.approved" name="checkmark" class="vote-yes"></ion-icon><ion-icon *ngIf="!answer.approved" name="close" class="vote-no"></ion-icon></h2>
       <p>{{answer.proposition.text}}</p>
     </ion-item>
   </div>

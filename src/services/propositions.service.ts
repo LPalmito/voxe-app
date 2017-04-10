@@ -6,6 +6,7 @@ import {MainService, Proposition} from "./main.service";
 import {AppStore} from "../store";
 import {Store} from "@ngrx/store";
 import {Answer} from "../pages/swipe/swipe";
+import {ADD_PROPOSITIONS} from "../reducers/propositions.reducer";
 
 
 @Injectable()
@@ -22,100 +23,63 @@ export class PropositionService {
     this.answers = store.select('answers');
   }
 
-  getPropositionsForElection(): Observable<Array<Proposition>> {
-    return this.main.election.map(election => election == undefined ? [] : election.tags)
-      .map(tags => tags.map(tag => tag.id))
-      .flatMap(tagIds => tagIds.length == 0 ? Observable.from([]) : this.getPropositionsForTags(tagIds));
+  getPropositionsForSwipe(candidacyIds: string[], tagIds: string[], nb: number): Observable<Array<Proposition>> {
+    let arrObs = candidacyIds
+      .map(id => this.getPropositions(id,tagIds[0],nb)
+        .map(arr => this.randomDiffElement(arr,nb))); // [Obs<Prop[]>,Obs<Prop[]>]
+    return arrObs[0].combineLatest(arrObs[1], (arrProp0,arrProp1) => arrProp0.concat(arrProp1))
+      .map(arr => this.randomDiffElement(arr,arr.length))
   }
 
-  getPropositionById(propositionId: string): Observable<Proposition> {
+  getPropositions(candidacyId: string, tagId: string, nb: number): Observable<Array<Proposition>> {
     return this.propositions
-      .map(arr => arr.filter(x => x.id == propositionId)[0]);
+      .map(arr => arr.filter(proposition => proposition.tags[0].id == tagId))
+      .map(arr => arr.filter(proposition => proposition.candidacy.id == candidacyId))
+      .flatMap(arr => arr.length >= nb ?
+        Observable.from([arr]):
+        this.getPropositionsViaVoxe(candidacyId, tagId, [], 0)
+          .map(voxe => voxe.filter(proposition => arr.map(p => p.id).indexOf(proposition.id) == -1))
+          .map(voxe => {
+            this.store.dispatch({type: ADD_PROPOSITIONS, payload: voxe});
+            return arr.concat(voxe);
+          })
+      ).first();
   }
 
-  getPropositionsForCandidacies(candidacyIds: string[]): Observable<Array<Proposition>> {
-    return this.propositions
-      .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
-  }
-
-  getPropositionsForTags(tagIds: string[]): Observable<Array<Proposition>> {
-    return this.propositions.flatMap(propositions => {
-      let arePropositionsAlreadyInStore = this.main.filterPropositionsByTagIds(propositions, tagIds).length != 0;
-
-      // If propositions are already in the store, filter it into nestedPropositions and return an observable of it
-      if(arePropositionsAlreadyInStore) {
-        let nestedPropositions = this.main.filterPropositionsByTagIds(propositions, tagIds);
-        return Observable.from([nestedPropositions]);
-      }
-
-      // If we need to get them from Voxe
-      else {
-        return this.getPropositionsForTagsViaVoxe(tagIds)
-          .map(nestedNewPropositions => {
-            return this.main.filterPropositionsByTagIds(nestedNewPropositions, tagIds);
-          }).first();
-      }
-
-    }).first();
-  }
-
-  getPropositionsForSwipe(candidacyIds: string[], tagIds: string[]): Observable<Array<Proposition>> {
-    return this.getPropositionsForTags(tagIds)
-      .map(arr => {
-        let nb = 5;
-        let resultArray: Proposition[] = [];
-        for (let i=0 ; i<candidacyIds.length ; i++) {
-          let candidacyArray = this.randomDiffElement(arr.filter(x => x.candidacy != undefined ? x.candidacy.id == candidacyIds[i] : false),nb);
-          resultArray = resultArray.concat(candidacyArray);
-        }
-        return this.randomDiffElement(resultArray,resultArray.length);
-      });
-  }
-
-  //Helper : takes an array of propositions and returns an array of nb random different elements
-  randomDiffElement(array: Proposition[], nb: number): Proposition[] {
-    let result: Proposition[] = [];
-    if (array.length) {
-      for (let i=0; i< nb; i++) {
-        let randomElement: Proposition = array[Math.floor(Math.random()*array.length)];
-        while (result.indexOf(randomElement) > -1) {
-          randomElement = array[Math.floor(Math.random()*array.length)];
-        }
-        result.push(randomElement);
-      }
-    }
-    return result;
-  }
-
-  // Unused at the moment
-  // Get the propositions according to a search by candidacy ids in Voxe API
-  getPropositionsForCandidaciesViaVoxe(candidacyIds: string[]): Observable<Array<Proposition>> {
-    let url = this.main.server+'propositions/search'+this.main.callback+'&candidacyIds=';
-    candidacyIds.forEach(x => url += x+",");
-    return this.jsonp.get(url)
-      .map(data => data.json().response.propositions)
-      .map(arr => arr.filter(x => candidacyIds.indexOf(x.candidacy.id)>=0));
-  }
-
-  // TODO: Find a quicker way to set the propositions
-  // Get the propositions according to a search by tag ids in Voxe API
-  getPropositionsForTagsViaVoxe(tagIds: string[], previousPropositions: Proposition[] = [], offset: number = 0): Observable<Array<Proposition>> {
+  getPropositionsViaVoxe(candidacyId: string,
+                         tagId: string,
+                         previousPropositions: Proposition[] = [],
+                         offset: number = 0): Observable<Array<Proposition>> {
 
     // Prepare the url
-    let url = this.main.server+'propositions/search'+this.main.callback+'&tagIds=';
-    tagIds.forEach(x => url += x+",");
-    url = url.slice(0,-1)+'&offset='+offset.toString();
+    let url = this.main.server+'propositions/search'+this.main.callback+'&tagIds='+tagId+'&candidacyIds='+candidacyId;
 
     // Do the request and filter the response
     return this.jsonp.get(url)
       .map(data => data.json().response.propositions)
-      .flatMap(propositions => {
+      .map(propositions => {
         let currentPropositions = previousPropositions.concat(propositions);
         return propositions.length < 500 ?
-          Observable.from([currentPropositions]):
-          this.getPropositionsForTagsViaVoxe(tagIds, currentPropositions, offset+500);
+          currentPropositions :
+          this.getPropositionsViaVoxe(candidacyId, tagId, currentPropositions, offset+500);
       });
-
   }
 
+  //Helper : takes an array of propositions and returns an array of 'nb' random different elements
+  randomDiffElement(array: Proposition[], nb: number): Proposition[] {
+    let result: Proposition[] = [];
+    if (array.length >= nb) {
+      for (let i = 0; i < nb; i++) {
+        let randomElement: Proposition = array[Math.floor(Math.random() * array.length)];
+        while (result.indexOf(randomElement) > -1) {
+          randomElement = array[Math.floor(Math.random() * array.length)];
+        }
+        result.push(randomElement);
+      }
+    }
+    else {
+      return this.randomDiffElement(array, array.length);
+    }
+    return result;
+  }
 }

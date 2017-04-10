@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Jsonp} from '@angular/http';
+import {Jsonp, Http} from '@angular/http';
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
 import {Store} from "@ngrx/store";
@@ -119,7 +119,7 @@ export class MainService {
   isHTML: Observable<boolean>;
   answers: Observable<Array<Answer>>;
 
-  constructor(private jsonp: Jsonp, private store: Store<AppStore>) {
+  constructor(private jsonp: Jsonp, public http: Http, private store: Store<AppStore>) {
     this.election = store.select('election');
     this.nav = store.select('nav');
     this.cards = store.select('cards');
@@ -155,29 +155,15 @@ export class MainService {
       })[0]);
   }
 
-  // Helper which returns true if the 2 arrays have a common element
-  hasCommonElement(arr1: Array<any>, arr2: Array<any>): boolean {
-    for(var i=0; i<arr1.length; i++) {
-      for(var j=0; j<arr2.length; j++) {
-        if(arr1[i] == arr2[j]) {
-          return true;
-        }
-      }
-    }
-    return false;
+  getElectionViaHttp(): Observable<Election> {
+    return this.http.get(this.server+'elections/search')
+      .map(data => data.json().response.elections)
+      .map(elections => elections.filter(election => election.namespace == this.electionNameSpace)[0]);
   }
 
   // Helper which transforms an array of observables in an observable of an array
   arrObs2ObsArr(arrObs: Array<Observable<any>>): Observable<Array<any>> {
     return Observable.from(arrObs).flatMap(x => x);
-  }
-
-  // Helper which returns an array of the propositions with one of the tags
-  filterPropositionsByTagIds(propositions: Proposition[], tagIds: string[]) {
-    return propositions.filter(proposition => {
-      let tIds = proposition.tags.map(tag => tag.id);
-      return this.hasCommonElement(tIds, tagIds);
-    });
   }
 
   // Getters
@@ -188,7 +174,6 @@ export class MainService {
   getInfoCards(cards: Array<InfoCard|SwipeCard>): InfoCard[] {
     return cards.filter(card => card.type == CardType.Info).map(card => <InfoCard> card);
   }
-
 
   getStars(cards: Array<InfoCard|SwipeCard>) {
     return cards.filter(card => card.isStar);
@@ -202,8 +187,8 @@ export class MainService {
     return cards.filter(card => card.isArchive);
   }
 
-  getCurrentCard(cards: Array<InfoCard|SwipeCard>) {
-    return cards.filter(card => card.isActive)[0];
+  getCurrentCard(): Observable<InfoCard|SwipeCard> {
+    return this.cards.map(cards => cards.filter(card => card.isActive)[0]);
   }
 
   // Takes an array of cards and returns an array of rows (a row is an array of 2 cards)
@@ -221,6 +206,7 @@ export class MainService {
     return rows;
   }
 
+  // TODO: Get from API on App initialization
   // Presidential election 2017
   hamonId = "58b69f469f3f14a49f000022";
   macronId = "58b46bf8b7286ef02e00009f";
@@ -229,7 +215,7 @@ export class MainService {
   cheminadeId = "58c153f1b19d2f2cd5000084";
   lassalleId = "58c12c21b19d2f7930000050";
   melenchonId = "58b69cda9f3f14497500001e";
-  lepenId = "58b69f3e9f3f14039a000021";
+  lePenId = "58b69f3e9f3f14039a000021";
   arthaudId = "58c91f8ad3b21298910000be";
   dupontAignanId = "58c91ff4d3b212f0fa0000c3";
   poutouId = "58cec5c5d87ba3f5900002ba";
@@ -237,7 +223,7 @@ export class MainService {
   cultureId = "4ef479f8bc60fb000400002a";
   institutionsId = "4ef479fbbc60fb000400015e";
   environnementId = "4ef479fabc60fb00040000ec";
-  internationaleId = "5785055285b1a8303e000098";
+  internationalId = "5785055285b1a8303e000098";
   societeId = "5141d25b6270dde92a0000c2";
   santeId = "4ef479fcbc60fb00040001c8";
   justiceId = "4ef479f9bc60fb00040000cc";
@@ -251,9 +237,9 @@ export class MainService {
   // Used to generate random quizz
   temp_candidacyIds = [this.hamonId, this.macronId, this.asselineauId,
     this.fillonId, this.cheminadeId, this.lassalleId, this.melenchonId,
-    this.lepenId, this.arthaudId, this.dupontAignanId, this.poutouId];
+    this.lePenId, this.arthaudId, this.dupontAignanId, this.poutouId];
   temp_tagIds = [this.emploiId, this.economieId, this.institutionsId, this.europeId, this.educationId,
-    this.cultureId, this.environnementId, this.justiceId, this.internationaleId, this.societeId,
+    this.cultureId, this.environnementId, this.justiceId, this.internationalId, this.societeId,
     this.santeId, this.territoiresId, this.immigrationId];
 
 }

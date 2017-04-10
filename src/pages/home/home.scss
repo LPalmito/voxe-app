@@ -1,20 +1,46 @@
+ion-card {
+  position: relative;
+  text-align: center;
+}
 
-.card-background-page {
+.card-title {
+  position: absolute;
+  top: 25%;
+  left: 15%;
+  font-size: 0.55em;
+  line-height: 1.5em;
+  font-weight: 700;
+  font-family: Montserrat, Open Sans, sans-serif;
+  width: 70%;
+  color: #A349A4;
+  text-shadow: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
-  ion-card {
-    position: relative;
-    text-align: center;
-  }
+#question {
+  color: black;
+  margin-top: -100%;
+  margin-bottom: 15%;
+  font-size: 4em;
+}
 
-  .card-title {
-    position: absolute;
-    top: 25%;
-    left: 10%;
-    font-size: 1em;
-    font-weight: bold;
-    font-family: Montserrat, Open Sans, Arial, sans-serif;
-    width: 80%;
-    color: #fff;
-    text-shadow: none;
-  }
+.card-h1 {
+  background-color: white;
+}
+
+.candidate-photo {
+  border-radius: 50%;
+}
+
+.compare-done {
+  margin-top: 5%;
+}
+
+.compare-not-done-yet {
+  margin-top: 8%;
+  background-color: white;
+  color: #27ccc0;
+  font-weight: 200;
+  font-size: 0.6em;
 }
