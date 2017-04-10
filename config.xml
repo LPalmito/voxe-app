@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.testproject2602038" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
   <name>Voxe.org</name>
-  <description>An awesome app for Voxe</description>
+  <description>On va enfin aimer la politique</description>
   <author email="yannick.morel1@gmail.com" href="http://www.voxe.org">Yannick, Augustin and Manon for the VoxeTeam</author>
   <content src="index.html"/>
   <access origin="http://compare.voxe.org"/>
@@ -30,7 +30,6 @@
   <preference name="SplashScreenDelay" value="0"/>
   <preference name="FadeSplashScreen" value="false"/>
   <preference name="FadeSplashScreenDuration" value="0"/>
-  <preference name="SplashScreenBackgroundColor" value="0xFFFFFFFF"/>
   <platform name="android">
     <allow-intent href="market:*"/>
     <splash src="resources/android/splash/drawable-port-ldpi-screen.png" density="port-ldpi"/>
