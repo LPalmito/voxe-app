@@ -64,7 +64,7 @@ export class SwipePage {
     });
     loader.present();
 
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       loader.dismissAll();
       this.showAlert()
     },10000);
@@ -74,6 +74,7 @@ export class SwipePage {
       .subscribe(arr => {
         this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: arr});
         loader.dismissAll();
+        clearTimeout(timer);
       });
 
     // Initialisation of the stack
