@@ -2,7 +2,7 @@ import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
 import {StatsPage} from "../stats/stats";
-import {HomePage} from "../home/home";
+import {HomePage, SwipeCard, Card} from "../home/home";
 import {ToastController, NavController, LoadingController} from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
@@ -14,6 +14,7 @@ import {PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS, CLEAR_SWIPED_PROPOSIT
 import {PUSH_ANSWER, POP_ANSWER, CLEAR_ANSWERS} from "../../reducers/answers.reducer";
 import {TagService} from "../../services/tags.service";
 import { AlertController } from 'ionic-angular';
+import {ARCHIVE_CARD} from "../../reducers/cards.reducer";
 
 // TODO: Change the structure to accept the "ask" attribute
 export interface Answer {
@@ -38,10 +39,13 @@ export class SwipePage {
   candidacyIds: string[];
   tagIds: string[];
   tags: Tag[] = [];
+  activeCard: SwipeCard;
 
   constructor(private main: MainService, public loadingController: LoadingController, public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController,
               private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService, public alertCtrl: AlertController) {
 
+    // Look for active card
+    this.main.getCurrentCard().subscribe(card => this.activeCard = <SwipeCard> card);
 
     // Get tags
     this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
@@ -151,7 +155,7 @@ export class SwipePage {
         {
           text: 'OK',
           handler: () => {
-            this.goHome()
+            this.goHome(this.activeCard)
           }
         }
       ]
@@ -160,7 +164,8 @@ export class SwipePage {
   }
 
   // Function called to go back to Home if TimeOut
-  goHome() {
+  goHome(card: Card) {
+    this.store.dispatch({type: ARCHIVE_CARD, payload: card});
     this.nav.setRoot(HomePage);
   }
 
