@@ -2,6 +2,7 @@ import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import 'rxjs/Rx';
 import {StackConfig, SwingStackComponent, SwingCardComponent} from 'angular2-swing';
 import {StatsPage} from "../stats/stats";
+import {HomePage, SwipeCard, Card} from "../home/home";
 import {ToastController, NavController, LoadingController} from 'ionic-angular';
 import {PropositionService} from "../../services/propositions.service";
 import {CandidateService} from "../../services/candidates.service";
@@ -12,6 +13,8 @@ import {SET_TO_SWIPE_PROPOSITIONS, POP_TO_SWIPE_PROPOSITIONS, PUSH_TO_SWIPE_PROP
 import {PUSH_SWIPED_PROPOSITIONS, POP_SWIPED_PROPOSITIONS, CLEAR_SWIPED_PROPOSITIONS} from "../../reducers/swiped-propositions.reducer";
 import {PUSH_ANSWER, POP_ANSWER, CLEAR_ANSWERS} from "../../reducers/answers.reducer";
 import {TagService} from "../../services/tags.service";
+import { AlertController } from 'ionic-angular';
+import {ARCHIVE_CARD} from "../../reducers/cards.reducer";
 
 // TODO: Change the structure to accept the "ask" attribute
 export interface Answer {
@@ -36,10 +39,13 @@ export class SwipePage {
   candidacyIds: string[];
   tagIds: string[];
   tags: Tag[] = [];
+  activeCard: SwipeCard;
 
   constructor(private main: MainService, public loadingController: LoadingController, public toastCtrl: ToastController, public store: Store<AppStore>, public nav: NavController,
-              private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService) {
+              private tagService: TagService, private propositionService: PropositionService, private candidateService: CandidateService, public alertCtrl: AlertController) {
 
+    // Look for active card
+    this.main.getCurrentCard().subscribe(card => this.activeCard = <SwipeCard> card);
 
     // Get tags
     this.tagService.tagIds.subscribe(tagIds => tagIds.forEach(tagId => {
@@ -58,15 +64,21 @@ export class SwipePage {
     this.store.dispatch({type: CLEAR_ANSWERS, payload: null});
 
     let loader = this.loadingController.create({
-      content: "Nous générons ton quizz ..."
+      content: "2 candidats, un thème, c'est parti !"
     });
     loader.present();
+
+    let timer = setTimeout(() => {
+      loader.dismissAll();
+      this.showAlert()
+    },10000);
 
     // Initialisation of the propositions to swipe
     this.propositionService.getPropositionsForSwipe(this.candidacyIds, this.tagIds, 5)
       .subscribe(arr => {
         this.store.dispatch({type: SET_TO_SWIPE_PROPOSITIONS, payload: arr});
         loader.dismissAll();
+        clearTimeout(timer);
       });
 
     // Initialisation of the stack
@@ -132,6 +144,29 @@ export class SwipePage {
       duration: 2000,
     });
     toast.present();
+  }
+
+  // Alert when timeout
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Faire une autre comparaison',
+      subTitle: 'Cette comparaison semble un peu lente à venir, on en fait une autre ?',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.goHome(this.activeCard)
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  // Function called to go back to Home if TimeOut
+  goHome(card: Card) {
+    this.store.dispatch({type: ARCHIVE_CARD, payload: card});
+    this.nav.setRoot(HomePage);
   }
 
   // Helper to get the last element of an array

@@ -92,7 +92,7 @@ export class HomePage {
   ) {
 
     // Various initializations
-    this.selectedSegment = 'all';
+    this.selectedSegment = 'swipe';
     this.main.isTutoDone.subscribe(isTutoDone => this.isTutoDone = isTutoDone);
 
     // Initialize the rows of cards

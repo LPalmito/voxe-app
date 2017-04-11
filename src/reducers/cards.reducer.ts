@@ -18,10 +18,10 @@ export const cards = (state: Array<InfoCard|SwipeCard> = [], {type,payload}) => 
     case ADD_CARD:
       return [payload].concat(state);
     case ARCHIVE_CARD:
+      console.log("archive !");
       return state.map(card => {
         if (card == payload) {
           card.isArchive = true;
-          card.isActive = false;
           return card;
         }
         else {
