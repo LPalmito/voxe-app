@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.voxeapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
+<widget id="com.voxe.voxeapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
   <name>Voxe.org</name>
   <description>On va enfin aimer la politique</description>
   <author email="yannick.morel1@gmail.com" href="http://www.voxe.org">Yannick, Augustin and Manon for the VoxeTeam</author>
