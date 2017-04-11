@@ -135,7 +135,10 @@ export class MainService {
 
     this.election.subscribe(election => {
       if (election != undefined) {
-        this.all_candidacyIds = election.candidacies.map(c => c.id);
+        this.all_candidacyIds = election.candidacies
+          .filter(c => c.id != "58beb414f110d477c200009b" && c.id != "58c11879b19d2ff24d00002d")
+          .map(c => c.id);
+        console.log(this.all_candidacyIds);
         this.all_tagIds = election.tags.map(t => t.id);
       }
     });
