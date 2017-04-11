@@ -87,13 +87,19 @@ export class InfoCardsService {
   arthaudId = "58c91f8ad3b21298910000be";
   dupontAignanId = "58c91ff4d3b212f0fa0000c3";
   poutouId = "58cec5c5d87ba3f5900002ba";
+  lassalleId = "58c12c21b19d2f7930000050";
 
   santeId = "4ef479fcbc60fb00040001c8";
   justiceId = "4ef479f9bc60fb00040000cc";
   europeId = "4ef479fcbc60fb0004000204";
   emploiId = "4ef479f9bc60fb000400009a";
+  economieId = "4ef479f9bc60fb00040000aa";
+  environnementId = "4ef479fabc60fb00040000ec";
 
   swipeCards: Array<SwipeCard> = [
+    new SwipeCard("assets/img/home-swipe-2.png","Économie",[this.economieId],[this.fillonId, this.macronId]),
+    new SwipeCard("assets/img/home-swipe-4.png","Europe",[this.europeId],[this.melenchonId, this.hamonId]),
+    new SwipeCard("assets/img/home-swipe-1.png","Environnement",[this.environnementId],[this.lePenId, this.lassalleId]),
     new SwipeCard("assets/img/home-swipe-5.png","Solidarité, Santé et Logement",[this.santeId],[this.hamonId, this.poutouId]),
     new SwipeCard("assets/img/home-swipe-3.png","Justice, Sécurité et Défense",[this.justiceId],[this.dupontAignanId, this.lePenId]),
     new SwipeCard("assets/img/home-swipe-2.png","Solidarité, Santé et Logement",[this.santeId],[this.fillonId, this.asselineauId]),
