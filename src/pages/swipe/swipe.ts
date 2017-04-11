@@ -58,7 +58,7 @@ export class SwipePage {
     this.store.dispatch({type: CLEAR_ANSWERS, payload: null});
 
     let loader = this.loadingController.create({
-      content: "Nous générons ton quizz ..."
+      content: "2 candidats, un thème, c'est parti !"
     });
     loader.present();
 
