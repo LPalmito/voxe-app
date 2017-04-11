@@ -74,6 +74,9 @@ export class InfoCardsService {
     cards.splice(4, 0, this.swipeCards[2]);
     cards.splice(7, 0, this.swipeCards[3]);
     cards.splice(8, 0, this.swipeCards[4]);
+    cards.splice(10, 0, this.swipeCards[5]);
+    cards.splice(11, 0, this.swipeCards[6]);
+    cards.splice(13, 0, this.swipeCards[7]);
     return cards;
   }
 
