@@ -6,6 +6,7 @@ import {MainService} from "../services/main.service";
 import {Store} from "@ngrx/store";
 import {AppStore} from "../store";
 import {SET_ELECTION} from "../reducers/election.reducer";
+import {Splashscreen} from 'ionic-native';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,9 +26,17 @@ export class VoxeApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
+      this.hideSplashScreen();
       this.main.getElectionViaVoxe().subscribe(election => {
         this.store.dispatch({type: SET_ELECTION, payload: election});
       })
     });
+  }
+  hideSplashScreen() {
+    if (Splashscreen) {
+      setTimeout(() => {
+        Splashscreen.hide();
+      }, 100);
+    }
   }
 }
