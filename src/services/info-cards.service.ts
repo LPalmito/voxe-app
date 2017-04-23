@@ -37,7 +37,16 @@ export class InfoCardsService {
         raw = raw.slice(indexStartA);
         let indexStartHref = raw.indexOf("href=\"");
         let indexEndHref = raw.slice(indexStartHref+6).indexOf("\"");
-        let infoUrl = raw.substr(indexStartHref+6,indexEndHref);
+        let infoUrl_raw = raw.substr(indexStartHref+6,indexEndHref);
+
+        if (infoUrl_raw.indexOf('http') == -1) {
+          var infoUrl_if = "http://www.voxe.org" + infoUrl_raw;
+        }
+        else {
+          var infoUrl_if = infoUrl_raw;
+        }
+
+        let infoUrl = infoUrl_if;
 
         let indexStartImg = raw.indexOf("<img");
         let indexEndA = raw.indexOf("</a>");
