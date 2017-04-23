@@ -7,9 +7,6 @@
       <button ion-button (click)="goToFavoritesPage()">
         <ion-icon name="star"></ion-icon>
       </button>
-      <button ion-button (click)="goToArchivePage()">
-        <ion-icon name="archive"></ion-icon>
-      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -20,35 +17,30 @@
   <!-- Segment between 'all' cards, 'info' cards and 'swipe' cards -->
   <div padding>
     <ion-segment [(ngModel)]="selectedSegment">
-      <ion-segment-button value="all">
-        Toutes
+      <ion-segment-button value="swipe">
+        Comparer
       </ion-segment-button>
       <ion-segment-button value="info">
         S'informer
-      </ion-segment-button>
-      <ion-segment-button value="swipe">
-        Comparer
       </ion-segment-button>
     </ion-segment>
   </div>
 
   <div [ngSwitch]="selectedSegment">
 
-  <!-- Default : show 'all' cards -->
-    <ion-grid *ngSwitchCase = "'all'">
-
-      <!-- Rows of 2 cards each -->
-      <ion-row *ngFor="let row of cardsRows">
+    <!-- Default: Show only 'swipe' cards -->
+    <ion-grid *ngSwitchCase = "'swipe'">
+      <ion-row *ngFor="let row of swipeCardsRows">
         <ion-col width-50 *ngFor="let card of row">
 
           <ion-card>
-            <div class="card-title" (click)="openCard(card)" *ngIf="isSwipeCard(card)">
+            <div class="card-title" (click)="openCard(card)">
               <div *ngIf="!card.hasBeenDone">
                 <ion-icon name="help-circle" id="question"></ion-icon>
               </div>
-	            <div class="card-h1">
-    	          {{card.title}}
-    	         </div>
+              <div class="card-h1">
+                {{card.title}}
+              </div>
               <div *ngIf="card.hasBeenDone" class="compare-done">
                 <ion-row>
                   <ion-col width-50 *ngFor="let c of card.stats.candidacies">
@@ -67,7 +59,6 @@
         </ion-col>
 
       </ion-row>
-
     </ion-grid>
 
     <!-- Show only Info cards -->
@@ -87,42 +78,6 @@
 
 
     </ion-grid>
-
-
-    <!-- Show only 'swipe' cards -->
-    <ion-grid *ngSwitchCase = "'swipe'">
-      <ion-row *ngFor="let row of swipeCardsRows">
-        <ion-col width-50 *ngFor="let card of row">
-
-          <ion-card>
-            <div class="card-title" (click)="openCard(card)">
-              <div *ngIf="!card.hasBeenDone">
-                <ion-icon name="help-circle" id="question"></ion-icon>
-              </div>
-              <div class="card-h1">
-                {{card.title}}
-               </div>
-              <div *ngIf="card.hasBeenDone" class="compare-done">
-                <ion-row>
-                  <ion-col width-50 *ngFor="let c of card.stats.candidacies">
-                    <img class="candidate-photo" src={{c.candidates[0].photo.sizes.small.url}}>
-                  </ion-col>
-                </ion-row>
-              </div>
-              <div *ngIf="!card.hasBeenDone" class="compare-not-done-yet">
-                Comparer !
-              </div>
-            </div>
-
-            <img src={{card.image}} (click)="openCard(card)"/>
-
-          </ion-card>
-        </ion-col>
-
-      </ion-row>
-
-    </ion-grid>
-
 
   </div>
   <!-- Fab to generate a Quizz -->
