@@ -77,21 +77,13 @@
 
   <ion-grid>
     <ion-row class="action-button">
-      <ion-col col-6>
-        <button (click)="restartQuizz()" ion-button icon-left outline small>
-          <ion-icon name="refresh"></ion-icon>
-          Recommencer
-        </button>  
-      </ion-col>
-      <ion-col col-6>
-        <button (click)="archiveCard()" ion-button icon-left outline small>
-          <ion-icon name="archive"></ion-icon>
-          Archiver
-        </button>
-      </ion-col>
+      <button (click)="restartQuizz()" ion-button icon-left outline small>
+        <ion-icon name="refresh"></ion-icon>
+        Recommencer
+      </button>
     </ion-row>
   </ion-grid>
-  
+
   <!--Go to home page button-->
   <button (click)="goHome()" ion-button round icon-left class="home-button">
     <ion-icon name="home"></ion-icon>

@@ -1,8 +1,8 @@
 .tuto {
-	background-color: #f53d3d;
+	background-color: #ff5a5f;
 }
 
-h1 {
+.h1_slide_1{
 	margin-top: 1rem;
 	font-size: 3.5rem;
 	color: white;
@@ -10,7 +10,7 @@ h1 {
 	font-variant: small-caps;
 }
 
-.tuto_h2 {
+.h2_slide_1 {
 	padding-left: 10%;
 	padding-right: 10%;
 	font-size: 2rem;
@@ -21,40 +21,31 @@ h1 {
 #icon-swipe {
 	margin-top: 10%;
 	margin-bottom: 10%;
-	height: 10em;
-	width: 9em;
+	height: 6em;
+	width: 5em;
 }
 
-.new-quizz {
-	font-family: Montserrat, Open Sans, sans-serif;
-	margin-left: 5%;
-	margin-right: 10%;
-	position: fixed;
-	top: 15%;
+.title_slide_2 {
+  margin-bottom: 7em;
 }
 
-.icons-like {
-    margin-bottom: 10%;
-    margin-top: 40%;
-    margin-left: 5%;
-    margin-right: 5%;
+.h1_slide_2 {
+  color: #ff5a5f;
+  font-family: Montserrat, Open Sans, sans-serif;
+  font-variant: small-caps;
 }
 
-#icon-like-red {
-	height: 8em;
-	width: 7em;
-	transform: rotate(180deg);
-}
-
-#icon-like-green {
-	height: 8em;
-	width: 7em;
+.h2_slide_2 {
+  color: #222222;
+  font-size: 2rem;
+  font-family: Montserrat, Open Sans, sans-serif;
 }
 
 .swipe-button {
-  background-color: #f53d3d;
+  background-color: #ff5a5f;
   color: white;
   margin-left: auto;
   margin-right: auto;
   display: block;
+  margin-top: inherit;
 }
