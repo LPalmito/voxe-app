@@ -136,7 +136,11 @@ export class MainService {
     this.election.subscribe(election => {
       if (election != undefined) {
         this.all_candidacyIds = election.candidacies
-          .filter(c => c.id != "58beb414f110d477c200009b" && c.id != "58c11879b19d2ff24d00002d")
+          .filter(c => c.id != "58beb414f110d477c200009b" && c.id != "58c11879b19d2ff24d00002d" && c.id != "58b69f469f3f14a49f000022"
+            && c.id != "58c92078d3b212636d0000c8" && c.id != "58c920ded3b2120d5d0000cd" && c.id != "58c153f1b19d2f2cd5000084"
+            && c.id != "58b69cda9f3f14497500001e" && c.id != "58c91f8ad3b21298910000be" && c.id != "58c91ff4d3b212f0fa0000c3"
+            && c.id != "58cec5c5d87ba3f5900002ba" && c.id != "58c12c21b19d2f7930000050"
+          )
           .map(c => c.id);
         this.all_tagIds = election.tags.map(t => t.id);
       }

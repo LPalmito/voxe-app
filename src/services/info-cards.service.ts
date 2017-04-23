@@ -76,7 +76,6 @@ export class InfoCardsService {
     cards.splice(8, 0, this.swipeCards[4]);
     cards.splice(10, 0, this.swipeCards[5]);
     cards.splice(11, 0, this.swipeCards[6]);
-    cards.splice(13, 0, this.swipeCards[7]);
     return cards;
   }
 
@@ -100,13 +99,12 @@ export class InfoCardsService {
   environnementId = "4ef479fabc60fb00040000ec";
 
   swipeCards: Array<SwipeCard> = [
-    new SwipeCard("assets/img/home-swipe-2.png","Économie",[this.economieId],[this.fillonId, this.macronId]),
-    new SwipeCard("assets/img/home-swipe-4.png","Europe",[this.europeId],[this.melenchonId, this.hamonId]),
-    new SwipeCard("assets/img/home-swipe-1.png","Environnement",[this.environnementId],[this.lePenId, this.lassalleId]),
-    new SwipeCard("assets/img/home-swipe-5.png","Solidarité, Santé et Logement",[this.santeId],[this.hamonId, this.poutouId]),
-    new SwipeCard("assets/img/home-swipe-3.png","Justice, Sécurité et Défense",[this.justiceId],[this.dupontAignanId, this.lePenId]),
-    new SwipeCard("assets/img/home-swipe-2.png","Solidarité, Santé et Logement",[this.santeId],[this.fillonId, this.asselineauId]),
-    new SwipeCard("assets/img/home-swipe-4.png","Europe",[this.europeId],[this.cheminadeId, this.macronId]),
-    new SwipeCard("assets/img/home-swipe-1.png","Emploi",[this.emploiId],[this.arthaudId, this.melenchonId])
+    new SwipeCard("assets/img/home-swipe-2.png","Économie",[this.economieId],[this.lePenId, this.macronId]),
+    new SwipeCard("assets/img/home-swipe-4.png","Europe",[this.europeId],[this.macronId, this.lePenId]),
+    new SwipeCard("assets/img/home-swipe-1.png","Environnement",[this.environnementId],[this.lePenId, this.macronId]),
+    new SwipeCard("assets/img/home-swipe-5.png","Solidarité, Santé et Logement",[this.santeId],[this.macronId, this.lePenId]),
+    new SwipeCard("assets/img/home-swipe-3.png","Justice, Sécurité et Défense",[this.justiceId],[this.lePenId, this.macronId]),
+    new SwipeCard("assets/img/home-swipe-2.png","Emploi",[this.emploiId],[this.macronId, this.lePenId]),
+    new SwipeCard("assets/img/home-swipe-4.png","Europe",[this.europeId],[this.lePenId, this.macronId]),
   ];
 }
